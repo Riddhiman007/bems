@@ -5,7 +5,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     EmailProvider({
       server: process.env.EMAIL_SERVER,
-      secret: process.env.SECRET_KEY,
+      secret: process.env.EMAIL_HASH,
     }),
   ],
 });
