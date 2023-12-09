@@ -7,3 +7,4 @@ declare global {
 }
 
 export {};
+declare module "@heroicons/react";

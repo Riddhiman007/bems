@@ -1,6 +1,8 @@
 import React from "react";
 import Context from "./contexts";
 import "./globals.css";
+import { Container } from "@mui/material";
+import Navigation from "./components/Navigation";
 
 export const metadata = {
   title: "Create Next App",
@@ -9,14 +11,22 @@ export const metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: {
   children: React.ReactNode;
+  modal: React.ReactNode;
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="">
-        
-        <Context>{children}</Context>
+      <body className="bg-gray-100 dark:bg-slate-950">
+        <Context>
+          <Navigation>
+            <Container className="mt-[97px]">
+              {children}
+              {modal}
+            </Container>
+          </Navigation>
+        </Context>
       </body>
     </html>
   );

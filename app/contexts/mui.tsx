@@ -1,5 +1,10 @@
 "use client";
-import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import {
+  CssBaseline,
+  LinkProps,
+  ThemeProvider,
+  createTheme,
+} from "@mui/material";
 import React, { useEffect, useState, useContext } from "react";
 import { DarkModeContext } from "./DarkModeContext";
 
