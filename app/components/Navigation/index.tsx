@@ -18,7 +18,10 @@ const Navigation = ({ children }: { children: React.ReactNode }) => {
           {children}
         </NavigationMobile>
       ) : (
-        <NavigationDeskTop elevation={triggerElevation ? 4 : 0} />
+        <>
+          <NavigationDeskTop elevation={triggerElevation ? 4 : 0} />
+          {children}
+        </>
       )}
     </>
   );

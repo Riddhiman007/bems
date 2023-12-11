@@ -9,11 +9,11 @@ import {
   Typography,
 } from "@mui/material";
 
-import { AnimatePresence, MotionButton, MotionDiv } from "@/components/Motion";
-
+import MotionDiv from "@/components/Motion/MotionDiv";
+import MotionButton from "@/components/Motion/MotionButton";
+import AnimatePresence from "@/components/Motion/AnimatePresence";
 // signin the client
 import { signIn } from "@/lib/auth";
-
 /// Login Handler
 async function login(formData: FormData) {
   "use server";
@@ -21,7 +21,7 @@ async function login(formData: FormData) {
   await signIn("email", { email: formData.get("email").toString() });
 }
 
-const Login = async () => {
+export default function Login(): React.ReactNode | null {
   return (
     <>
       <Card
@@ -69,6 +69,4 @@ const Login = async () => {
       </Card>
     </>
   );
-};
-
-export default Login;
+}

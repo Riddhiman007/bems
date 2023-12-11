@@ -1,4 +1,5 @@
-import { AnimatePresence, MotionDiv } from "@/components/Motion";
+import MotionDiv from "@/components/Motion/MotionDiv";
+import AnimatePresence from "@/components/Motion/AnimatePresence";
 import React from "react";
 
 export default function Template({ children }: { children: React.ReactNode }) {

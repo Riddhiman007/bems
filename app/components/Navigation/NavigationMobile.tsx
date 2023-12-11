@@ -33,8 +33,10 @@ import "@fontsource/shrikhand";
 import { DarkModeContext } from "@/contexts/DarkModeContext";
 import Link from "next/link";
 
-import { MotionDiv } from "../Motion";
+import { MotionDiv } from "../Motion/MotionDiv";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
+import image from "@/photo-removebg.png";
 
 interface NavItem {
   href: string;
@@ -87,10 +89,12 @@ const NavigationMobile = ({
     <>
       <AppBar elevation={elevation} className="bg-transparent py-4 lg:py-6">
         <Container className="flex flex-row text-center">
-          <Box className="mx-auto">
+          <Box className=" mx-auto flex flex-row gap-2">
+            <Image src={image} alt="braves" height={50} width={50} />
             <Typography
+              style={{ font: "Shrikhand" }}
+              className=" mt-3 text-xl mix-blend-difference"
               variant="h6"
-              className="mt-1 font-[Shrikhand_sans-serif]"
             >
               Braves
             </Typography>
@@ -98,13 +102,13 @@ const NavigationMobile = ({
           <Box className="flex flex-row gap-2 md:gap-4">
             <IconButton onClick={() => setIsDark(!isDark)}>
               {isDark ? (
-                <MoonIcon className="text-gray-950 dark:text-slate-50 h-7 w-7" />
+                <MoonIcon className="dark:text-slate-50 h-7 w-7" />
               ) : (
-                <SunIcon className="text-gray-950 dark:text-slate-50 h-7 w-7" />
+                <SunIcon className="dark:text-slate-50 h-7 w-7" />
               )}
             </IconButton>
             <IconButton>
-              <UserIcon className="h-7 w-7 text-gray-950 dark:text-slate-50" />
+              <UserIcon className="h-7 w-7 dark:text-slate-50" />
             </IconButton>
           </Box>
         </Container>
