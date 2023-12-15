@@ -45,7 +45,7 @@ model User {
   emailVerified DateTime?
   role          String
   image         String?
-  isSuperUser   Boolean?  @default(false)
+  username      String    @unique
   accounts      Account[]
   sessions      Session[]
 

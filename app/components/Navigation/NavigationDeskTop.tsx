@@ -1,21 +1,13 @@
 "use client";
-import {
-  Box,
-  Container,
-  Typography,
-  IconButton,
-  AppBar,
-  Button,
-} from "@mui/material";
+import { Box, Container, Typography, IconButton, AppBar, Button } from "@mui/material";
 import { MoonIcon, SunIcon, UserIcon } from "@heroicons/react/24/solid";
-import React from "react";
-import "@fontsource/shrikhand";
-import { DarkModeContext } from "@/contexts/DarkModeContext";
+import { useTheme } from "next-themes";
 import Link from "next/link";
 import Image from "next/image";
-import image from "@/photo-removebg.png";
+import image from "../../photo-removebg.png";
 import "@fontsource/shrikhand";
 import MotionDiv from "../Motion/MotionDiv";
+import React, { useEffect, useState } from "react";
 interface AppBarItem {
   name: string;
   href: string;
@@ -28,7 +20,9 @@ const AppBarItems: Array<AppBarItem> = [
   { name: "about us", href: "/about" },
 ];
 const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
-  const { isDark, setIsDark } = React.useContext(DarkModeContext);
+  const { theme, setTheme } = useTheme();
+  const [CurrentTheme, setCurrentTheme] = useState("light");
+  useEffect(() => setCurrentTheme(theme), [theme]);
   return (
     <AppBar
       component="header"
@@ -40,12 +34,12 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
           <Box
             component={MotionDiv}
             whileHover={{ scale: 1.1 }}
-            className="grow-[3] flex flex-row gap-1"
+            className="flex grow-[3] flex-row gap-1"
           >
             <Image src={image} alt="braves" height={50} width={50} />
             <Typography
               style={{ font: "Shrikhand" }}
-              className=" mt-3 text-xl dark:text-slate-50 no-underline font-semibold mix-blend-difference"
+              className=" mt-3 text-xl font-semibold no-underline mix-blend-difference dark:text-slate-50"
               variant="h6"
             >
               Braves
@@ -58,7 +52,7 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
               <Button
                 component={MotionDiv}
                 whileHover={{ scale: 1.1 }}
-                className="dark:text-slate-50  text-xs"
+                className="text-xs  dark:text-slate-50"
                 key={item.name}
                 LinkComponent={Link}
                 href={item.href}
@@ -70,17 +64,22 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
           </Box>
           <Box className="flex flex-row ">
             <IconButton
-              onClick={() => setIsDark(!isDark)}
-              className="h-fit w-fit m-1 hover:scale-[1.1]"
+              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+              className="m-1 h-fit w-fit hover:scale-[1.1]"
             >
-              {isDark ? (
-                <MoonIcon className=" dark:text-slate-100 h-7 w-7" />
+              {CurrentTheme === "dark" ? (
+                <MoonIcon className=" h-7 w-7 dark:text-slate-100" />
               ) : (
-                <SunIcon className=" dark:text-slate-100 h-7 w-7" />
+                <SunIcon className=" h-7 w-7 dark:text-slate-100" />
               )}
             </IconButton>
-            <IconButton className="h-fit w-fit m-1 hover:scale-[1.1]">
-              <UserIcon className="dark:text-slate-100 h-7 w-7" />
+
+            <IconButton
+              className="m-1 h-fit w-fit hover:scale-[1.1]"
+              LinkComponent={Link}
+              href="/auth/login"
+            >
+              <UserIcon className="h-7 w-7 dark:text-slate-100" />
             </IconButton>
           </Box>
         </Box>

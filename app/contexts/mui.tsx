@@ -2,15 +2,16 @@
 import {
   CssBaseline,
   LinkProps,
+  PaletteMode,
   ThemeProvider,
   createTheme,
 } from "@mui/material";
+import { useTheme } from "next-themes";
 import React, { useEffect, useState, useContext } from "react";
-import { DarkModeContext } from "./DarkModeContext";
 
 export default function MuiTheme({ children }: { children: React.ReactNode }) {
   const [root, setRoot] = useState<HTMLElement | null>(null);
-  const { isDark } = useContext(DarkModeContext);
+  const { theme: CurrentTheme } = useTheme();
   useEffect(() => {
     setRoot(document.querySelector("body"));
   }, []);
@@ -42,7 +43,7 @@ export default function MuiTheme({ children }: { children: React.ReactNode }) {
       },
     },
     palette: {
-      mode: isDark ? "dark" : "light",
+      mode: CurrentTheme === "light" ? "light" : "dark",
     },
   });
   return (

@@ -30,10 +30,10 @@ import {
 import { Dashboard, DashboardOutlined } from "@mui/icons-material";
 
 import "@fontsource/shrikhand";
-import { DarkModeContext } from "@/contexts/DarkModeContext";
+import { useTheme } from "next-themes";
 import Link from "next/link";
 
-import { MotionDiv } from "../Motion/MotionDiv";
+import MotionDiv from "../Motion/MotionDiv";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import image from "@/photo-removebg.png";
@@ -52,7 +52,7 @@ const NavigationMobile = ({
   children: React.ReactNode;
   elevation: number;
 }) => {
-  const { isDark, setIsDark } = React.useContext(DarkModeContext);
+  const { theme, setTheme } = useTheme();
   const currentRoute = usePathname();
 
   const navItems: Array<NavItem> = [
@@ -72,17 +72,13 @@ const NavigationMobile = ({
       label: "Events",
       href: "/events",
       icon: <CalendarIcon className="h-7 w-7 dark:text-slate-50" />,
-      iconOutline: (
-        <CalenderIconOutline className="h-7 w-7 dark:text-slate-50" />
-      ),
+      iconOutline: <CalenderIconOutline className="h-7 w-7 dark:text-slate-50" />,
     },
     {
       label: "Me",
       href: "/me",
       icon: <UserCircleIcon className="h-7 w-7 dark:text-slate-50" />,
-      iconOutline: (
-        <UserCircleIconOutline className="h-7 w-7 dark:text-slate-50" />
-      ),
+      iconOutline: <UserCircleIconOutline className="h-7 w-7 dark:text-slate-50" />,
     },
   ];
   return (
@@ -100,11 +96,11 @@ const NavigationMobile = ({
             </Typography>
           </Box>
           <Box className="flex flex-row gap-2 md:gap-4">
-            <IconButton onClick={() => setIsDark(!isDark)}>
-              {isDark ? (
-                <MoonIcon className="dark:text-slate-50 h-7 w-7" />
+            <IconButton onClick={() => setIsDark(theme === "light" ? "dark" : "light")}>
+              {theme === "dark" ? (
+                <MoonIcon className="h-7 w-7 dark:text-slate-50" />
               ) : (
-                <SunIcon className="dark:text-slate-50 h-7 w-7" />
+                <SunIcon className="h-7 w-7 dark:text-slate-50" />
               )}
             </IconButton>
             <IconButton>
@@ -116,7 +112,7 @@ const NavigationMobile = ({
       {children}
       <BottomNavigation
         showLabels
-        className="fixed h-16 dark:bg-slate-900 shadow-md shadow-gray-950 bottom-0 left-0 right-0"
+        className="fixed bottom-0 left-0 right-0 h-16 shadow-md shadow-gray-950 dark:bg-slate-900"
       >
         {navItems.map((item) => (
           <BottomNavigationAction

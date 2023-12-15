@@ -1,14 +1,16 @@
+"use client";
 import React from "react";
-import DarkModeProvider from "./DarkModeContext";
+
 import MuiTheme from "./mui";
 import IsMobileProvider from "./IsMobileContext";
+import { ThemeProvider } from "next-themes";
 
 export default function Context({ children }: { children: React.ReactNode }) {
   return (
     <IsMobileProvider>
-      <DarkModeProvider>
+      <ThemeProvider attribute="class">
         <MuiTheme>{children}</MuiTheme>
-      </DarkModeProvider>
+      </ThemeProvider>
     </IsMobileProvider>
   );
 }
