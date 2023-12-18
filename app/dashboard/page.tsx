@@ -1,7 +1,9 @@
+import { auth } from "@/lib/auth";
 import React from "react";
 
-const Dashboard = () => {
-  return <div>Dashboard</div>;
-};
+export default async function Dashboard() {
+  const session = await auth();
+  console.log(session);
 
-export default Dashboard;
+  return <div>Dashboard</div>;
+}

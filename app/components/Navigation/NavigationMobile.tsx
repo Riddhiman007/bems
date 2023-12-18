@@ -37,6 +37,7 @@ import MotionDiv from "../Motion/MotionDiv";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import image from "@/photo-removebg.png";
+import MotionBottomNavigationAction from "../Motion/MotionButtonNavigation";
 
 interface NavItem {
   href: string;
@@ -96,7 +97,7 @@ const NavigationMobile = ({
             </Typography>
           </Box>
           <Box className="flex flex-row gap-2 md:gap-4">
-            <IconButton onClick={() => setIsDark(theme === "light" ? "dark" : "light")}>
+            <IconButton onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
               {theme === "dark" ? (
                 <MoonIcon className="h-7 w-7 dark:text-slate-50" />
               ) : (
@@ -112,7 +113,7 @@ const NavigationMobile = ({
       {children}
       <BottomNavigation
         showLabels
-        className="fixed bottom-0 left-0 right-0 h-16 shadow-md shadow-gray-950 dark:bg-slate-900"
+        className="fixed inset-x-0 bottom-0 h-16 shadow-md shadow-gray-950 dark:bg-slate-900"
       >
         {navItems.map((item) => (
           <BottomNavigationAction
@@ -121,6 +122,7 @@ const NavigationMobile = ({
             LinkComponent={Link}
             href={item.href}
             icon={item.href == currentRoute ? item.icon : item.iconOutline}
+            // whileHover={{ scale: 1.2 }}
           />
         ))}
       </BottomNavigation>

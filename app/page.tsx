@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       <Image
-        className="absolute bottom-0 right-10 top-0 z-10 m-auto self-center dark:mix-blend-color-dodge"
+        className="absolute inset-y-0 right-10 z-10 m-auto self-center dark:mix-blend-color-dodge"
         src={Explosion}
         alt="explosion"
         width={700}
@@ -17,7 +17,7 @@ export default function Home() {
       />
       <Box
         component="main"
-        className="absolute bottom-0 left-0 right-0 top-0 flex flex-row bg-gradient-to-b dark:from-blue-950 dark:to-slate-950"
+        className="absolute inset-0 flex flex-row bg-gradient-to-b dark:from-blue-950 dark:to-slate-950"
       >
         <Container
           className="m-auto ml-0 flex flex-row"

@@ -8,6 +8,7 @@ import image from "../../photo-removebg.png";
 import "@fontsource/shrikhand";
 import MotionDiv from "../Motion/MotionDiv";
 import React, { useEffect, useState } from "react";
+import MotionLink from "../Motion/MotionLink";
 interface AppBarItem {
   name: string;
   href: string;
@@ -39,7 +40,7 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
             <Image src={image} alt="braves" height={50} width={50} />
             <Typography
               style={{ font: "Shrikhand" }}
-              className=" mt-3 text-xl font-semibold no-underline mix-blend-difference dark:text-slate-50"
+              className="mt-3 text-xl font-semibold no-underline mix-blend-difference dark:text-slate-50"
               variant="h6"
             >
               Braves
@@ -50,11 +51,10 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
           <Box className="flex flex-row gap-4">
             {AppBarItems.map((item) => (
               <Button
-                component={MotionDiv}
+                component={MotionLink}
                 whileHover={{ scale: 1.1 }}
                 className="text-xs  dark:text-slate-50"
                 key={item.name}
-                LinkComponent={Link}
                 href={item.href}
                 variant="text"
               >

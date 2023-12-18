@@ -3,7 +3,8 @@ import EmailProvider from "@auth/core/providers/email";
 import GoogleProvider from "@auth/core/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
-import prisma from "./prisma";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 export const { handlers, auth, signIn, signOut, update } = NextAuth({
   providers: [
     EmailProvider({
@@ -13,13 +14,18 @@ export const { handlers, auth, signIn, signOut, update } = NextAuth({
   ],
   pages: {
     signIn: "/auth/login",
+    verifyRequest: "/auth/verify",
   },
   adapter: PrismaAdapter(prisma),
   session: { strategy: "database" },
+  trustHost: true,
   callbacks: {
     async session({ session, user }) {
       session.user = user;
       return session;
+    },
+    async signIn(params) {
+      return true;
     },
   },
 });
