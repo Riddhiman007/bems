@@ -4,7 +4,6 @@ import React from "react";
 import Explosion from "@/explosion.png";
 import Image from "next/image";
 import MotionDiv from "./components/Motion/MotionDiv";
-
 export default function Home() {
   return (
     <>
@@ -30,15 +29,17 @@ export default function Home() {
             <Box>
               <Typography
                 variant="body2"
-                className=" ml-1 text-sm md:text-base lg:text-lg"
+                className="ml-1 text-sm md:text-base lg:text-lg"
               >
                 We believe in
               </Typography>
             </Box>
             <Box className="flex flex-row">
-              <Typography className="text-6xl md:text-7xl lg:text-[12rem] ">C</Typography>
+              <Typography className="text-[10rem] md:bg-gradient-to-r md:text-[6rem] lg:text-[12rem]">
+                C
+              </Typography>
               <TypeAnimation
-                className="mt-3 align-text-bottom text-2xl md:mt-2 md:text-5xl lg:mt-11 lg:text-8xl"
+                className="mt-3 align-text-bottom text-2xl md:mt-6 md:text-5xl lg:mt-[5.3rem] lg:text-8xl"
                 sequence={["onfidence", 3000, "ommitment", 3000, "ooperation", 3000]}
                 speed={10}
                 repeat={Infinity}
