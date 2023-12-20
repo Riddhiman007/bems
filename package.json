@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "name": "query",
   "version": "0.0.0",
@@ -85,3 +86,60 @@
     "typescript": "5.1.6"
   }
 }
+=======
+{
+  "name": "bems",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "analyze": "cross-env ANALYZE=true next build",
+    "dev": "next dev --turbo",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@auth/core": "^0.18.4",
+    "@auth/prisma-adapter": "^1.0.9",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/shrikhand": "^5.0.18",
+    "@heroicons/react": "^2.0.18",
+    "@mui/icons-material": "^5.14.19",
+    "@mui/material": "^5.14.2",
+    "@prisma/client": "^5.7.0",
+    "@types/node": "20.4.5",
+    "@types/react": "18.2.17",
+    "@types/react-dom": "18.2.7",
+    "eslint": "8.46.0",
+    "eslint-config-next": "13.4.12",
+    "framer-motion": "^10.16.12",
+    "next": "14.0.3",
+    "next-auth": "^5.0.0-beta.4",
+    "next-themes": "^0.2.1",
+    "nodemailer": "^6.9.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.49.2",
+    "react-particles": "^2.12.2",
+    "react-type-animation": "^3.2.0",
+    "sharp": "^0.33.0",
+    "tsparticles": "^2.12.0",
+    "typescript": "5.1.6"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "^14.0.4",
+    "autoprefixer": "^10.4.16",
+    "cross-env": "^7.0.3",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-tailwindcss": "^3.13.0",
+    "postcss": "^8.4.32",
+    "prettier": "^3.1.1",
+    "prettier-plugin-tailwindcss": "^0.5.9",
+    "prisma": "^5.7.0",
+    "tailwindcss": "^3.3.5"
+  }
+}
+>>>>>>> 2d62cbd247b08604215eb72ab23e4d9e1a414938
