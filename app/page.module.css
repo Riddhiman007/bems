@@ -1,7 +1,0 @@
-.c {
-  @applybg-clip-text ;
-}
-
-.c::before{
-@apply  from-blue-800 via-purple-800 to-red-900 ;
-}

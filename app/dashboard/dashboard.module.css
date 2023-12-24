@@ -1,0 +1,21 @@
+.main {
+  @apply grid w-screen gap-4 md:gap-6 lg:gap-7;
+}
+
+@media (min-width: 600px) {
+  .main {
+    grid-template-areas: "identity installments";
+    grid-template-columns: 60%;
+  }
+}
+
+.main:nth-child(1) {
+  grid-area: "identity";
+}
+.main:nth-child(2) {
+  grid-area: "installments";
+  grid-column:;
+}
+.main:nth-child(3) {
+  grid-area: "academic";
+}

@@ -1,9 +1,75 @@
 import { auth } from "@/lib/auth";
+
+// components
+import {
+  Avatar,
+  Box,
+  Card,
+  CardContent,
+  CardMedia,
+  Container,
+  Typography,
+} from "@mui/material";
+
+// styles
 import React from "react";
+import AcademicProgressBarChart from "./components/AcademicProgressBarChart";
+
+// datasets
+interface AcademicProgressDataset {
+  exam_type: "Ist FA" | "Ist SA" | "IInd FA" | "IInd SA";
+  mathematics: number;
+  science: number;
+  sst: number;
+  english: number;
+  hindi: number;
+  computer: number;
+}
 
 export default async function Dashboard() {
   const session = await auth();
   console.log(session);
+  return (
+    <Container
+      component="main"
+      className="container mt-24 flex flex-row gap-7 sm:flex-col"
+    >
+      <Box className="flex w-full flex-col gap-7">
+        {/* identity */}
+        <Card className="flex flex-row rounded-md px-4 shadow-xl shadow-gray-400 dark:bg-slate-950 dark:shadow dark:shadow-black">
+          <CardMedia className=" h-full">
+            <Avatar className="mt-4">R</Avatar>
+          </CardMedia>
+          <CardContent className="flex flex-col gap-4">
+            <Box>
+              <Typography variant="h6">Chowdhury Riddhiman</Typography>
+            </Box>
+            <Box className="flex flex-col">
+              <Typography>Std: 9th</Typography>
+              <Typography>
+                Academic progress:{" "}
+                <Typography component="span" className="text-green-600">
+                  Good
+                </Typography>
+              </Typography>
+            </Box>
+          </CardContent>
+        </Card>
 
-  return <div>Dashboard</div>;
+        <Card className="shadow-xl shadow-gray-400 dark:bg-slate-950 dark:shadow dark:shadow-black">
+          <CardContent>
+            <Box>
+              <AcademicProgressBarChart />
+            </Box>
+          </CardContent>
+        </Card>
+      </Box>
+
+      <Box className="w-2/5">
+        <Card className="h-full w-full shadow-xl shadow-gray-400 dark:bg-slate-950 dark:shadow dark:shadow-black">
+          <CardContent>Installments</CardContent>
+        </Card>
+      </Box>
+    </Container>
+  );
 }

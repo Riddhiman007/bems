@@ -14,6 +14,7 @@ import {
 // icons
 import {
   CalendarIcon,
+  ChatBubbleLeftIcon,
   HomeIcon,
   MoonIcon,
   SunIcon,
@@ -63,17 +64,18 @@ const NavigationMobile = ({
       icon: <HomeIcon className="h-7 w-7 dark:text-slate-50" />,
       iconOutline: <HomeIconOutline className="h-7 w-7 dark:text-slate-50" />,
     },
-    {
-      label: "Dashboard",
-      href: "/dashboard",
-      icon: <Dashboard className="h-7 w-7 dark:text-slate-50" />,
-      iconOutline: <DashboardOutlined className="h-7 w-7 dark:text-slate-50" />,
-    },
+
     {
       label: "Events",
       href: "/events",
       icon: <CalendarIcon className="h-7 w-7 dark:text-slate-50" />,
       iconOutline: <CalenderIconOutline className="h-7 w-7 dark:text-slate-50" />,
+    },
+    {
+      label: "Posts",
+      href: "/posts",
+      icon: <ChatBubbleLeftIcon className="h-7 w-7 dark:text-slate-50" />,
+      iconOutline: <ChatBubbleLeftIcon className="h-7 w-7 dark:text-slate-50" />,
     },
     {
       label: "Me",

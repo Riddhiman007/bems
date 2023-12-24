@@ -1,5 +1,16 @@
 "use client";
-import { Box, Container, Typography, IconButton, AppBar, Button } from "@mui/material";
+
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import AppBar from "@mui/material/AppBar/AppBar";
+import Typography from "@mui/material/Typography/Typography";
+import Button from "@mui/material/Button/Button";
+import IconButton from "@mui/material/IconButton/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+
 import { MoonIcon, SunIcon, UserIcon } from "@heroicons/react/24/solid";
 import { useTheme } from "next-themes";
 import Link from "next/link";
@@ -9,6 +20,7 @@ import "@fontsource/shrikhand";
 import MotionDiv from "../Motion/MotionDiv";
 import React, { useEffect, useState } from "react";
 import MotionLink from "../Motion/MotionLink";
+import { useSession } from "next-auth/react";
 interface AppBarItem {
   name: string;
   href: string;
@@ -16,14 +28,33 @@ interface AppBarItem {
 
 const AppBarItems: Array<AppBarItem> = [
   { name: "home", href: "/" },
-  { name: "dashboard", href: "/dashboard" },
   { name: "events", href: "/events" },
+  { name: "posts", href: "/posts" },
   { name: "about us", href: "/about" },
+];
+
+const UserMenuItems: Array<AppBarItem> = [
+  { name: "dashboard", href: "/dashboard" },
+  { name: "my achievements", href: "/myachievements" },
+  { name: "logout", href: "/logout" },
 ];
 const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
   const { theme, setTheme } = useTheme();
-  const [CurrentTheme, setCurrentTheme] = useState("light");
+  const [CurrentTheme, setCurrentTheme] = useState<string | undefined>("light");
+  const [UserAnchorEl, setUserAnchorEl] = useState<null | HTMLElement>(null);
+
+  // get session
+  const { data: session } = useSession();
+
   useEffect(() => setCurrentTheme(theme), [theme]);
+
+  // ui logic
+  const handleUserMenuOpen = (e: React.MouseEvent<HTMLElement>) => {
+    setUserAnchorEl(e.currentTarget);
+  };
+  const handleUserMenuClose = () => {
+    setUserAnchorEl(null);
+  };
   return (
     <AppBar
       component="header"
@@ -62,10 +93,10 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
               </Button>
             ))}
           </Box>
-          <Box className="flex flex-row ">
+          <Box className="flex flex-row">
             <IconButton
-              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-              className="m-1 h-fit w-fit hover:scale-[1.1]"
+              onClick={(e) => setTheme(theme === "light" ? "dark" : "light")}
+              className="mx-1 mb-1 mt-3 h-fit w-fit hover:scale-[1.1]"
             >
               {CurrentTheme === "dark" ? (
                 <MoonIcon className=" h-7 w-7 dark:text-slate-100" />
@@ -74,13 +105,41 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
               )}
             </IconButton>
 
-            <IconButton
-              className="m-1 h-fit w-fit hover:scale-[1.1]"
-              LinkComponent={Link}
-              href="/auth/login"
-            >
-              <UserIcon className="h-7 w-7 dark:text-slate-100" />
-            </IconButton>
+            {session ? (
+              <>
+                <Tooltip title="me">
+                  <IconButton
+                    className="m-1 h-fit w-fit hover:scale-[1.1]"
+                    onClick={handleUserMenuOpen}
+                  >
+                    <Avatar className="bg-teal-700 dark:text-slate-100">R</Avatar>
+                  </IconButton>
+                </Tooltip>
+
+                <Menu
+                  anchorEl={UserAnchorEl}
+                  open={Boolean(UserAnchorEl)}
+                  onClose={handleUserMenuClose}
+                  onClick={handleUserMenuClose}
+                  className="mt-[45px]"
+                >
+                  {UserMenuItems.map((item) => (
+                    <MenuItem key={item.name} href={item.href} LinkComponent={Link}>
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </>
+            ) : (
+              <Button
+                className="my-2 bg-green-700 !py-1 px-4 text-green-50 hover:bg-green-900"
+                component={MotionLink}
+                whileHover={{ scale: 1.1 }}
+                href="/auth/login"
+              >
+                Login
+              </Button>
+            )}
           </Box>
         </Box>
       </Container>
