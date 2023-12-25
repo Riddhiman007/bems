@@ -21,6 +21,8 @@ import MotionDiv from "../Motion/MotionDiv";
 import React, { useEffect, useState } from "react";
 import MotionLink from "../Motion/MotionLink";
 import { useSession } from "next-auth/react";
+import { Divider, Icon } from "@mui/material";
+import { Dashboard, Logout } from "@mui/icons-material";
 interface AppBarItem {
   name: string;
   href: string;
@@ -33,10 +35,9 @@ const AppBarItems: Array<AppBarItem> = [
   { name: "about us", href: "/about" },
 ];
 
-const UserMenuItems: Array<AppBarItem> = [
-  { name: "dashboard", href: "/dashboard" },
-  { name: "my achievements", href: "/myachievements" },
-  { name: "logout", href: "/logout" },
+const UserMenuItems = [
+  { name: "dashboard", href: "/dashboard", icon: <Dashboard /> },
+  { name: "my achievements", href: "/myachievements", icon: <Dashboard /> },
 ];
 const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
   const { theme, setTheme } = useTheme();
@@ -121,13 +122,32 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
                   open={Boolean(UserAnchorEl)}
                   onClose={handleUserMenuClose}
                   onClick={handleUserMenuClose}
-                  className="mt-[45px]"
+                  MenuListProps={{ className: "dark:bg-slate-900" }}
+                  elevation={6}
                 >
                   {UserMenuItems.map((item) => (
-                    <MenuItem key={item.name} href={item.href} LinkComponent={Link}>
-                      {item.name}
+                    <MenuItem
+                      key={item.name}
+                      href={item.href}
+                      LinkComponent={Link}
+                      className="flex flex-row gap-4"
+                    >
+                      <Icon>{item.icon}</Icon>
+                      <Typography>{item.name}</Typography>
                     </MenuItem>
                   ))}
+
+                  <Divider />
+                  <MenuItem
+                    href="/auth/logout"
+                    LinkComponent={Link}
+                    className="flex flex-row gap-4"
+                  >
+                    <Icon>
+                      <Logout />
+                    </Icon>
+                    <Typography>Logout</Typography>
+                  </MenuItem>
                 </Menu>
               </>
             ) : (
