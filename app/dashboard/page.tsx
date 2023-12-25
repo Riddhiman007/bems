@@ -32,7 +32,7 @@ export default async function Dashboard() {
   return (
     <Container
       component="main"
-      className="container mt-24 flex flex-row gap-7 sm:flex-col"
+      className="container mt-24 flex flex-col gap-7 lg:flex-row"
     >
       <Box className="flex w-full flex-col gap-7">
         {/* identity */}
