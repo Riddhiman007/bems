@@ -139,9 +139,9 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
 
                   <Divider />
                   <MenuItem
-                    href="/auth/logout"
                     LinkComponent={Link}
                     className="flex flex-row gap-4"
+                    href="/auth/logout"
                   >
                     <Icon>
                       <Logout />
