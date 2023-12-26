@@ -18,6 +18,7 @@
   width: 20px;
   box-shadow: 23px 19px 0 -4px var(--shadow-color);
   border-radius: 50%;
+  z-index: 0;
 }
 .indicator::after {
   content: "";
@@ -30,8 +31,17 @@
   width: 20px;
   box-shadow: 23px 19px 0 -4px var(--shadow-color);
   border-radius: 50%;
+  z-index: 0;
 }
 
 .indicator svg {
   @apply mt-2;
+}
+
+.speedDial {
+  @apply fixed inset-x-24 bottom-0;
+}
+
+.speedDial > div {
+  @apply !mb-1;
 }

@@ -35,6 +35,7 @@ import {
   Dashboard,
   DashboardOutlined,
   LeaderboardOutlined,
+  LogoutOutlined,
   MoneyOutlined,
 } from "@mui/icons-material";
 
@@ -49,6 +50,7 @@ import MotionBottomNavigationAction from "../Motion/MotionButtonNavigation";
 import MotionLink from "../Motion/MotionLink";
 
 import styles from "./NavigationMobile.module.css";
+import Link from "next/link";
 
 interface NavItem {
   href: string;
@@ -94,6 +96,19 @@ const NavigationMobile = ({
     },
   ];
 
+  const speedDialItems = [
+    {
+      title: "logout",
+      href: "/auth/logout",
+      icon: <LogoutOutlined />,
+    },
+    {
+      title: "my posts",
+      href: "/posts",
+      icon: <ChatBubbleLeftIconOutline className="h-7 w-7" />,
+    },
+    { title: "Dashboard", href: "/dashboard", icon: <DashboardOutlined /> },
+  ];
   return (
     <>
       <AppBar elevation={elevation} className="bg-transparent py-4 lg:py-6">
@@ -123,15 +138,16 @@ const NavigationMobile = ({
         </Container>
       </AppBar>
       {children}
-      <BottomNavigation className="fixed inset-x-0 bottom-0 gap-7 px-7 shadow-md shadow-gray-950 dark:bg-slate-900">
+      <BottomNavigation className="fixed inset-x-0 bottom-0 z-[60] gap-7 px-7 shadow-md shadow-gray-950 dark:bg-slate-900">
         {navItems.map((item) => (
           <BottomNavigationAction
             showLabel={item.href === currentRoute}
             key={item.label}
             id={item.label}
+            TouchRippleProps={{ className: "z-20" }}
             label={item.label}
             LinkComponent={MotionLink}
-            className={`dark:bg-slate-900 ${
+            className={`dark:bg-slate-900  ${
               item.href === currentRoute
                 ? `${styles.indicator} dark:[--shadow-color:#0f172a;]`
                 : ""
@@ -145,32 +161,28 @@ const NavigationMobile = ({
 
       <SpeedDial
         icon={<UserIconOutline className="h-8 w-8 text-green-50" />}
-        className="fixed inset-x-24 bottom-0 z-50"
+        className={styles.speedDial}
         FabProps={{
-          component: "animateMotion",
+          style: { zIndex: 100 },
           className:
-            "h-[4.25rem] w-[4.25rem] -top-9 bg-green-700 hover:bg-green-900 hover:scale-150",
+            "h-[4.25rem] w-[4.25rem] relative bottom-10 bg-green-700 hover:bg-green-900 hover:scale-150 z-50",
         }}
         ariaLabel="user info"
         openIcon={<CloseOutlined />}
       >
-        <SpeedDialAction
-          icon={<DashboardOutlined />}
-          FabProps={{ className: "hover:scale-125 h-15 w-15" }}
-        />
-        <SpeedDialAction
-          icon={<LeaderboardOutlined />}
-          placement="left"
-          FabProps={{ className: "hover:scale-125 h-15 w-15" }}
-        />
-        <SpeedDialAction
-          icon={<ChatBubbleLeftIconOutline className="h-7 w-7" />}
-          FabProps={{ className: "hover:scale-125 h-15 w-15" }}
-        />
-        <SpeedDialAction
-          icon={<MoneyOutlined />}
-          FabProps={{ className: "hover:scale-125 h-15 w-15" }}
-        />
+        {speedDialItems.map((item) => (
+          <SpeedDialAction
+            key={item.title}
+            tooltipTitle={item.title}
+            icon={item.icon}
+            FabProps={{
+              LinkComponent: Link,
+              href: item.href,
+              className:
+                "hover:scale-125 dark:text-slate-50 dark:bg-slate-800 dark:hover:bg-slate-900",
+            }}
+          />
+        ))}
       </SpeedDial>
     </>
   );
