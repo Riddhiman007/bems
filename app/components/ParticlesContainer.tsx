@@ -1,7 +1,7 @@
 "use client";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
-import { loadSlim } from "tsparticles";
+import { loadSlim } from "@tsparticles/slim";
 import { Engine, Container, RecursivePartial, IOptions } from "@tsparticles/engine";
 
 export default function ParticlesContainer() {
