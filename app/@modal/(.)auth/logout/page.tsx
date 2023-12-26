@@ -1,3 +1,4 @@
+import CancelButton from "@/components/CancelButton";
 import LogoutButton from "@/components/LogoutButton";
 import MotionDiv from "@/components/Motion/MotionDiv";
 import { Box, Card, CardContent, Typography } from "@mui/material";
@@ -20,7 +21,8 @@ export default function Logout() {
           </Typography>
         </Box>
         <Typography>Are you sure you want to log out?</Typography>
-        <Box className="flex flex-row justify-end">
+        <Box className="flex flex-row justify-between">
+          <CancelButton />
           <LogoutButton />
         </Box>
       </CardContent>

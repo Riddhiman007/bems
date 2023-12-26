@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { UserIcon } from "@heroicons/react/24/solid";
 import { LoginByEmail, LoginByUsername } from "@/lib/actions/queries";
 import { Email } from "@mui/icons-material";
+import CancelButton from "../CancelButton";
 
 export default function LoginForm({
   isBackButtonEnabled,
@@ -42,22 +43,7 @@ export default function LoginForm({
           isBackButtonEnabled ? "justify-between" : "justify-end"
         }`}
       >
-        {isBackButtonEnabled && (
-          <Button
-            type="button"
-            onClick={() => router.back()}
-            component={MotionButton}
-            initial={{ opacity: 0, y: 400 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            whileHover={{ scale: 1.05 }}
-            variant="outlined"
-            className="rounded-md px-4 py-2 "
-            color="error"
-          >
-            Cancel
-          </Button>
-        )}
+        {isBackButtonEnabled && <CancelButton />}
         <AnimatePresence>
           <Button
             component={MotionButton}
