@@ -1,13 +1,13 @@
 "use client";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
-import { loadFull } from "tsparticles";
+import { loadSlim } from "tsparticles";
 import { Engine, Container, RecursivePartial, IOptions } from "@tsparticles/engine";
 
 export default function ParticlesContainer() {
   const [init, setInit] = useState(false);
   useEffect(
-      () => { initParticlesEngine(async (engine) => { await loadFull(engine); }).then(() => {setInit(true);})},
+      () => { initParticlesEngine(async (engine) => { await loadSlim(engine); }).then(() => {setInit(true);})},
     [],
   );
 
