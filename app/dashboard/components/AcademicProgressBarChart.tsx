@@ -1,11 +1,26 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 
 // charts
 import BarChart from "@/components/Charts/BarChart";
 
-import { axisClasses } from "@/components/Charts";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
 
+import { axisClasses } from "@/components/Charts";
+import { IsMobileContext } from "@/contexts/IsMobileContext";
+
+const examDataset = [
+  {
+    exam_type: "IInd SA",
+    percentage: 97,
+  },
+  { exam_type: "IInd FA", percentage: 93 },
+  { exam_type: "Ist SA", percentage: 90 },
+  { exam_type: "Ist FA", percentage: 96 },
+];
 const dataset = [
   {
     exam_type: "Ist FA",
@@ -46,55 +61,75 @@ const dataset = [
 ];
 
 export default function AcademicProgressBarChart() {
+  const isMobile = useContext(IsMobileContext);
   return (
-    <BarChart
-      dataset={dataset}
-      xAxis={[{ scaleType: "band", dataKey: "exam_type" }]}
-      series={[
-        {
-          dataKey: "mathematics",
-          label: "Mathematics",
-          valueFormatter: (value) => value + "%",
-        },
-        {
-          dataKey: "science",
-          label: "Science",
-          valueFormatter: (value) => value + "%",
-        },
-        {
-          dataKey: "sst",
-          label: "SST",
-          valueFormatter: (value) => value + "%",
-        },
-        {
-          dataKey: "english",
-          label: "English",
-          valueFormatter: (value) => value + "%",
-        },
-        {
-          dataKey: "hindi",
-          label: "Hindi",
-          valueFormatter: (value) => value + "%",
-        },
-        {
-          dataKey: "computer",
-          label: "computer",
-          valueFormatter: (value) => value + "%",
-        },
-      ]}
-      yAxis={[
-        {
-          label: "percentage (mm)",
-          max: 100,
-        },
-      ]}
-      width={500}
-      height={300}
-      // sx={{
-      //   [`.${axisClasses.left} .${axisClasses.label}`]: {
-      //     transform: "translate(-20px, 0)",
-      //   },
-      // }}
-    />
+    <>
+      <Card className="shadow-xl shadow-gray-400 dark:bg-slate-950 dark:shadow dark:shadow-black">
+        <CardContent>
+          <Box className="flex flex-row justify-center">
+            <BarChart
+              dataset={isMobile ? examDataset : dataset}
+              xAxis={
+                !isMobile ? [{ scaleType: "band", dataKey: "exam_type" }] : undefined
+              }
+              layout={isMobile ? "horizontal" : "vertical"}
+              series={
+                isMobile
+                  ? [{ dataKey: "percentage", valueFormatter: (value) => value + "%" }]
+                  : [
+                      {
+                        dataKey: "mathematics",
+                        label: "Mathematics",
+                        valueFormatter: (value) => value + "%",
+                      },
+                      {
+                        dataKey: "science",
+                        label: "Science",
+                        valueFormatter: (value) => value + "%",
+                      },
+                      {
+                        dataKey: "sst",
+                        label: "SST",
+                        valueFormatter: (value) => value + "%",
+                      },
+                      {
+                        dataKey: "english",
+                        label: "English",
+                        valueFormatter: (value) => value + "%",
+                      },
+                      {
+                        dataKey: "hindi",
+                        label: "Hindi",
+                        valueFormatter: (value) => value + "%",
+                      },
+                      {
+                        dataKey: "computer",
+                        label: "computer",
+                        valueFormatter: (value) => value + "%",
+                      },
+                    ]
+              }
+              yAxis={[
+                {
+                  label: !isMobile ? "percentage (mm)" : undefined,
+                  max: 100,
+                  scaleType: isMobile ? "band" : undefined,
+                  dataKey: isMobile ? "exam_type" : undefined,
+                },
+              ]}
+              height={isMobile ? 200 : 400}
+              width={isMobile ? 400 : undefined}
+            />
+          </Box>
+        </CardContent>
+      </Card>
+      {isMobile && (
+        <Card className="shadow-xl shadow-gray-400 dark:bg-slate-950 dark:shadow dark:shadow-black">
+          <CardContent>
+            <Box className="flex flex-row justify-center"></Box>
+          </CardContent>
+        </Card>
+      )}
+    </>
   );
 }

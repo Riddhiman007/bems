@@ -56,13 +56,7 @@ export default async function Dashboard() {
           </CardContent>
         </Card>
 
-        <Card className="shadow-xl shadow-gray-400 dark:bg-slate-950 dark:shadow dark:shadow-black">
-          <CardContent>
-            <Box>
-              <AcademicProgressBarChart />
-            </Box>
-          </CardContent>
-        </Card>
+        <AcademicProgressBarChart />
       </Box>
 
       <Box className="w-2/5">

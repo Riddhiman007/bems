@@ -5,6 +5,7 @@ import Image from "next/image";
 import MotionDiv from "./components/Motion/MotionDiv";
 import SchoolImage from "./20231212_133837.png";
 import ExplosionImage from "./components/ExplosionImage";
+import ParticlesContainer from "./components/ParticlesContainer";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
         fill
       />
       <ExplosionImage />
+      <ParticlesContainer />
       <Box
         component="main"
         className="absolute inset-0 flex flex-row bg-red-700/90 bg-none dark:bg-gradient-to-b dark:from-blue-950 dark:to-slate-950"
