@@ -1,6 +1,10 @@
 import MotionDiv from "@/components/Motion/MotionDiv";
 import AnimatePresence from "@/components/Motion/AnimatePresence";
-import { Box, Card, CardContent, TextField, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+
 import Button from "@mui/material/Button";
 import React from "react";
 import MotionButton from "@/components/Motion/MotionButton";
