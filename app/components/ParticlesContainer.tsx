@@ -23,7 +23,7 @@ export default function ParticlesContainer() {
       fps_limit: 120,
       interactivity: {
         events: {
-          onClick: { enable: true, mode: "push" },
+          onClick: { enable: false, mode: "push" },
           onHover: {
             enable: true,
             mode: "repulse",
