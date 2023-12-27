@@ -29,6 +29,7 @@ import {
   UserCircleIcon as UserCircleIconOutline,
   UserIcon as UserIconOutline,
   ChatBubbleLeftIcon as ChatBubbleLeftIconOutline,
+  BellIcon as BellIconOutline,
 } from "@heroicons/react/24/outline";
 import {
   CloseOutlined,
@@ -101,13 +102,20 @@ const NavigationMobile = ({
       title: "logout",
       href: "/auth/logout",
       icon: <LogoutOutlined />,
+      idx: "[--i:1]",
     },
     {
       title: "my posts",
       href: "/posts",
       icon: <ChatBubbleLeftIconOutline className="h-7 w-7" />,
+      idx: "[--i:2]",
     },
-    { title: "Dashboard", href: "/dashboard", icon: <DashboardOutlined /> },
+    {
+      title: "Dashboard",
+      href: "/dashboard",
+      icon: <DashboardOutlined />,
+      idx: "[--i:3]",
+    },
   ];
   return (
     <>
@@ -132,7 +140,10 @@ const NavigationMobile = ({
               )}
             </IconButton>
             <IconButton>
-              <UserIcon className="h-7 w-7 dark:text-slate-50" />
+              <BellIconOutline
+                aria-label="notifications"
+                className="h-7 w-7 dark:text-slate-50"
+              />
             </IconButton>
           </Box>
         </Container>
@@ -179,7 +190,8 @@ const NavigationMobile = ({
               LinkComponent: Link,
               href: item.href,
               className:
-                "hover:scale-125 dark:text-slate-50 dark:bg-slate-800 dark:hover:bg-slate-900",
+                "hover:scale-125 dark:text-slate-50 dark:bg-slate-800 dark:hover:bg-slate-900 " +
+                item.idx,
             }}
           />
         ))}

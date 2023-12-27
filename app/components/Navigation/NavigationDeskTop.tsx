@@ -119,17 +119,19 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
 
                 <Menu
                   anchorEl={UserAnchorEl}
+                  component="div"
                   open={Boolean(UserAnchorEl)}
                   onClose={handleUserMenuClose}
                   onClick={handleUserMenuClose}
-                  MenuListProps={{ className: "dark:bg-slate-900" }}
+                  MenuListProps={{ component: "div", className: "dark:bg-slate-900" }}
                   elevation={6}
                 >
                   {UserMenuItems.map((item) => (
                     <MenuItem
                       key={item.name}
+                      component={Link}
+                      // LinkComponent={Link}
                       href={item.href}
-                      LinkComponent={Link}
                       className="flex flex-row gap-4"
                     >
                       <Icon>{item.icon}</Icon>

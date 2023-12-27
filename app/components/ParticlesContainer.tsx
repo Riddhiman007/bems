@@ -1,15 +1,21 @@
 "use client";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
-import { loadFull } from "tsparticles";
+import { loadSlim } from "@tsparticles/slim";
 import { Engine, Container, RecursivePartial, IOptions } from "@tsparticles/engine";
+import { IsMobileContext } from "@/contexts/IsMobileContext";
 
 export default function ParticlesContainer() {
   const [init, setInit] = useState(false);
-  useEffect(
-      () => { initParticlesEngine(async (engine) => { await loadFull(engine); }).then(() => {setInit(true);})},
-    [],
-  );
+  const isMobile = useContext(IsMobileContext);
+
+  useEffect(() => {
+    initParticlesEngine(async (engine) => {
+      await loadSlim(engine);
+    }).then(() => {
+      setInit(true);
+    });
+  }, []);
 
   const particlesLoaded = useCallback(
     async (container?: Container) => console.log(container),
@@ -23,7 +29,7 @@ export default function ParticlesContainer() {
       fps_limit: 120,
       interactivity: {
         events: {
-          onClick: { enable: true, mode: "push" },
+          onClick: { enable: !isMobile, mode: "push" },
           onHover: {
             enable: true,
             mode: "repulse",
@@ -32,7 +38,7 @@ export default function ParticlesContainer() {
         },
         modes: {
           push: { quantity: 90 },
-          repulse: { distance: 200, duration: 0.4 },
+          repulse: { distance: 100, duration: 0.4 },
         },
       },
       particles: {
@@ -71,7 +77,7 @@ export default function ParticlesContainer() {
       },
       detectRetina: true,
     }),
-    [],
+    [isMobile],
   );
 
   if (init) {

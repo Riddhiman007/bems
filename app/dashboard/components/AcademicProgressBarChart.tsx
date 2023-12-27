@@ -70,7 +70,9 @@ export default function AcademicProgressBarChart() {
             <BarChart
               dataset={isMobile ? examDataset : dataset}
               xAxis={
-                !isMobile ? [{ scaleType: "band", dataKey: "exam_type" }] : undefined
+                !isMobile
+                  ? [{ scaleType: "band", dataKey: "exam_type", axisId: "exam_type" }]
+                  : undefined
               }
               layout={isMobile ? "horizontal" : "vertical"}
               series={
