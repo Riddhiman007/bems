@@ -7,6 +7,7 @@ import { IsMobileContext } from "@/contexts/IsMobileContext";
 
 export default function ParticlesContainer() {
   const [init, setInit] = useState(false);
+<<<<<<< HEAD
   const isMobile = useContext(IsMobileContext);
 
   useEffect(() => {
@@ -16,6 +17,12 @@ export default function ParticlesContainer() {
       setInit(true);
     });
   }, []);
+=======
+  useEffect(
+      () => { initParticlesEngine(async (engine) => { await loadSlim(engine); }).then(() => {setInit(true);})},
+    [],
+  );
+>>>>>>> 8191fa83fdd43c745f37ce72f720ef7cd3ddd062
 
   const particlesLoaded = useCallback(
     async (container?: Container) => console.log(container),
@@ -29,7 +36,11 @@ export default function ParticlesContainer() {
       fps_limit: 120,
       interactivity: {
         events: {
+<<<<<<< HEAD
           onClick: { enable: !isMobile, mode: "push" },
+=======
+          onClick: { enable: false, mode: "push" },
+>>>>>>> 8191fa83fdd43c745f37ce72f720ef7cd3ddd062
           onHover: {
             enable: true,
             mode: "repulse",
