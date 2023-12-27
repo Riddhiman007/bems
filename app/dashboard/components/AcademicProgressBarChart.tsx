@@ -2,7 +2,7 @@
 import React, { useContext } from "react";
 
 // charts
-import BarChart from "@/components/Charts/BarChart";
+import { BarChart, BarElement } from "@mui/x-charts/BarChart";
 
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 
 import { axisClasses } from "@/components/Charts";
 import { IsMobileContext } from "@/contexts/IsMobileContext";
+import { ChartsLegend } from "@mui/x-charts/ChartsLegend";
 
 const examDataset = [
   {
@@ -66,60 +67,69 @@ export default function AcademicProgressBarChart() {
     <>
       <Card className="shadow-xl shadow-gray-400 dark:bg-slate-950 dark:shadow dark:shadow-black">
         <CardContent>
-          <Box className="flex flex-row justify-center">
+          <Box className="flex flex-row justify-center overflow-y-auto">
             <BarChart
-              dataset={isMobile ? examDataset : dataset}
+              dataset={dataset}
               xAxis={
                 !isMobile
-                  ? [{ scaleType: "band", dataKey: "exam_type", axisId: "exam_type" }]
+                  ? [{ scaleType: "band", dataKey: "exam_type", id: "exam_type" }]
                   : undefined
               }
               layout={isMobile ? "horizontal" : "vertical"}
-              series={
-                isMobile
-                  ? [{ dataKey: "percentage", valueFormatter: (value) => value + "%" }]
-                  : [
-                      {
-                        dataKey: "mathematics",
-                        label: "Mathematics",
-                        valueFormatter: (value) => value + "%",
-                      },
-                      {
-                        dataKey: "science",
-                        label: "Science",
-                        valueFormatter: (value) => value + "%",
-                      },
-                      {
-                        dataKey: "sst",
-                        label: "SST",
-                        valueFormatter: (value) => value + "%",
-                      },
-                      {
-                        dataKey: "english",
-                        label: "English",
-                        valueFormatter: (value) => value + "%",
-                      },
-                      {
-                        dataKey: "hindi",
-                        label: "Hindi",
-                        valueFormatter: (value) => value + "%",
-                      },
-                      {
-                        dataKey: "computer",
-                        label: "computer",
-                        valueFormatter: (value) => value + "%",
-                      },
-                    ]
-              }
+              series={[
+                {
+                  dataKey: "mathematics",
+                  label: "Mathematics",
+                  valueFormatter: (value) => value + "%",
+                },
+                {
+                  dataKey: "science",
+                  label: "Science",
+                  valueFormatter: (value) => value + "%",
+                },
+                {
+                  dataKey: "sst",
+                  label: "SST",
+                  valueFormatter: (value) => value + "%",
+                },
+                {
+                  dataKey: "english",
+                  label: "English",
+                  valueFormatter: (value) => value + "%",
+                },
+                {
+                  dataKey: "hindi",
+                  label: "Hindi",
+                  valueFormatter: (value) => value + "%",
+                },
+                {
+                  dataKey: "computer",
+                  label: "computer",
+                  valueFormatter: (value) => value + "%",
+                },
+              ]}
               yAxis={[
                 {
                   label: !isMobile ? "percentage (mm)" : undefined,
                   max: 100,
                   scaleType: isMobile ? "band" : undefined,
                   dataKey: isMobile ? "exam_type" : undefined,
+                  id: "exam_type",
                 },
               ]}
-              height={isMobile ? 200 : 400}
+              height={400}
+              slotProps={{
+                legend: {
+                  drawingArea: {
+                    height: 600,
+                    width: isMobile ? 400 : 600,
+                    bottom: 400,
+                    top: 400,
+                    left: 0,
+                    right: 0,
+                  },
+                },
+              }}
               width={isMobile ? 400 : undefined}
             />
           </Box>
