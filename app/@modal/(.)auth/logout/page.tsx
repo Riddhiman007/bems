@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 
 import AnimatePresence from "@/components/Motion/AnimatePresence";
 import React from "react";
+import CardBackgroundForLightMode from "@/components/CardBackgroundForLightMode";
 
 export default function Logout() {
   return (
@@ -20,9 +21,10 @@ export default function Logout() {
         exit={{ opacity: 0, y: -400 }}
         className="m-auto mt-40 w-96 rounded-md shadow-2xl shadow-neutral-950 dark:bg-slate-900"
       >
-        <CardContent className="m-4 flex flex-col gap-4 ">
+        <CardBackgroundForLightMode />
+        <CardContent className="relative z-10 m-4 flex flex-col gap-4 ">
           {/* title */}
-          <Box>
+          <Box className="">
             <Typography variant="h4" className="text-3xl" component="h3">
               Log out
             </Typography>

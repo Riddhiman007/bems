@@ -2,3 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 /* @tailwind variants; */
+
+@layer components {
+  @keyframes pink-background-slide {
+    50% {
+      transform: translate(-30px, -10px);
+    }
+  }
+  @keyframes blue-background-slide {
+    50% {
+      transform: translate(30px, -10px);
+    }
+  }
+  @keyframes yellow-background-slide {
+    50% {
+      transform: translate(0, 20px);
+    }
+  }
+  .animate-pink-background-slide {
+    animation: pink-background-slide 3s infinite both normal;
+  }
+  .animate-blue-background-slide {
+    animation: blue-background-slide 3s infinite both normal;
+  }
+  .animate-yellow-background-slide {
+    animation: yellow-background-slide 3s infinite both normal;
+  }
+}

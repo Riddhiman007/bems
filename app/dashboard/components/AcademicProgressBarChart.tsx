@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import { axisClasses } from "@/components/Charts";
 import { IsMobileContext } from "@/contexts/IsMobileContext";
 import { ChartsLegend } from "@mui/x-charts/ChartsLegend";
+import CardBackgroundForLightMode from "@/components/CardBackgroundForLightMode";
 
 const examDataset = [
   {
@@ -66,6 +67,7 @@ export default function AcademicProgressBarChart() {
   return (
     <>
       <Card className="shadow-xl shadow-gray-400 dark:bg-slate-950 dark:shadow dark:shadow-black">
+        <CardBackgroundForLightMode/>
         <CardContent>
           <Box className="flex flex-row justify-center overflow-y-auto">
             <BarChart
