@@ -67,7 +67,7 @@ export default function AcademicProgressBarChart() {
   return (
     <>
       <Card className="shadow-xl shadow-gray-400 dark:bg-slate-950 dark:shadow dark:shadow-black">
-        <CardBackgroundForLightMode/>
+        <CardBackgroundForLightMode />
         <CardContent>
           <Box className="flex flex-row justify-center overflow-y-auto">
             <BarChart
@@ -83,36 +83,42 @@ export default function AcademicProgressBarChart() {
                   dataKey: "mathematics",
                   label: "Mathematics",
                   valueFormatter: (value) => value + "%",
+                  highlightScope: { faded: "global", highlighted: "item" },
                 },
                 {
                   dataKey: "science",
                   label: "Science",
                   valueFormatter: (value) => value + "%",
+                  highlightScope: { faded: "global", highlighted: "item" },
                 },
                 {
                   dataKey: "sst",
                   label: "SST",
                   valueFormatter: (value) => value + "%",
+                  highlightScope: { faded: "global", highlighted: "item" },
                 },
                 {
                   dataKey: "english",
                   label: "English",
                   valueFormatter: (value) => value + "%",
+                  highlightScope: { faded: "global", highlighted: "item" },
                 },
                 {
                   dataKey: "hindi",
                   label: "Hindi",
                   valueFormatter: (value) => value + "%",
+                  highlightScope: { faded: "global", highlighted: "item" },
                 },
                 {
                   dataKey: "computer",
-                  label: "computer",
+                  label: "Computer",
                   valueFormatter: (value) => value + "%",
+                  highlightScope: { faded: "global", highlighted: "item" },
                 },
               ]}
               yAxis={[
                 {
-                  label: !isMobile ? "percentage (mm)" : undefined,
+                  label: !isMobile ? "percentage" : undefined,
                   max: 100,
                   scaleType: isMobile ? "band" : undefined,
                   dataKey: isMobile ? "exam_type" : undefined,
@@ -132,7 +138,7 @@ export default function AcademicProgressBarChart() {
                   },
                 },
               }}
-              width={isMobile ? 400 : undefined}
+              width={isMobile ? 400 : 600}
             />
           </Box>
         </CardContent>

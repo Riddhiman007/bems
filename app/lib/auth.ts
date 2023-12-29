@@ -1,10 +1,8 @@
 import NextAuth from "next-auth";
 import EmailProvider from "@auth/core/providers/email";
-import GoogleProvider from "@auth/core/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import prisma from "./prisma";
 
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
 export const { handlers, auth, signIn, signOut, update } = NextAuth({
   providers: [
     EmailProvider({

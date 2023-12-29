@@ -14,6 +14,7 @@ import {
 // styles
 import React from "react";
 import AcademicProgressBarChart from "./components/AcademicProgressBarChart";
+import InstallMentsCharts from "./components/InstallmentsCharts";
 
 // datasets
 interface AcademicProgressDataset {
@@ -32,9 +33,9 @@ export default async function Dashboard() {
   return (
     <Container
       component="main"
-      className="container mt-24 flex flex-col gap-7 lg:flex-row"
+      className="container mt-24 flex flex-col justify-center gap-7 lg:flex-row"
     >
-      <Box className="flex w-full flex-col gap-7">
+      <Box className="flex flex-col gap-7 ">
         {/* identity */}
         <Card className="flex flex-row rounded-md px-4 shadow-xl shadow-gray-400 dark:bg-slate-950 dark:shadow dark:shadow-black">
           <CardMedia className=" h-full">
@@ -61,7 +62,9 @@ export default async function Dashboard() {
 
       <Box className="w-2/5">
         <Card className="h-full w-full shadow-xl shadow-gray-400 dark:bg-slate-950 dark:shadow dark:shadow-black">
-          <CardContent>Installments</CardContent>
+          <CardContent>
+            <InstallMentsCharts />
+          </CardContent>
         </Card>
       </Box>
     </Container>

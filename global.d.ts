@@ -1,3 +1,5 @@
+import { User } from "@prisma/client";
+
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
@@ -15,5 +17,11 @@ declare module "@mui/material/styles" {
     lg: true;
     xl: true;
     xxl: true;
+  }
+}
+
+declare module "@auth/core" {
+  interface Session {
+    user: User;
   }
 }

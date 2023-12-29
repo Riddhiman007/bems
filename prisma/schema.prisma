@@ -1,6 +1,7 @@
 datasource db {
   provider = "mongodb"
-  url      = env("MONGODB_URI")
+
+  url = env("MONGODB_URI")
 }
 
 generator client {
@@ -13,8 +14,8 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? // @db.Text
-  access_token      String? // @db.Text
+  refresh_token     String? //@db.Text
+  access_token      String? //@db.Text
   expires_at        Int?
   token_type        String?
   scope             String?
@@ -24,6 +25,7 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@map("accounts")
 }
 
 model Session {
@@ -41,15 +43,19 @@ model User {
   firstname     String // @db.Text
   middlename    String?
   lastname      String
-  email         String    @unique
+  email         String
   emailVerified DateTime?
   role          String
   image         String?
-  username      String    @unique
+  username      String
+  student       Student?
+  teacher       Teacher?
   posts         Post[]
   accounts      Account[]
   sessions      Session[]
+  teacherId     String?   @db.ObjectId
 
+  @@unique([email, username])
   @@map("users")
 }
 
@@ -65,32 +71,43 @@ model VerificationToken {
 
 model Grade {
   id            String  @id @default(auto()) @map("_id") @db.ObjectId
-  name          String
+  grade         String  @unique
   class_teacher Teacher @relation(fields: [teacher_name], references: [username], onDelete: NoAction)
   teacher_name  String  @unique
 
   students Student[]
+
+  @@map("grades")
 }
 
 model Teacher {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
   name     String
   username String @unique
+  email    String
   class    Grade?
+  User     User   @relation(fields: [username, email], references: [username, email], onDelete: Cascade)
+
+  @@unique([username, email])
+  @@map("teachers")
 }
 
 model Student {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
   firstname   String
-  middlename  String
+  middlename  String?
   lastname    String
-  username    String @unique
+  username    String
   father_name String
   mother_name String
   caste       String
+  email       String
+  grade       Grade   @relation(fields: [grade_name], references: [grade], onDelete: NoAction)
+  grade_name  String  @unique
+  user        User    @relation(fields: [username, email], references: [username, email], onDelete: Cascade)
 
-  grade      Grade  @relation(fields: [grade_name], references: [id], onDelete: NoAction)
-  grade_name String @unique @db.ObjectId
+  @@unique([username, email])
+  @@map("students")
 }
 
 model Post {
@@ -100,4 +117,6 @@ model Post {
   content     String
   author      User   @relation(fields: [author_id], references: [id], onDelete: NoAction)
   author_id   String @db.ObjectId
+
+  @@map("posts")
 }

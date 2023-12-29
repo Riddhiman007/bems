@@ -4,18 +4,18 @@
 
 @media (min-width: 600px) {
   .main {
-    grid-template-areas: "identity installments";
-    grid-template-columns: 60%;
+    grid-template-areas: "identity installments" "academic installments";
+    grid-template-columns: 60% auto;
   }
 }
 
 .main:nth-child(1) {
-  grid-area: "identity";
+  grid-area: identity;
 }
 .main:nth-child(2) {
-  grid-area: "installments";
-  grid-column:;
+  grid-area: installments;
+  grid-row: 1/3;
 }
 .main:nth-child(3) {
-  grid-area: "academic";
+  grid-area: academic;
 }
