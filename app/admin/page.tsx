@@ -6,7 +6,7 @@ export default function Admin() {
   return (
     <Container className="mt-24">
       <Card className="dark:bg-slate-900">
-        <CardContent>
+        <CardContent className="overflow-x-auto">
           <StudentDataGrid />
         </CardContent>
       </Card>
