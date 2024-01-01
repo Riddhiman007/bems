@@ -1,7 +1,9 @@
-import React from "react";
+import React, { lazy } from "react";
 
 import { Container, Card, CardContent } from "@mui/material";
-import StudentDataGrid from "./components/StudentDataGrid";
+// import dynamic from "next/dynamic";
+
+const StudentDataGrid = lazy(() => import("./components/StudentDataGrid"));
 export default function Admin() {
   return (
     <Container className="mt-24">

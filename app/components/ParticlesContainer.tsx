@@ -49,6 +49,7 @@ export default function ParticlesContainer() {
           push: { quantity: 90 },
           repulse: { distance: 100, duration: 0.4 },
         },
+        detectsOn: "parent",
       },
       particles: {
         color: { value: "#fff" },
@@ -95,9 +96,10 @@ export default function ParticlesContainer() {
         id="tsparticles"
         //   init={particlesInit}
         //   loaded={particlesLoaded}
+
         particlesLoaded={particlesLoaded}
         options={options}
-        className="absolute inset-y-0 right-10 z-10"
+        className="absolute inset-y-0 right-10 z-20"
       />
     );
   }

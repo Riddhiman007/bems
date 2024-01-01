@@ -8,6 +8,14 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator zod {
+  provider         = "npx zod-prisma-types"
+  output           = "../app/lib/prisma/schemas"
+  useMultipleFiles = true
+  writeBarrelFiles = true
+  createInputTypes = true
+}
+
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
   userId            String  @db.ObjectId
@@ -40,14 +48,13 @@ model Session {
 
 model User {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  firstname     String // @db.Text
-  middlename    String?
-  lastname      String
+  fullname      String
   email         String
   emailVerified DateTime?
-  role          String
+  role          Role      @default(Student)
   image         String?
   username      String
+  address       String
   student       Student?
   teacher       Teacher?
   posts         Post[]
@@ -70,10 +77,10 @@ model VerificationToken {
 }
 
 model Grade {
-  id            String  @id @default(auto()) @map("_id") @db.ObjectId
-  grade         String  @unique
-  class_teacher Teacher @relation(fields: [teacher_name], references: [username], onDelete: NoAction)
-  teacher_name  String  @unique
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  grade         GradeType @unique
+  class_teacher Teacher   @relation(fields: [teacher_name], references: [username], onDelete: NoAction)
+  teacher_name  String    @unique
 
   students Student[]
 
@@ -93,18 +100,19 @@ model Teacher {
 }
 
 model Student {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  firstname   String
-  middlename  String?
-  lastname    String
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  fullname    String
   username    String
   father_name String
   mother_name String
+  contact     Int
   caste       String
+  address     String
+  gender      Gender    @default(Male)
   email       String
-  grade       Grade   @relation(fields: [grade_name], references: [grade], onDelete: NoAction)
-  grade_name  String  @unique
-  user        User    @relation(fields: [username, email], references: [username, email], onDelete: Cascade)
+  grade       Grade     @relation(fields: [grade_name], references: [grade], onDelete: NoAction)
+  grade_name  GradeType @unique
+  user        User      @relation(fields: [username, email], references: [username, email], onDelete: Cascade)
 
   @@unique([username, email])
   @@map("students")
@@ -119,4 +127,31 @@ model Post {
   author_id   String @db.ObjectId
 
   @@map("posts")
+}
+
+enum Role {
+  Student
+  Teacher
+  Admin
+}
+
+enum GradeType {
+  nursery
+  jr
+  sr
+  I
+  II
+  III
+  IV
+  V
+  VI
+  VII
+  VIII
+  IX
+  X
+}
+
+enum Gender {
+  Male
+  Female
 }

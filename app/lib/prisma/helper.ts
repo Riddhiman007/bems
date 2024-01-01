@@ -15,8 +15,8 @@ export type Grade =
 
 export const allGrades = [
   "nursery",
-  "jr. kg",
-  "sr. kg",
+  "jr",
+  "sr",
   "I",
   "II",
   "III",

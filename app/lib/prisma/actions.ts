@@ -1,48 +1,62 @@
 "use server";
 
-import { Student } from "@prisma/client";
+import { Role } from "@prisma/client";
+// import { Student } from "@prisma/client";
 import prisma from ".";
 import { Grade } from "./helper";
+import { Student } from "./schemas";
 
-export interface StudentInterface {
-  firstname: string;
-  middlename?: string;
-
-  lastname: string;
-  username: string;
-  email: string;
-  father_name: string;
-  mother_name: string;
-  caste: string;
-  grade: Grade;
-}
 export async function createNewStudent({
-  firstname,
-  middlename,
-  lastname,
+  fullname,
   username,
   email,
   father_name,
   mother_name,
+  address,
+  contact,
+  gender,
   caste,
-  grade,
-}: StudentInterface): Promise<Student> {
-  let user = await prisma.user.create({
-    data: { firstname, username, email, lastname, middlename, role: "student" },
-  });
+  grade_name,
+}: Student): Promise<Student> {
+  console.log(
+    "before push " +
+      JSON.stringify(
+        {
+          fullname,
+          username,
+          email,
+          father_name,
+          mother_name,
+          address,
+          contact,
+          gender,
+          caste,
+          grade_name,
+        },
+        null,
+        2,
+      ),
+  );
   let student = await prisma.student.create({
+    include: {
+      grade: true,
+      user: true,
+    },
     data: {
-      firstname,
-      middlename,
-      lastname,
-      username,
+      address,
+      contact,
       caste,
+
       father_name,
       mother_name,
-      grade_name: grade,
-      email: user.email,
+      fullname,
+      gender,
+      grade_name,
+      email,
+      username,
     },
   });
+  console.log(student);
   return student;
 }
 

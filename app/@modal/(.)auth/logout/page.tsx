@@ -12,8 +12,9 @@ import CardBackgroundForLightMode from "@/components/CardBackgroundForLightMode"
 
 export default function Logout() {
   return (
-    <AnimatePresence key="logout">
+    <AnimatePresence>
       <Card
+        key="logout"
         component={MotionDiv}
         initial={{ opacity: 0, y: -400 }}
         animate={{ opacity: 1, y: 0 }}
