@@ -15,6 +15,7 @@ async function setupDb() {
               address: "Nashik",
               email: "123@gmail.com",
               username: "Abc123!",
+              role: "Teacher"
             },
           },
         },
@@ -31,6 +32,7 @@ async function setupDb() {
               address: "Nashik",
               email: "abc@gmail.com",
               username: "123Abc!",
+              role: "Teacher"
             },
           },
         },
@@ -47,6 +49,7 @@ async function setupDb() {
               address: "Nashik",
               email: "unati@gmail.com",
               username: "Unati123!",
+              role: "Teacher"
             },
           },
         },
@@ -63,6 +66,7 @@ async function setupDb() {
               address: "Nashik",
               email: "prajakta@gmail.com",
               username: "Prajakta123!",
+              role: "Teacher"
             },
           },
         },
@@ -79,6 +83,7 @@ async function setupDb() {
               address: "Nashik",
               email: "KK@gmail.com",
               username: "KK123!",
+              role: "Teacher"
             },
           },
         },
@@ -95,6 +100,7 @@ async function setupDb() {
               address: "Nashik",
               email: "neha@gmail.com",
               username: "neha123!",
+              role: "Teacher"
             },
           },
         },
@@ -111,6 +117,7 @@ async function setupDb() {
               address: "Nashik",
               email: "kavita@gmail.com",
               username: "Kavita123!",
+              role: "Teacher"
             },
           },
         },
@@ -127,6 +134,7 @@ async function setupDb() {
               address: "Moh, Chincholi phata",
               email: "aparnachoudhary229@gmail.com",
               username: "Aparna123!",
+              role: "Teacher"
             },
           },
         },
@@ -143,6 +151,7 @@ async function setupDb() {
               address: "Nashik",
               email: "sunita@gmail.com",
               username: "sunita123!",
+              role: "Teacher"
             },
           },
         },
@@ -159,6 +168,7 @@ async function setupDb() {
               address: "Moh, Chincholi Phata",
               email: "rudranarayanchoudhary311@gmail.com",
               username: "Rudra123!",
+              role: "Teacher"
             },
           },
         },
