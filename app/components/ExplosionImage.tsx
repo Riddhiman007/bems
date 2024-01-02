@@ -4,6 +4,7 @@ import React from "react";
 
 import Explosion from "@/explosion.png";
 import { useTheme } from "next-themes";
+import {IsMobileContext} from "@/contexts/IsMobileContext"
 
 export default function ExplosionImage() {
   const { theme } = useTheme();
