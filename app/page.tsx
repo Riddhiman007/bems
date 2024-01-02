@@ -57,7 +57,7 @@ export default function Home() {
           </Container>
         </Box>
 
-        <Container className="flex flex-col gap-7 pl-0">
+        <Container className="mt-20 md:mt-0 flex flex-col gap-7 pl-0">
           <MotionDiv
             initial={{ opacity: 0, y: 200 }}
             whileInView={{ opacity: 1, y: 0 }}
