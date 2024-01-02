@@ -8,13 +8,13 @@ generator client {
   provider = "prisma-client-js"
 }
 
-generator zod {
-  provider         = "npx zod-prisma-types"
-  output           = "../app/lib/prisma/schemas"
-  useMultipleFiles = true
-  writeBarrelFiles = true
-  createInputTypes = true
-}
+// generator zod {
+//  provider         = "npx zod-prisma-types"
+//  output           = "../app/lib/prisma/schemas"
+//  useMultipleFiles = true
+//  writeBarrelFiles = true
+//  createInputTypes = true
+//}
 
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
