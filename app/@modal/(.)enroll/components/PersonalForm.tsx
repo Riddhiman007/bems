@@ -105,14 +105,13 @@ export default function PersonalForm() {
           name="grade_name"
           render={({ field: { ref, ...remainingProps } }) => (
             <>
-              <Select
+              <TextField 
+                select
                 variant="standard"
                 inputRef={ref}
                 fullWidth
                 label="Grade"
-                inputProps={{
-                  placeholder: "Please enter your grade",
-                }}
+                placeholder="Please enter your grade"
                 MenuProps={{
                   className: "w-fit dark:bg-slate-900",
                 }}
@@ -127,7 +126,7 @@ export default function PersonalForm() {
                     {grade}
                   </MenuItem>
                 ))}
-              </Select>
+              </TextField>
             </>
           )}
         />
@@ -136,8 +135,10 @@ export default function PersonalForm() {
           name="gender"
           render={({ field: { ref, ...remainingProps } }) => (
             <>
-              <Select
+              <TextField
+                select
                 variant="standard"
+                label="Gender"
                 inputRef={ref}
                 fullWidth
                 placeholder="Please enter your gender"
@@ -155,7 +156,7 @@ export default function PersonalForm() {
                     {gender}
                   </MenuItem>
                 ))}
-              </Select>
+              </TextField>
             </>
           )}
         />
