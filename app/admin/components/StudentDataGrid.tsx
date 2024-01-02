@@ -159,7 +159,7 @@ export default function StudentDataGrid() {
     (id: GridRowId) => {
       setRows(rows.filter((row) => row.id !== id));
     },
-    [rowModesModel, rows],
+    [rows],
   );
 
   const handleCancelClick = useCallback(
