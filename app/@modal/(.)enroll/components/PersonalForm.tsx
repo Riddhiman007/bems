@@ -42,7 +42,7 @@ export default function PersonalForm() {
             inputRef={ref}
             variant="standard"
             label="Contact No"
-            type="tel"
+            type="number"
             fullWidth
             placeholder="Please enter your contact number"
             InputProps={{

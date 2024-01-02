@@ -18,7 +18,7 @@ import Done from "./Done";
 import { Student, StudentSchema } from "@/lib/prisma/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createNewStudent } from "@/lib/prisma/actions";
-
+import { z } from "zod";
 const steps = [
   { label: "Personal details", component: <PersonalForm /> },
   { label: "Parental details", component: <ParentalForm /> },
@@ -35,10 +35,15 @@ export default function EnrollComponent() {
 
   const totalSteps = steps.length;
   const isFirstStep = activeStep === 0;
+  const isLastStep = activeStep === totalSteps - 2;
   const allStepsCompleted = activeStep === totalSteps - 1;
 
   const handleSubmitButtonClick = () => {
-    allStepsCompleted ? undefined : setActiveStep((lastStep) => lastStep + 1);
+    allStepsCompleted
+      ? router.back()
+      : isLastStep
+        ? undefined
+        : setActiveStep((lastStep) => lastStep + 1);
   };
 
   const handleReturnButtonClick: () => void = () => {
@@ -48,6 +53,7 @@ export default function EnrollComponent() {
   const onSubmit: SubmitHandler<Student> = (data) => {
     console.log(data);
     createNewStudent({ ...data });
+    setActiveStep((lastStep) => lastStep + 1);
   };
   return (
     <>
@@ -102,7 +108,10 @@ export default function EnrollComponent() {
           ))}
         </Stepper>
         <FormProvider<Student> {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col gap-7">
+          <form
+            onSubmit={methods.handleSubmit(onSubmit, (e) => console.log(e))}
+            className="flex flex-col gap-7"
+          >
             {steps[activeStep].component}
             <Box className="flex flex-row justify-between ">
               <Button
@@ -125,15 +134,15 @@ export default function EnrollComponent() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
                 whileHover={{ scale: 1.05 }}
-                type={allStepsCompleted ? "submit" : "button"}
+                type={isLastStep ? "submit" : "button"}
                 className="rounded-md bg-green-700 px-4 py-2 text-green-50 hover:bg-green-900 "
                 onClick={handleSubmitButtonClick}
               >
-                {allStepsCompleted ? "Finish" : "Next"}
+                {isLastStep ? "Finish" : allStepsCompleted ? "Done" : "Next"}
               </Button>
             </Box>
           </form>
-          <pre>{JSON.stringify(methods.watch(), null, 2)}</pre>
+          {/* <pre>{JSON.stringify(methods.watch(), null, 2)}</pre> */}
         </FormProvider>
       </Box>
     </>

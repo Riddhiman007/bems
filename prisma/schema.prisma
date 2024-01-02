@@ -62,7 +62,7 @@ model User {
   sessions      Session[]
   teacherId     String?   @db.ObjectId
 
-  @@unique([email, username])
+  @@unique([id, email, username])
   @@map("users")
 }
 
@@ -93,28 +93,30 @@ model Teacher {
   username String @unique
   email    String
   class    Grade?
-  User     User   @relation(fields: [username, email], references: [username, email], onDelete: Cascade)
+  User     User   @relation(fields: [userId, username, email], references: [id, username, email], onDelete: Cascade)
+  userId   String @db.ObjectId
 
-  @@unique([username, email])
+  @@unique([userId, username, email])
   @@map("teachers")
 }
 
 model Student {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId /// @zod.custom.omit([model, input])
   fullname    String
   username    String
   father_name String
   mother_name String
-  contact     Int
+  contact     String
   caste       String
   address     String
   gender      Gender    @default(Male)
   email       String
   grade       Grade     @relation(fields: [grade_name], references: [grade], onDelete: NoAction)
   grade_name  GradeType @unique
-  user        User      @relation(fields: [username, email], references: [username, email], onDelete: Cascade)
+  user        User      @relation(fields: [userId, username, email], references: [id, username, email], onDelete: Cascade)
+  userId      String    @db.ObjectId /// @zod.custom.omit([model, input])
 
-  @@unique([username, email])
+  @@unique([userId, username, email])
   @@map("students")
 }
 

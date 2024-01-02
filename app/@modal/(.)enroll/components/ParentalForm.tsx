@@ -1,7 +1,7 @@
 "use client";
 import { Student } from "@/lib/prisma/schemas";
 import { AcademicCapIcon } from "@heroicons/react/24/solid";
-import { Face, Face2, LocationCity, Man, Pin, Woman } from "@mui/icons-material";
+import { Cast, Face, Face2, LocationCity, Man, Pin, Woman } from "@mui/icons-material";
 import { Box, InputAdornment, TextField } from "@mui/material";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
@@ -67,6 +67,27 @@ export default function ParentalForm() {
               startAdornment: (
                 <InputAdornment position="start">
                   <LocationCity />
+                </InputAdornment>
+              ),
+            }}
+            {...remainingProps}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="caste"
+        render={({ field: { ref, ...remainingProps } }) => (
+          <TextField
+            inputRef={ref}
+            variant="standard"
+            label="Caste"
+            className="w-full"
+            placeholder="Please enter your caste"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Cast />
                 </InputAdornment>
               ),
             }}

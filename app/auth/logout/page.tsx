@@ -7,8 +7,10 @@ import Typography from "@mui/material/Typography";
 
 import AnimatePresence from "@/components/Motion/AnimatePresence";
 import React from "react";
+import { auth } from "@/lib/auth";
 
-export default function Logout() {
+export default async function Logout() {
+  const session = await auth();
   return (
     <AnimatePresence key="logout">
       <Card
@@ -23,13 +25,17 @@ export default function Logout() {
           {/* title */}
           <Box>
             <Typography variant="h4" className="text-3xl" component="h3">
-              Log out
+              {session ? "You're already logged in..." : "Log out"}
             </Typography>
           </Box>
-          <Typography>Are you sure you want to log out?</Typography>
-          <Box className="flex flex-row justify-end">
-            <LogoutButton />
-          </Box>
+          {session === null && (
+            <>
+              <Typography>Are you sure you want to log out?</Typography>
+              <Box className="flex flex-row justify-end">
+                <LogoutButton />
+              </Box>
+            </>
+          )}
         </CardContent>
       </Card>
     </AnimatePresence>

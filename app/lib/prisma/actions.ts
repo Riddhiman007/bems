@@ -37,23 +37,30 @@ export async function createNewStudent({
         2,
       ),
   );
-  let student = await prisma.student.create({
-    include: {
-      grade: true,
-      user: true,
-    },
+
+  const student = await prisma.student.create({
     data: {
       address,
-      contact,
       caste,
-
-      father_name,
-      mother_name,
       fullname,
-      gender,
-      grade_name,
-      email,
-      username,
+      mother_name,
+      contact,
+      father_name,
+      grade: {
+        connect: {
+          grade: grade_name,
+        },
+      },
+      user: {
+        create: {
+          fullname,
+          email,
+          username,
+          role: "Student" as Role,
+
+          address,
+        },
+      },
     },
   });
   console.log(student);

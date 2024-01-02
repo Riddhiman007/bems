@@ -52,6 +52,7 @@ import MotionLink from "../Motion/MotionLink";
 
 import styles from "./NavigationMobile.module.css";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 interface NavItem {
   href: string;
@@ -69,6 +70,7 @@ const NavigationMobile = ({
 }) => {
   const { theme, setTheme } = useTheme();
   const currentRoute = usePathname();
+  const { data: session } = useSession();
   const navItems: Array<NavItem> = [
     {
       label: "Home",
@@ -169,33 +171,34 @@ const NavigationMobile = ({
           />
         ))}
       </BottomNavigation>
-
-      <SpeedDial
-        icon={<UserIconOutline className="h-8 w-8 text-green-50" />}
-        className={styles.speedDial}
-        FabProps={{
-          style: { zIndex: 100 },
-          className:
-            "h-[4.25rem] w-[4.25rem] relative bottom-10 bg-green-700 hover:bg-green-900 hover:scale-150 z-50",
-        }}
-        ariaLabel="user info"
-        openIcon={<CloseOutlined />}
-      >
-        {speedDialItems.map((item) => (
-          <SpeedDialAction
-            key={item.title}
-            tooltipTitle={item.title}
-            icon={item.icon}
-            FabProps={{
-              LinkComponent: Link,
-              href: item.href,
-              className:
-                "hover:scale-125 dark:text-slate-50 dark:bg-slate-800 dark:hover:bg-slate-900 " +
-                item.idx,
-            }}
-          />
-        ))}
-      </SpeedDial>
+      {session && (
+        <SpeedDial
+          icon={<UserIconOutline className="h-8 w-8 text-green-50" />}
+          className={styles.speedDial}
+          FabProps={{
+            style: { zIndex: 100 },
+            className:
+              "h-[4.25rem] w-[4.25rem] relative bottom-10 bg-green-700 hover:bg-green-900 hover:scale-150 z-50",
+          }}
+          ariaLabel="user info"
+          openIcon={<CloseOutlined />}
+        >
+          {speedDialItems.map((item) => (
+            <SpeedDialAction
+              key={item.title}
+              tooltipTitle={item.title}
+              icon={item.icon}
+              FabProps={{
+                LinkComponent: Link,
+                href: item.href,
+                className:
+                  "hover:scale-125 dark:text-slate-50 dark:bg-slate-800 dark:hover:bg-slate-900 " +
+                  item.idx,
+              }}
+            />
+          ))}
+        </SpeedDial>
+      )}
     </>
   );
 };
