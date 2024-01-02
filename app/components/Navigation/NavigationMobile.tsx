@@ -151,7 +151,7 @@ const NavigationMobile = ({
         </Container>
       </AppBar>
       {children}
-      <BottomNavigation className="fixed inset-x-0 bottom-0 z-[60] gap-7 px-7 shadow-md shadow-gray-950 dark:bg-slate-900">
+      <BottomNavigation className="fixed inset-x-0 bottom-0 z-[120] gap-7 px-7 shadow-md shadow-gray-950 dark:bg-slate-900">
         {navItems.map((item) => (
           <BottomNavigationAction
             showLabel={item.href === currentRoute}
@@ -178,7 +178,7 @@ const NavigationMobile = ({
           FabProps={{
             style: { zIndex: 100 },
             className:
-              "h-[4.25rem] w-[4.25rem] relative bottom-10 bg-green-700 hover:bg-green-900 hover:scale-150 z-50",
+              "h-[4.25rem] w-[4.25rem] relative bottom-10 bg-green-700 hover:bg-green-900 hover:scale-150 z-[140]",
           }}
           ariaLabel="user info"
           openIcon={<CloseOutlined />}
@@ -192,7 +192,7 @@ const NavigationMobile = ({
                 LinkComponent: Link,
                 href: item.href,
                 className:
-                  "hover:scale-125 dark:text-slate-50 dark:bg-slate-800 dark:hover:bg-slate-900 " +
+                  "hover:scale-125 dark:text-slate-50 dark:bg-slate-800 dark:hover:bg-slate-900 z-[120]" +
                   item.idx,
               }}
             />
