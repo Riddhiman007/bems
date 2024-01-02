@@ -65,7 +65,7 @@ export default function Home() {
           >
             <Typography
               variant="h4"
-              className="md:text-4xl lg:text-6xl dark:text-slate-50"
+              className="ml-10 md:ml-0 md:text-4xl lg:text-6xl dark:text-slate-50"
             >
               Admission Open for <Typography>2024-25</Typography>
             </Typography>
@@ -80,7 +80,7 @@ export default function Home() {
             <Button
               variant="contained"
               color="success"
-              className="rounded bg-green-700 px-7 py-4 text-xl text-green-50 hover:bg-green-900"
+              className="rounded bg-green-700 px-7 py-4 text-xl text-green-50 z-[100] hover:bg-green-900"
               component={MotionLink}
               href="/enroll"
             >
