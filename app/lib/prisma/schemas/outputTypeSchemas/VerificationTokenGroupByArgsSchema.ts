@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { Prisma } from '../../client';
+import type { Prisma } from '@prisma/client';
 import { VerificationTokenWhereInputSchema } from '../inputTypeSchemas/VerificationTokenWhereInputSchema'
 import { VerificationTokenOrderByWithAggregationInputSchema } from '../inputTypeSchemas/VerificationTokenOrderByWithAggregationInputSchema'
 import { VerificationTokenScalarFieldEnumSchema } from '../inputTypeSchemas/VerificationTokenScalarFieldEnumSchema'

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { Prisma } from '../../client';
+import type { Prisma } from '@prisma/client';
 import { StudentUpdateManyMutationInputSchema } from '../inputTypeSchemas/StudentUpdateManyMutationInputSchema'
 import { StudentUncheckedUpdateManyInputSchema } from '../inputTypeSchemas/StudentUncheckedUpdateManyInputSchema'
 import { StudentWhereInputSchema } from '../inputTypeSchemas/StudentWhereInputSchema'

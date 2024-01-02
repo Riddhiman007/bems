@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { Prisma } from '../../client';
+import type { Prisma } from '@prisma/client';
 
 export const VerificationTokenSelectSchema: z.ZodType<Prisma.VerificationTokenSelect> = z.object({
   id: z.boolean().optional(),

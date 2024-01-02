@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { Prisma } from '../../client';
+import type { Prisma } from '@prisma/client';
 import { TeacherIncludeSchema } from '../inputTypeSchemas/TeacherIncludeSchema'
 import { TeacherUpdateInputSchema } from '../inputTypeSchemas/TeacherUpdateInputSchema'
 import { TeacherUncheckedUpdateInputSchema } from '../inputTypeSchemas/TeacherUncheckedUpdateInputSchema'

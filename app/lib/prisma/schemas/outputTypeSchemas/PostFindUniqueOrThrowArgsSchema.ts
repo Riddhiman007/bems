@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { Prisma } from '../../client';
+import type { Prisma } from '@prisma/client';
 import { PostIncludeSchema } from '../inputTypeSchemas/PostIncludeSchema'
 import { PostWhereUniqueInputSchema } from '../inputTypeSchemas/PostWhereUniqueInputSchema'
 import { UserArgsSchema } from "../outputTypeSchemas/UserArgsSchema"

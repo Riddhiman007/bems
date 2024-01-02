@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { Prisma } from '../../client';
+import type { Prisma } from '@prisma/client';
 import { SessionWhereInputSchema } from '../inputTypeSchemas/SessionWhereInputSchema'
 import { SessionOrderByWithAggregationInputSchema } from '../inputTypeSchemas/SessionOrderByWithAggregationInputSchema'
 import { SessionScalarFieldEnumSchema } from '../inputTypeSchemas/SessionScalarFieldEnumSchema'

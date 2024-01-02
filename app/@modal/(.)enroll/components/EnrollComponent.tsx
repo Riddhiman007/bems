@@ -18,7 +18,7 @@ import Done from "./Done";
 import { Student, StudentSchema } from "@/lib/prisma/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createNewStudent } from "@/lib/prisma/actions";
-import { z } from "zod";
+
 const steps = [
   { label: "Personal details", component: <PersonalForm /> },
   { label: "Parental details", component: <ParentalForm /> },

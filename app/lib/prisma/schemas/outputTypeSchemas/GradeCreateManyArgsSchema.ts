@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { Prisma } from '../../client';
+import type { Prisma } from '@prisma/client';
 import { GradeCreateManyInputSchema } from '../inputTypeSchemas/GradeCreateManyInputSchema'
 
 export const GradeCreateManyArgsSchema: z.ZodType<Prisma.GradeCreateManyArgs> = z.object({

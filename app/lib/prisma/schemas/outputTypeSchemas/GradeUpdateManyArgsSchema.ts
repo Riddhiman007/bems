@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { Prisma } from '../../client';
+import type { Prisma } from '@prisma/client';
 import { GradeUpdateManyMutationInputSchema } from '../inputTypeSchemas/GradeUpdateManyMutationInputSchema'
 import { GradeUncheckedUpdateManyInputSchema } from '../inputTypeSchemas/GradeUncheckedUpdateManyInputSchema'
 import { GradeWhereInputSchema } from '../inputTypeSchemas/GradeWhereInputSchema'

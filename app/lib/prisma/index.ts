@@ -1,4 +1,4 @@
-import { PrismaClient } from "./client";
+import { PrismaClient } from "@prisma/client";
 
 const globalWithPrisma = global as unknown as { prisma: PrismaClient };
 function isPrismaInDevMode() {
@@ -12,5 +12,9 @@ function isPrismaInDevMode() {
 }
 
 const prisma = isPrismaInDevMode();
+
+// export * from "./actions";
+// export * as Helpers from "./helper";
+// export * from "./schemas";
 
 export default prisma;

@@ -3,7 +3,6 @@
 import { Role } from "@prisma/client";
 // import { Student } from "@prisma/client";
 import prisma from ".";
-import { Grade } from "./helper";
 import { Student } from "./schemas";
 
 export async function createNewStudent({

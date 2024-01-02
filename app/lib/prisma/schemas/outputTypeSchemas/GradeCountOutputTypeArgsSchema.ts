@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { Prisma } from '../../client';
+import type { Prisma } from '@prisma/client';
 import { GradeCountOutputTypeSelectSchema } from './GradeCountOutputTypeSelectSchema';
 
 export const GradeCountOutputTypeArgsSchema: z.ZodType<Prisma.GradeCountOutputTypeDefaultArgs> = z.object({

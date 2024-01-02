@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { Prisma } from '../../client';
+import type { Prisma } from '@prisma/client';
 import { GradeSelectSchema } from '../inputTypeSchemas/GradeSelectSchema';
 import { GradeIncludeSchema } from '../inputTypeSchemas/GradeIncludeSchema';
 

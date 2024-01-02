@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { Prisma } from '../../client';
+import type { Prisma } from '@prisma/client';
 import { AccountIncludeSchema } from '../inputTypeSchemas/AccountIncludeSchema'
 import { AccountWhereUniqueInputSchema } from '../inputTypeSchemas/AccountWhereUniqueInputSchema'
 import { UserArgsSchema } from "../outputTypeSchemas/UserArgsSchema"

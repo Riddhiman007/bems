@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { Prisma } from '../../client';
+import type { Prisma } from '@prisma/client';
 import { GradeIncludeSchema } from '../inputTypeSchemas/GradeIncludeSchema'
 import { GradeWhereInputSchema } from '../inputTypeSchemas/GradeWhereInputSchema'
 import { GradeOrderByWithRelationInputSchema } from '../inputTypeSchemas/GradeOrderByWithRelationInputSchema'

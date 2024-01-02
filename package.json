@@ -2,7 +2,7 @@
   "name": "bems",
   "version": "0.1.0",
   "license": "MIT",
-  "devDependencies":{
+  "devDependencies": {
     "@next/bundle-analyzer": "^14.0.4",
     "autoprefixer": "^10.4.16",
     "ava": "^5.1.1",
@@ -23,7 +23,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall":"prisma db push"
+    "postinstall": "prisma db push"
   },
   "dependencies": {
     "@auth/core": "^0.18.4",

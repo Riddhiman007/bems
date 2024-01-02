@@ -1,4 +1,4 @@
-import type { Prisma } from '../../client';
+import type { Prisma } from '@prisma/client';
 
 import { z } from 'zod';
 import { AccountWhereUniqueInputSchema } from './AccountWhereUniqueInputSchema';
