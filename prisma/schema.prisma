@@ -109,7 +109,7 @@ model Student {
   contact     String
   caste       String
   address     String
-  isNew       Boolean   @default(true)
+  isNew       Boolean  
   gender      Gender    @default(Male)
   email       String
   grade       Grade     @relation(fields: [grade_name], references: [grade], onDelete: NoAction)
