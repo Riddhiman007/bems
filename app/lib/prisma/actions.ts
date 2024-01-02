@@ -45,6 +45,7 @@ export async function createNewStudent({
       mother_name,
       contact,
       father_name,
+      isNew: true,
       grade: {
         connect: {
           grade: grade_name,
