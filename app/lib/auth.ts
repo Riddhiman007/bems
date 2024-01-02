@@ -75,6 +75,7 @@ export const { handlers, auth, signIn, signOut, update } = NextAuth({
   adapter: CustomPrismaAdapter(prisma),
   session: { strategy: "database" },
   trustHost: true,
+
   callbacks: {
     async session({ session, user }) {
       session.user = user;
