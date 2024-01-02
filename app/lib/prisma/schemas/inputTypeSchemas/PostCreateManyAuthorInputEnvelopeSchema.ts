@@ -1,0 +1,10 @@
+import type { Prisma } from '../../client';
+
+import { z } from 'zod';
+import { PostCreateManyAuthorInputSchema } from './PostCreateManyAuthorInputSchema';
+
+export const PostCreateManyAuthorInputEnvelopeSchema: z.ZodType<Prisma.PostCreateManyAuthorInputEnvelope> = z.object({
+  data: z.union([ z.lazy(() => PostCreateManyAuthorInputSchema),z.lazy(() => PostCreateManyAuthorInputSchema).array() ]),
+}).strict();
+
+export default PostCreateManyAuthorInputEnvelopeSchema;

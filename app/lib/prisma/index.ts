@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "./client";
 
 const globalWithPrisma = global as unknown as { prisma: PrismaClient };
 function isPrismaInDevMode() {
