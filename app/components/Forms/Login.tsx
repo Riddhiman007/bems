@@ -1,42 +1,70 @@
 "use client";
-import React from "react";
-import { Box, Button, InputAdornment, TextField } from "@mui/material";
+import React, { useState } from "react";
+import {
+  Box,
+  CircularProgress,
+  InputAdornment,
+  TextField,
+  Typography,
+} from "@mui/material";
 import MotionButton from "../Motion/MotionButton";
 import AnimatePresence from "../Motion/AnimatePresence";
 
 // hooks
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { UserIcon } from "@heroicons/react/24/solid";
-import { LoginByEmail, LoginByUsername } from "@/lib/actions/queries";
+import { Controller, SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
+import { LoginByEmail } from "@/lib/actions/queries";
 import { Email } from "@mui/icons-material";
 import CancelButton from "../CancelButton";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import MotionMuiBotton from "../Motion/MotionMuiButton";
 
+const loginSchema = z.object({
+  email: z.string().email({ message: "Please enter correct email address." }),
+});
+
+type LoginValidator = z.infer<typeof loginSchema>;
 export default function LoginForm({
   isBackButtonEnabled,
 }: {
   isBackButtonEnabled: boolean;
 }) {
-  const router = useRouter();
-  const { handleSubmit, register } = useForm();
+  const [isLoading, setIsLoading] = useState(false);
+  const { control, handleSubmit } = useForm<LoginValidator>({
+    resolver: zodResolver(loginSchema),
+  });
+  const onSubmit: SubmitHandler<LoginValidator> = async (data) => {
+    setTimeout(() => setIsLoading(true), 500);
+    await LoginByEmail(data.email);
+  };
+
+  const onError: SubmitErrorHandler<LoginValidator> = async (data) => console.log(data);
 
   return (
-    <form className="flex flex-col gap-7" action={LoginByUsername}>
-      <TextField
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <UserIcon className="h-4 w-4 dark:text-slate-50" />
-            </InputAdornment>
-          ),
-        }}
-        name="username"
-        size="medium"
-        variant="standard"
-        fullWidth
-        label="Username"
-        type="text"
-        placeholder="Please enter your username"
+    <form className="flex flex-col gap-7" onSubmit={handleSubmit(onSubmit, onError)}>
+      <Controller
+        control={control}
+        name="email"
+        rules={{ required: true }}
+        render={({ field: { ref, ...remainingProps }, fieldState: { error } }) => (
+          <TextField
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Email className="h-4 w-4 dark:text-slate-50" />
+                </InputAdornment>
+              ),
+            }}
+            required
+            size="medium"
+            variant="standard"
+            fullWidth
+            label="Email"
+            type="email"
+            placeholder="Please enter your email address"
+            {...remainingProps}
+          />
+        )}
       />
       <Box
         className={`flex flex-row ${
@@ -45,21 +73,29 @@ export default function LoginForm({
       >
         {isBackButtonEnabled && <CancelButton />}
         <AnimatePresence>
-          <Button
-            component={MotionButton}
+          <MotionMuiBotton
+            type="submit"
+            color="success"
+            className="flex flex-row gap-4 rounded-md bg-green-700 px-4 py-2 text-green-50 shadow shadow-gray-900 hover:bg-green-900"
             initial={{ opacity: 0, y: 400 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
             whileHover={{
               scale: 1.05,
-              backgroundImage: null,
+              backgroundImage: "none",
               backgroundColor: "rgb(29 78 216)",
             }}
-            type="submit"
-            className="rounded-md bg-gradient-to-l from-indigo-600/70 to-blue-800 px-4 py-2 text-blue-50 shadow shadow-gray-900 "
           >
-            Submit
-          </Button>
+            {isLoading && (
+              <CircularProgress
+                size={20}
+                classes={{
+                  circle: "text-green-50",
+                }}
+              />
+            )}
+            <Typography>Login</Typography>
+          </MotionMuiBotton>
         </AnimatePresence>
       </Box>
     </form>

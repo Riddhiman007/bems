@@ -2,12 +2,13 @@
 import { allGrades } from "@/lib/prisma/helper";
 import { Student } from "@/lib/prisma/schemas";
 import { AcademicCapIcon, UserCircleIcon } from "@heroicons/react/24/solid";
-import { ContactPhone, Email, Phone } from "@mui/icons-material";
+import { ContactPhone, Email, Face, Face2, Phone } from "@mui/icons-material";
 import { Box, InputAdornment, MenuItem, Radio, Select, TextField } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
 export default function PersonalForm() {
+  const [gender, setGender] = useState<"Male" | "Female" | boolean>(false);
   const { control } = useFormContext<Student>();
 
   return (
@@ -78,42 +79,23 @@ export default function PersonalForm() {
           />
         )}
       />
-      <Controller
-        control={control}
-        name="username"
-        render={({ field: { ref, ...remainingProps } }) => (
-          <TextField
-            inputRef={ref}
-            variant="standard"
-            label="Username"
-            className="w-full"
-            placeholder="Please enter a unique username"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <UserCircleIcon className="h-6 w-6 dark:text-slate-50" />
-                </InputAdornment>
-              ),
-            }}
-            {...remainingProps}
-          />
-        )}
-      />
       <Box className="flex flex-row gap-6">
         <Controller
           control={control}
           name="grade_name"
           render={({ field: { ref, ...remainingProps } }) => (
             <>
-              <TextField 
+              <TextField
                 select
                 variant="standard"
                 inputRef={ref}
                 fullWidth
                 label="Grade"
                 placeholder="Please enter your grade"
-                MenuProps={{
-                  className: "w-fit dark:bg-slate-900",
+                SelectProps={{
+                  MenuProps: {
+                    className: "w-fit dark:bg-slate-900",
+                  },
                 }}
                 {...remainingProps}
               >
@@ -133,6 +115,11 @@ export default function PersonalForm() {
         <Controller
           control={control}
           name="gender"
+          rules={{
+            onChange(event) {
+              setGender(event.target.value);
+            },
+          }}
           render={({ field: { ref, ...remainingProps } }) => (
             <>
               <TextField
@@ -142,8 +129,17 @@ export default function PersonalForm() {
                 inputRef={ref}
                 fullWidth
                 placeholder="Please enter your gender"
-                MenuProps={{
-                  className: "w-fit dark:bg-slate-900",
+                SelectProps={{
+                  MenuProps: {
+                    className: "w-fit dark:bg-slate-900",
+                  },
+                }}
+                InputProps={{
+                  startAdornment: gender ? (
+                    <InputAdornment position="start">
+                      {gender === "Male" ? <Face /> : <Face2 />}
+                    </InputAdornment>
+                  ) : undefined,
                 }}
                 {...remainingProps}
               >

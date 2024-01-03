@@ -1,7 +1,6 @@
 import type { Prisma } from '@prisma/client';
 
 import { z } from 'zod';
-import { UserIdEmailUsernameCompoundUniqueInputSchema } from './UserIdEmailUsernameCompoundUniqueInputSchema';
 import { UserWhereInputSchema } from './UserWhereInputSchema';
 import { StringFilterSchema } from './StringFilterSchema';
 import { DateTimeNullableFilterSchema } from './DateTimeNullableFilterSchema';
@@ -19,27 +18,25 @@ import { SessionListRelationFilterSchema } from './SessionListRelationFilterSche
 export const UserWhereUniqueInputSchema: z.ZodType<Prisma.UserWhereUniqueInput> = z.union([
   z.object({
     id: z.string(),
-    id_email_username: z.lazy(() => UserIdEmailUsernameCompoundUniqueInputSchema)
+    email: z.string()
   }),
   z.object({
     id: z.string(),
   }),
   z.object({
-    id_email_username: z.lazy(() => UserIdEmailUsernameCompoundUniqueInputSchema),
+    email: z.string(),
   }),
 ])
 .and(z.object({
   id: z.string().optional(),
-  id_email_username: z.lazy(() => UserIdEmailUsernameCompoundUniqueInputSchema).optional(),
+  email: z.string().optional(),
   AND: z.union([ z.lazy(() => UserWhereInputSchema),z.lazy(() => UserWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => UserWhereInputSchema).array().optional(),
   NOT: z.union([ z.lazy(() => UserWhereInputSchema),z.lazy(() => UserWhereInputSchema).array() ]).optional(),
   fullname: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  email: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   emailVerified: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
   role: z.union([ z.lazy(() => EnumRoleFilterSchema),z.lazy(() => RoleSchema) ]).optional(),
   image: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  username: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   address: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   teacherId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   student: z.union([ z.lazy(() => StudentNullableRelationFilterSchema),z.lazy(() => StudentWhereInputSchema) ]).optional().nullable(),

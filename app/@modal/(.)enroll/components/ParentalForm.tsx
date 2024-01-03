@@ -1,7 +1,6 @@
 "use client";
 import { Student } from "@/lib/prisma/schemas";
-import { AcademicCapIcon } from "@heroicons/react/24/solid";
-import { Cast, Face, Face2, LocationCity, Man, Pin, Woman } from "@mui/icons-material";
+import { Cast, Face, Face2, LocationCity } from "@mui/icons-material";
 import { Box, InputAdornment, TextField } from "@mui/material";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";

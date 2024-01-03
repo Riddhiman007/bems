@@ -5,9 +5,7 @@ import { StringFieldUpdateOperationsInputSchema } from './StringFieldUpdateOpera
 
 export const TeacherUncheckedUpdateManyInputSchema: z.ZodType<Prisma.TeacherUncheckedUpdateManyInput> = z.object({
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  username: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   email: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  userId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
 export default TeacherUncheckedUpdateManyInputSchema;

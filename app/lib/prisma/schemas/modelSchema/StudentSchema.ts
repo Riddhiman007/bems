@@ -11,14 +11,13 @@ export const StudentSchema = z.object({
   grade_name: GradeTypeSchema,
   // omitted: id: z.string(),
   fullname: z.string(),
-  username: z.string(),
   father_name: z.string(),
   mother_name: z.string(),
   contact: z.string(),
   caste: z.string(),
   address: z.string(),
+  // omitted: isNew: z.boolean(),
   email: z.string(),
-  // omitted: userId: z.string(),
 })
 
 export type Student = z.infer<typeof StudentSchema>

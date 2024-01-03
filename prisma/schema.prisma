@@ -8,13 +8,13 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// generator zod {
-//  provider         = "npx zod-prisma-types"
-//  output           = "../app/lib/prisma/schemas"
-//  useMultipleFiles = true
-//  writeBarrelFiles = true
-//  createInputTypes = true
-// }
+generator zod {
+  provider         = "npx zod-prisma-types"
+  output           = "../app/lib/prisma/schemas"
+  useMultipleFiles = true
+  writeBarrelFiles = true
+  createInputTypes = true
+}
 
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
@@ -49,11 +49,10 @@ model Session {
 model User {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   fullname      String
-  email         String
+  email         String    @unique
   emailVerified DateTime?
   role          Role      @default(Student)
   image         String?
-  username      String
   address       String
   student       Student?
   teacher       Teacher?
@@ -62,7 +61,6 @@ model User {
   sessions      Session[]
   teacherId     String?   @db.ObjectId
 
-  @@unique([id, email, username])
   @@map("users")
 }
 
@@ -79,8 +77,8 @@ model VerificationToken {
 model Grade {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   grade         GradeType @unique
-  class_teacher Teacher   @relation(fields: [teacher_name], references: [username], onDelete: NoAction)
-  teacher_name  String    @unique
+  class_teacher Teacher   @relation(fields: [teacher_name], references: [id], onDelete: NoAction)
+  teacher_name  String    @unique @db.ObjectId
 
   students Student[]
 
@@ -88,36 +86,30 @@ model Grade {
 }
 
 model Teacher {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  name     String
-  username String @unique
-  email    String
-  class    Grade?
-  User     User   @relation(fields: [userId, username, email], references: [id, username, email], onDelete: Cascade)
-  userId   String @db.ObjectId
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  name  String
+  email String @unique
+  class Grade?
+  User  User   @relation(fields: [email], references: [email], onDelete: Cascade)
 
-  @@unique([userId, username, email])
   @@map("teachers")
 }
 
 model Student {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId /// @zod.custom.omit([model, input])
   fullname    String
-  username    String
   father_name String
   mother_name String
   contact     String
   caste       String
   address     String
-  isNew       Boolean
+  isNew       Boolean /// @zod.custom.omit([model, input])
   gender      Gender    @default(Male)
-  email       String
+  email       String    @unique
   grade       Grade     @relation(fields: [grade_name], references: [grade], onDelete: NoAction)
   grade_name  GradeType @unique
-  user        User      @relation(fields: [userId, username, email], references: [id, username, email], onDelete: Cascade)
-  userId      String    @db.ObjectId /// @zod.custom.omit([model, input])
+  user        User      @relation(fields: [email], references: [email], onDelete: Cascade)
 
-  @@unique([userId, username, email])
   @@map("students")
 }
 

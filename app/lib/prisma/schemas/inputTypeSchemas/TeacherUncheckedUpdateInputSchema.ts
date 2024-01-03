@@ -6,9 +6,7 @@ import { GradeUncheckedUpdateOneWithoutClass_teacherNestedInputSchema } from './
 
 export const TeacherUncheckedUpdateInputSchema: z.ZodType<Prisma.TeacherUncheckedUpdateInput> = z.object({
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  username: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   email: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  userId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   class: z.lazy(() => GradeUncheckedUpdateOneWithoutClass_teacherNestedInputSchema).optional()
 }).strict();
 

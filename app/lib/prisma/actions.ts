@@ -7,7 +7,6 @@ import { Student } from "./schemas";
 
 export async function createNewStudent({
   fullname,
-  username,
   email,
   father_name,
   mother_name,
@@ -22,7 +21,6 @@ export async function createNewStudent({
       JSON.stringify(
         {
           fullname,
-          username,
           email,
           father_name,
           mother_name,
@@ -55,7 +53,7 @@ export async function createNewStudent({
         create: {
           fullname,
           email,
-          username,
+
           role: "Student" as Role,
 
           address,

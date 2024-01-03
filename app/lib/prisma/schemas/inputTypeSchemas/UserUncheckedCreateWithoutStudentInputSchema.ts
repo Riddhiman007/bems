@@ -14,7 +14,6 @@ export const UserUncheckedCreateWithoutStudentInputSchema: z.ZodType<Prisma.User
   emailVerified: z.coerce.date().optional().nullable(),
   role: z.lazy(() => RoleSchema).optional(),
   image: z.string().optional().nullable(),
-  username: z.string(),
   address: z.string(),
   teacherId: z.string().optional().nullable(),
   teacher: z.lazy(() => TeacherUncheckedCreateNestedOneWithoutUserInputSchema).optional(),

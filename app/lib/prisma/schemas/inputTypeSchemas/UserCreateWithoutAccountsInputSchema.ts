@@ -14,7 +14,6 @@ export const UserCreateWithoutAccountsInputSchema: z.ZodType<Prisma.UserCreateWi
   emailVerified: z.coerce.date().optional().nullable(),
   role: z.lazy(() => RoleSchema).optional(),
   image: z.string().optional().nullable(),
-  username: z.string(),
   address: z.string(),
   teacherId: z.string().optional().nullable(),
   student: z.lazy(() => StudentCreateNestedOneWithoutUserInputSchema).optional(),

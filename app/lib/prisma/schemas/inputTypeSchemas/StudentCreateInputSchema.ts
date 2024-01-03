@@ -5,7 +5,7 @@ import { GenderSchema } from './GenderSchema';
 import { GradeCreateNestedOneWithoutStudentsInputSchema } from './GradeCreateNestedOneWithoutStudentsInputSchema';
 import { UserCreateNestedOneWithoutStudentInputSchema } from './UserCreateNestedOneWithoutStudentInputSchema';
 
-export const StudentCreateInputSchema: z.ZodType<Omit<Prisma.StudentCreateInput, "id">> = z.object({
+export const StudentCreateInputSchema: z.ZodType<Omit<Prisma.StudentCreateInput, "id" | "isNew">> = z.object({
   // omitted: id: z.string().optional(),
   fullname: z.string(),
   father_name: z.string(),
@@ -13,6 +13,7 @@ export const StudentCreateInputSchema: z.ZodType<Omit<Prisma.StudentCreateInput,
   contact: z.string(),
   caste: z.string(),
   address: z.string(),
+  // omitted: isNew: z.boolean(),
   gender: z.lazy(() => GenderSchema).optional(),
   grade: z.lazy(() => GradeCreateNestedOneWithoutStudentsInputSchema),
   user: z.lazy(() => UserCreateNestedOneWithoutStudentInputSchema)

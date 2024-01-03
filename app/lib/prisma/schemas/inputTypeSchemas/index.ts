@@ -122,7 +122,6 @@ export { SessionListRelationFilterSchema } from './SessionListRelationFilterSche
 export { PostOrderByRelationAggregateInputSchema } from './PostOrderByRelationAggregateInputSchema';
 export { AccountOrderByRelationAggregateInputSchema } from './AccountOrderByRelationAggregateInputSchema';
 export { SessionOrderByRelationAggregateInputSchema } from './SessionOrderByRelationAggregateInputSchema';
-export { UserIdEmailUsernameCompoundUniqueInputSchema } from './UserIdEmailUsernameCompoundUniqueInputSchema';
 export { UserCountOrderByAggregateInputSchema } from './UserCountOrderByAggregateInputSchema';
 export { UserMaxOrderByAggregateInputSchema } from './UserMaxOrderByAggregateInputSchema';
 export { UserMinOrderByAggregateInputSchema } from './UserMinOrderByAggregateInputSchema';
@@ -141,16 +140,16 @@ export { GradeMaxOrderByAggregateInputSchema } from './GradeMaxOrderByAggregateI
 export { GradeMinOrderByAggregateInputSchema } from './GradeMinOrderByAggregateInputSchema';
 export { EnumGradeTypeWithAggregatesFilterSchema } from './EnumGradeTypeWithAggregatesFilterSchema';
 export { GradeNullableRelationFilterSchema } from './GradeNullableRelationFilterSchema';
-export { TeacherUserIdUsernameEmailCompoundUniqueInputSchema } from './TeacherUserIdUsernameEmailCompoundUniqueInputSchema';
 export { TeacherCountOrderByAggregateInputSchema } from './TeacherCountOrderByAggregateInputSchema';
 export { TeacherMaxOrderByAggregateInputSchema } from './TeacherMaxOrderByAggregateInputSchema';
 export { TeacherMinOrderByAggregateInputSchema } from './TeacherMinOrderByAggregateInputSchema';
+export { BoolFilterSchema } from './BoolFilterSchema';
 export { EnumGenderFilterSchema } from './EnumGenderFilterSchema';
 export { GradeRelationFilterSchema } from './GradeRelationFilterSchema';
-export { StudentUserIdUsernameEmailCompoundUniqueInputSchema } from './StudentUserIdUsernameEmailCompoundUniqueInputSchema';
 export { StudentCountOrderByAggregateInputSchema } from './StudentCountOrderByAggregateInputSchema';
 export { StudentMaxOrderByAggregateInputSchema } from './StudentMaxOrderByAggregateInputSchema';
 export { StudentMinOrderByAggregateInputSchema } from './StudentMinOrderByAggregateInputSchema';
+export { BoolWithAggregatesFilterSchema } from './BoolWithAggregatesFilterSchema';
 export { EnumGenderWithAggregatesFilterSchema } from './EnumGenderWithAggregatesFilterSchema';
 export { PostCountOrderByAggregateInputSchema } from './PostCountOrderByAggregateInputSchema';
 export { PostMaxOrderByAggregateInputSchema } from './PostMaxOrderByAggregateInputSchema';
@@ -200,6 +199,7 @@ export { UserUpdateOneRequiredWithoutTeacherNestedInputSchema } from './UserUpda
 export { GradeUncheckedUpdateOneWithoutClass_teacherNestedInputSchema } from './GradeUncheckedUpdateOneWithoutClass_teacherNestedInputSchema';
 export { GradeCreateNestedOneWithoutStudentsInputSchema } from './GradeCreateNestedOneWithoutStudentsInputSchema';
 export { UserCreateNestedOneWithoutStudentInputSchema } from './UserCreateNestedOneWithoutStudentInputSchema';
+export { BoolFieldUpdateOperationsInputSchema } from './BoolFieldUpdateOperationsInputSchema';
 export { EnumGenderFieldUpdateOperationsInputSchema } from './EnumGenderFieldUpdateOperationsInputSchema';
 export { GradeUpdateOneRequiredWithoutStudentsNestedInputSchema } from './GradeUpdateOneRequiredWithoutStudentsNestedInputSchema';
 export { UserUpdateOneRequiredWithoutStudentNestedInputSchema } from './UserUpdateOneRequiredWithoutStudentNestedInputSchema';
@@ -221,7 +221,9 @@ export { NestedDateTimeNullableWithAggregatesFilterSchema } from './NestedDateTi
 export { NestedEnumRoleWithAggregatesFilterSchema } from './NestedEnumRoleWithAggregatesFilterSchema';
 export { NestedEnumGradeTypeFilterSchema } from './NestedEnumGradeTypeFilterSchema';
 export { NestedEnumGradeTypeWithAggregatesFilterSchema } from './NestedEnumGradeTypeWithAggregatesFilterSchema';
+export { NestedBoolFilterSchema } from './NestedBoolFilterSchema';
 export { NestedEnumGenderFilterSchema } from './NestedEnumGenderFilterSchema';
+export { NestedBoolWithAggregatesFilterSchema } from './NestedBoolWithAggregatesFilterSchema';
 export { NestedEnumGenderWithAggregatesFilterSchema } from './NestedEnumGenderWithAggregatesFilterSchema';
 export { UserCreateWithoutAccountsInputSchema } from './UserCreateWithoutAccountsInputSchema';
 export { UserUncheckedCreateWithoutAccountsInputSchema } from './UserUncheckedCreateWithoutAccountsInputSchema';

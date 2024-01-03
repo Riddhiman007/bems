@@ -28,4 +28,8 @@
   .animate-yellow-background-slide {
     animation: yellow-background-slide 3s infinite both normal;
   }
+
+  .Mui-active > .MuiStepConnector-line {
+    @apply border-green-800;
+  }
 }

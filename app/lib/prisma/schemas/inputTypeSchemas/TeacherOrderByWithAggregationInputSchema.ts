@@ -9,9 +9,7 @@ import { TeacherMinOrderByAggregateInputSchema } from './TeacherMinOrderByAggreg
 export const TeacherOrderByWithAggregationInputSchema: z.ZodType<Prisma.TeacherOrderByWithAggregationInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   name: z.lazy(() => SortOrderSchema).optional(),
-  username: z.lazy(() => SortOrderSchema).optional(),
   email: z.lazy(() => SortOrderSchema).optional(),
-  userId: z.lazy(() => SortOrderSchema).optional(),
   _count: z.lazy(() => TeacherCountOrderByAggregateInputSchema).optional(),
   _max: z.lazy(() => TeacherMaxOrderByAggregateInputSchema).optional(),
   _min: z.lazy(() => TeacherMinOrderByAggregateInputSchema).optional()

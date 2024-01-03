@@ -57,16 +57,17 @@ export default function EnrollComponent() {
   };
   return (
     <>
-      <Box className="flex flex-col justify-center gap-7">
+      <Box className="flex flex-col justify-center gap-7 overflow-auto">
         <Stepper
           orientation="horizontal"
           activeStep={activeStep}
           connector={
             <StepConnector
-              classes={{
-                completed: "border-green-600 text-green-600",
-                active: "border-green-700 text-green-700",
-              }}
+              // classes={{
+              //   completed: "border-green-600 text-green-600",
+              //   active: "border-green-700 text-green-700",
+
+              // }}
               sx={{
                 [`& .${stepConnectorClasses.completed}`]: {
                   borderColor: "rgb(22 163 74)!important",
