@@ -131,7 +131,7 @@ export default function EnrollComponent() {
             className="flex flex-col gap-7"
           >
             {steps[activeStep].component}
-            <Box className="flex flex-row justify-between ">
+            <Box className={`flex flex-row ${allStepsCompleted?"justify-end":"justify-between"} `}>
               {!allStepsCompleted && (
                 <Button
                   type="button"
