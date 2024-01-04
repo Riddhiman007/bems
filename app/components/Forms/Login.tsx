@@ -48,6 +48,14 @@ export default function LoginForm({
         rules={{ required: true }}
         render={({ field: { ref, ...remainingProps }, fieldState: { error } }) => (
           <TextField
+            error={Boolean(error)}
+            helperText={
+              error && (
+                <Typography className="text-red-600">
+                  {error.type === "required" ? "Please fill this field" : ""}
+                </Typography>
+              )
+            }
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -76,7 +84,8 @@ export default function LoginForm({
           <MotionMuiBotton
             type="submit"
             color="success"
-            className="flex flex-row gap-4 rounded-md bg-green-700 px-4 py-2 text-green-50 shadow shadow-gray-900 hover:bg-green-900"
+            disabled={isLoading}
+            className="flex flex-row gap-4 rounded-md !bg-green-700 px-4 py-2 text-green-50 shadow shadow-gray-900 hover:!bg-green-900 disabled:bg-green-900"
             initial={{ opacity: 0, y: 400 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}

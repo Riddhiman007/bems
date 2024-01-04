@@ -64,7 +64,7 @@ export default function PersonalForm() {
           <TextField
             inputRef={ref}
             variant="standard"
-            label="Contact No"
+            label="Email"
             type="email"
             fullWidth
             placeholder="Please enter your email address"

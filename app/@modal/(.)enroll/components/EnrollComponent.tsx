@@ -7,6 +7,8 @@ import {
   StepLabel,
   Stepper,
   stepConnectorClasses,
+  stepIconClasses,
+  styled,
 } from "@mui/material";
 import React, { useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
@@ -18,6 +20,7 @@ import Done from "./Done";
 import { Student, StudentSchema } from "@/lib/prisma/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createNewStudent } from "@/lib/prisma/actions";
+import { useTheme } from "next-themes";
 
 const steps = [
   { label: "Personal details", component: <PersonalForm /> },
@@ -27,23 +30,34 @@ const steps = [
 
 export default function EnrollComponent() {
   const [activeStep, setActiveStep] = useState(0);
+  const { theme } = useTheme();
   const router = useRouter();
   const methods = useForm<Student>({
     reValidateMode: "onChange",
     resolver: zodResolver(StudentSchema),
   });
 
+  const { handleSubmit, trigger } = methods;
   const totalSteps = steps.length;
   const isFirstStep = activeStep === 0;
   const isLastStep = activeStep === totalSteps - 2;
   const allStepsCompleted = activeStep === totalSteps - 1;
 
-  const handleSubmitButtonClick = () => {
-    allStepsCompleted
-      ? router.back()
-      : isLastStep
-        ? undefined
-        : setActiveStep((lastStep) => lastStep + 1);
+  const handleSubmitButtonClick = async () => {
+    if (allStepsCompleted) {
+      router.back();
+    } else if (!isLastStep) {
+      const isCorrect = await trigger([
+        "gender",
+        "grade_name",
+        "fullname",
+        "email",
+        "contact",
+      ]);
+      if (isCorrect) {
+        setActiveStep((lastStep) => lastStep + 1);
+      }
+    }
   };
 
   const handleReturnButtonClick: () => void = () => {
@@ -57,26 +71,22 @@ export default function EnrollComponent() {
   };
   return (
     <>
-      <Box className="flex flex-col justify-center gap-7 overflow-auto">
+      <Box className="flex flex-col justify-center gap-7">
         <Stepper
           orientation="horizontal"
           activeStep={activeStep}
           connector={
             <StepConnector
-              // classes={{
-              //   completed: "border-green-600 text-green-600",
-              //   active: "border-green-700 text-green-700",
-
-              // }}
               sx={{
-                [`& .${stepConnectorClasses.completed}`]: {
-                  borderColor: "rgb(22 163 74)!important",
-
-                  color: "rgb(22 163 74)!important",
+                [`&.${stepConnectorClasses.completed}`]: {
+                  [`& .${stepConnectorClasses.line}`]: {
+                    borderColor: "rgb(22 163 74)!important",
+                  },
                 },
-                [`& .${stepConnectorClasses.active}`]: {
-                  borderColor: "rgb(22 163 74)!important",
-                  color: "rgb(22 163 74)!important",
+                [`&.${stepConnectorClasses.active}`]: {
+                  [`& .${stepConnectorClasses.line}`]: {
+                    borderColor: "rgb(22 163 74)!important",
+                  },
                 },
               }}
             />
@@ -87,20 +97,27 @@ export default function EnrollComponent() {
             <Step key={label}>
               <StepLabel
                 StepIconProps={{
-                  classes: {
-                    completed: "!text-green-500",
-                    active: "!text-green-600 scale-110",
-                    text: "!text-green-50",
+                  sx: {
+                    [`&.${stepIconClasses.active}`]: {
+                      scale: 1.2,
+                      color: "transparent !important",
+                      borderColor:
+                        theme === "dark"
+                          ? "rgb(74 222 128)!important"
+                          : "rgb(21 168 61)!important",
+                      border: "1px solid",
+                      borderRadius: "990px",
+                      [`& .${stepIconClasses.text}`]: {
+                        fill:
+                          theme === "dark"
+                            ? "rgb(74 222 128)!important"
+                            : "rgb(21 168 61)!important",
+                      },
+                    },
+                    [`&.${stepIconClasses.completed}`]: {
+                      color: "rgb(34,197, 94) !important",
+                    },
                   },
-                  // sx: {
-                  //   [`& .${stepIconClasses.active}`]: {
-                  //     scale: 1.1,
-                  //     color: "rgb(21 168 61)!important",
-                  //   },
-                  //   [`& .${stepIconClasses.completed}`]: {
-                  //     color: "rgb(34,197, 94) !important",
-                  //   },
-                  // },
                 }}
               >
                 {label}
@@ -110,7 +127,7 @@ export default function EnrollComponent() {
         </Stepper>
         <FormProvider<Student> {...methods}>
           <form
-            onSubmit={methods.handleSubmit(onSubmit, (e) => console.log(e))}
+            onSubmit={handleSubmit(onSubmit, (e) => console.log(e))}
             className="flex flex-col gap-7"
           >
             {steps[activeStep].component}

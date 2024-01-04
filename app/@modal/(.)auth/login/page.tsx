@@ -17,11 +17,11 @@ export default function page() {
       <Card
         component={MotionDiv}
         key="loginCard"
-        initial={{ opacity: 0, marginTop: "-10rem" }}
-        animate={{ opacity: 1, marginTop: "10rem" }}
+        initial={{ opacity: 0, y: -400 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.25, ease: "easeInOut" }}
         exit={{ opacity: 0, marginTop: "-10rem" }}
-        className="m-auto mt-40 w-96 rounded-md  shadow-2xl shadow-neutral-950 dark:bg-slate-900"
+        className="m-auto mt-10 w-96 rounded-md shadow-2xl shadow-neutral-950 lg:mt-40 dark:bg-slate-900"
       >
         <CardBackgroundForLightMode />
         <CardContent className="m-4 flex flex-col gap-4  ">
