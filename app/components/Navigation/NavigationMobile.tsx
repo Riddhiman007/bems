@@ -11,6 +11,7 @@ import {
   IconButton,
   SpeedDial,
   SpeedDialAction,
+  Button,
 } from "@mui/material";
 
 // icons
@@ -21,7 +22,6 @@ import {
   MoonIcon,
   SunIcon,
   UserCircleIcon,
-  UserIcon,
 } from "@heroicons/react/24/solid";
 import {
   CalendarIcon as CalenderIconOutline,
@@ -31,23 +31,14 @@ import {
   ChatBubbleLeftIcon as ChatBubbleLeftIconOutline,
   BellIcon as BellIconOutline,
 } from "@heroicons/react/24/outline";
-import {
-  CloseOutlined,
-  Dashboard,
-  DashboardOutlined,
-  LeaderboardOutlined,
-  LogoutOutlined,
-  MoneyOutlined,
-} from "@mui/icons-material";
+import { CloseOutlined, DashboardOutlined, LogoutOutlined } from "@mui/icons-material";
 
 import "@fontsource/shrikhand";
 import { useTheme } from "next-themes";
 
-import MotionButton from "../Motion/MotionButton";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import image from "@/photo-removebg.png";
-import MotionBottomNavigationAction from "../Motion/MotionButtonNavigation";
 import MotionLink from "../Motion/MotionLink";
 
 import styles from "./NavigationMobile.module.css";
@@ -147,6 +138,16 @@ const NavigationMobile = ({
                 className="h-7 w-7 dark:text-slate-50"
               />
             </IconButton>
+            {!session && (
+              <Button
+                className="my-2 bg-green-700 !py-2 px-4 text-green-50 hover:bg-green-900"
+                component={MotionLink}
+                whileHover={{ scale: 1.1 }}
+                href="/auth/login"
+              >
+                Login
+              </Button>
+            )}
           </Box>
         </Container>
       </AppBar>
