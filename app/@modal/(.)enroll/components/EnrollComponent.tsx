@@ -132,20 +132,22 @@ export default function EnrollComponent() {
           >
             {steps[activeStep].component}
             <Box className="flex flex-row justify-between ">
-              <Button
-                type="button"
-                onClick={handleReturnButtonClick}
-                component={MotionButton}
-                initial={{ opacity: 0, y: 400 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                whileHover={{ scale: 1.05 }}
-                variant="outlined"
-                className="rounded-md px-4 py-2 "
-                color="error"
-              >
-                {isFirstStep ? "Cancel" : "Back"}
-              </Button>
+              {!allStepsCompleted && (
+                <Button
+                  type="button"
+                  onClick={handleReturnButtonClick}
+                  component={MotionButton}
+                  initial={{ opacity: 0, y: 400 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  whileHover={{ scale: 1.05 }}
+                  variant="outlined"
+                  className="rounded-md px-4 py-2 "
+                  color="error"
+                >
+                  {isFirstStep ? "Cancel" : "Back"}
+                </Button>
+              )}
               <Button
                 component={MotionButton}
                 initial={{ opacity: 0, y: 400 }}
