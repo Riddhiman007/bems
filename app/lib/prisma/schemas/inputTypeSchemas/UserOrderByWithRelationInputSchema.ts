@@ -16,7 +16,7 @@ export const UserOrderByWithRelationInputSchema: z.ZodType<Prisma.UserOrderByWit
   role: z.lazy(() => SortOrderSchema).optional(),
   image: z.lazy(() => SortOrderSchema).optional(),
   address: z.lazy(() => SortOrderSchema).optional(),
-  teacherId: z.lazy(() => SortOrderSchema).optional(),
+  gender: z.lazy(() => SortOrderSchema).optional(),
   student: z.lazy(() => StudentOrderByWithRelationInputSchema).optional(),
   teacher: z.lazy(() => TeacherOrderByWithRelationInputSchema).optional(),
   posts: z.lazy(() => PostOrderByRelationAggregateInputSchema).optional(),

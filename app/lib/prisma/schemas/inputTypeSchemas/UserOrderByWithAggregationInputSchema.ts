@@ -14,7 +14,7 @@ export const UserOrderByWithAggregationInputSchema: z.ZodType<Prisma.UserOrderBy
   role: z.lazy(() => SortOrderSchema).optional(),
   image: z.lazy(() => SortOrderSchema).optional(),
   address: z.lazy(() => SortOrderSchema).optional(),
-  teacherId: z.lazy(() => SortOrderSchema).optional(),
+  gender: z.lazy(() => SortOrderSchema).optional(),
   _count: z.lazy(() => UserCountOrderByAggregateInputSchema).optional(),
   _max: z.lazy(() => UserMaxOrderByAggregateInputSchema).optional(),
   _min: z.lazy(() => UserMinOrderByAggregateInputSchema).optional()

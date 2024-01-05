@@ -204,7 +204,7 @@ export default function StudentDataGrid() {
                 key="cancel"
                 icon={<CancelIcon />}
                 label="Cancel"
-                className="textPrimary"
+                className="text-blue-600"
                 onClick={() => handleCancelClick(id)}
                 color="inherit"
               />,
@@ -216,7 +216,7 @@ export default function StudentDataGrid() {
               key="edit"
               icon={<EditIcon />}
               label="Edit"
-              className="textPrimary"
+              className="text-blue-600"
               onClick={() => handleEditClick(id)}
               color="inherit"
             />,

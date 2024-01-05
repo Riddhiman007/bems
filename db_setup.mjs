@@ -1,7 +1,8 @@
 import { PrismaClient, GradeType } from "@prisma/client";
+import { z } from "zod";
 
 const prisma = new PrismaClient();
-// type Grade = z.infer<typeof GradeCreateInputSchema>;
+//type Grade = z.infer<typeof GradeCreateInputSchema>;
 async function setupDb() {
   const data = [
     {
@@ -15,6 +16,7 @@ async function setupDb() {
               address: "Nashik",
               email: "123@gmail.com",
               role: "Teacher",
+              gender: "Female",
             },
           },
         },
@@ -31,6 +33,7 @@ async function setupDb() {
               address: "Nashik",
               email: "abc@gmail.com",
               role: "Teacher",
+              gender: "Female",
             },
           },
         },
@@ -47,6 +50,7 @@ async function setupDb() {
               address: "Nashik",
               email: "unati@gmail.com",
               role: "Teacher",
+              gender: "Female",
             },
           },
         },
@@ -63,6 +67,7 @@ async function setupDb() {
               address: "Nashik",
               email: "prajakta@gmail.com",
               role: "Teacher",
+              gender: "Female",
             },
           },
         },
@@ -79,6 +84,7 @@ async function setupDb() {
               address: "Nashik",
               email: "KK@gmail.com",
               role: "Teacher",
+              gender: "Female",
             },
           },
         },
@@ -95,6 +101,7 @@ async function setupDb() {
               address: "Nashik",
               email: "neha@gmail.com",
               role: "Teacher",
+              gender: "Female",
             },
           },
         },
@@ -111,6 +118,7 @@ async function setupDb() {
               address: "Nashik",
               email: "kavita@gmail.com",
               role: "Teacher",
+              gender: "Female",
             },
           },
         },
@@ -127,6 +135,7 @@ async function setupDb() {
               address: "Moh, Chincholi phata",
               email: "aparnachoudhary229@gmail.com",
               role: "Teacher",
+              gender: "Female",
             },
           },
         },
@@ -143,6 +152,7 @@ async function setupDb() {
               address: "Nashik",
               email: "sunita@gmail.com",
               role: "Teacher",
+              gender: "Female",
             },
           },
         },
@@ -158,7 +168,9 @@ async function setupDb() {
               fullname: "Rudranarayan Chowdhury",
               address: "Moh, Chincholi Phata",
               email: "rudranarayanchoudhary311@gmail.com",
+
               role: "Teacher",
+              gender: "Male",
             },
           },
         },

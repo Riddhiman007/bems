@@ -1,25 +1,29 @@
 "use client";
 import { allGrades } from "@/lib/prisma/helper";
 import { Student } from "@/lib/prisma/schemas";
-import { AcademicCapIcon, UserCircleIcon } from "@heroicons/react/24/solid";
-import { ContactPhone, Email, Face, Face2, Phone } from "@mui/icons-material";
-import { Box, InputAdornment, MenuItem, Radio, Select, TextField } from "@mui/material";
+import { AcademicCapIcon } from "@heroicons/react/24/solid";
+import { Email, Face, Face2, Phone } from "@mui/icons-material";
+import { Box, InputAdornment, MenuItem, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-
 export default function PersonalForm() {
   const [gender, setGender] = useState<"Male" | "Female" | boolean>(false);
   const { control } = useFormContext<Student>();
-
   return (
     <Box className="flex flex-col gap-6">
       <Controller
         control={control}
         name="fullname"
-        render={({ field: { ref, ...remainingProps } }) => (
+        render={({ field: { ref, ...remainingProps }, fieldState: { error } }) => (
           <TextField
             inputRef={ref}
             variant="standard"
+            error={Boolean(error)}
+            helperText={
+              error && (
+                <Typography className="text-sm text-red-600">{error.message}</Typography>
+              )
+            }
             label="Name"
             className="w-full"
             placeholder="Please enter your name"
@@ -38,13 +42,19 @@ export default function PersonalForm() {
       <Controller
         control={control}
         name="contact"
-        render={({ field: { ref, ...remainingProps } }) => (
+        render={({ field: { ref, ...remainingProps }, fieldState: { error } }) => (
           <TextField
             inputRef={ref}
             variant="standard"
             label="Contact No"
             type="number"
             fullWidth
+            error={Boolean(error)}
+            helperText={
+              error && (
+                <Typography className="text-sm text-red-600">{error.message}</Typography>
+              )
+            }
             placeholder="Please enter your contact number"
             InputProps={{
               startAdornment: (
@@ -60,13 +70,19 @@ export default function PersonalForm() {
       <Controller
         control={control}
         name="email"
-        render={({ field: { ref, ...remainingProps } }) => (
+        render={({ field: { ref, ...remainingProps }, fieldState: { error } }) => (
           <TextField
             inputRef={ref}
             variant="standard"
             label="Email"
             type="email"
             fullWidth
+            error={Boolean(error)}
+            helperText={
+              error && (
+                <Typography className="text-sm text-red-600">{error.message}</Typography>
+              )
+            }
             placeholder="Please enter your email address"
             InputProps={{
               startAdornment: (
@@ -83,7 +99,7 @@ export default function PersonalForm() {
         <Controller
           control={control}
           name="grade_name"
-          render={({ field: { ref, ...remainingProps } }) => (
+          render={({ field: { ref, ...remainingProps }, fieldState: { error } }) => (
             <>
               <TextField
                 select
@@ -91,6 +107,14 @@ export default function PersonalForm() {
                 inputRef={ref}
                 fullWidth
                 label="Grade"
+                error={Boolean(error)}
+                helperText={
+                  error && (
+                    <Typography className="text-sm text-red-600">
+                      {error.message}
+                    </Typography>
+                  )
+                }
                 placeholder="Please enter your grade"
                 SelectProps={{
                   MenuProps: {
@@ -120,12 +144,20 @@ export default function PersonalForm() {
               setGender(event.target.value);
             },
           }}
-          render={({ field: { ref, ...remainingProps } }) => (
+          render={({ field: { ref, ...remainingProps }, fieldState: { error } }) => (
             <>
               <TextField
                 select
                 variant="standard"
                 label="Gender"
+                error={Boolean(error)}
+                helperText={
+                  error && (
+                    <Typography className="text-sm text-red-600">
+                      {error.message}
+                    </Typography>
+                  )
+                }
                 inputRef={ref}
                 fullWidth
                 placeholder="Please enter your gender"

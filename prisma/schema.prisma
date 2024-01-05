@@ -8,13 +8,13 @@ generator client {
   provider = "prisma-client-js"
 }
 
-//generator zod {
-//  provider         = "npx zod-prisma-types"
-//  output           = "../app/lib/prisma/schemas"
-//  useMultipleFiles = true
-//  writeBarrelFiles = true
-//  createInputTypes = true
-//}
+// generator zod {
+//   provider         = "npx zod-prisma-types"
+//   output           = "../app/lib/prisma/schemas"
+//   useMultipleFiles = true
+//   writeBarrelFiles = true
+//   createInputTypes = true
+// }
 
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
@@ -54,12 +54,12 @@ model User {
   role          Role      @default(Student)
   image         String?
   address       String
+  gender        Gender    @default(Female)
   student       Student?
   teacher       Teacher?
   posts         Post[]
   accounts      Account[]
   sessions      Session[]
-  teacherId     String?   @db.ObjectId
 
   @@map("users")
 }
@@ -76,7 +76,7 @@ model VerificationToken {
 
 model Grade {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  grade         GradeType @unique
+  grade         GradeType @unique /// @zod.enum({required_error:"Which class do you want to study?"})
   class_teacher Teacher   @relation(fields: [teacher_name], references: [id], onDelete: NoAction)
   teacher_name  String    @unique @db.ObjectId
 
@@ -97,15 +97,15 @@ model Teacher {
 
 model Student {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId /// @zod.custom.omit([model, input])
-  fullname    String
-  father_name String
-  mother_name String
-  contact     String
-  caste       String
-  address     String
+  fullname    String /// @zod.string({required_error:"We don't know what is your name"})
+  father_name String /// @zod.string({required_error:"Who is your father?"})
+  mother_name String /// @zod.string({required_error:"Who is your mother?"})
+  contact     String /// @zod.string({required_error:"Please enter your contact number."}).length(10, {message:"Contact numbers must be 10 digits long."})
+  caste       Caste     @default(Gen)
+  address     String /// @zod.string({required_error:"Can you please tell us where do you live?"})
   isNew       Boolean /// @zod.custom.omit([model, input])
-  gender      Gender    @default(Male)
-  email       String    @unique
+  gender      Gender    @default(Male) /// @zod.enum({required_error:"Are you a boy or a girl?"})
+  email       String    @unique /// @zod.string({required_error:"Can you please enter your email address?"})
   grade       Grade     @relation(fields: [grade_name], references: [grade], onDelete: NoAction)
   grade_name  GradeType @unique
   user        User      @relation(fields: [email], references: [email], onDelete: Cascade)
@@ -149,4 +149,12 @@ enum GradeType {
 enum Gender {
   Male
   Female
+}
+
+enum Caste {
+  Gen
+  SC
+  ST
+  OBC
+  NT
 }

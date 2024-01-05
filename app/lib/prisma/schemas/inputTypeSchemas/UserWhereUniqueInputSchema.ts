@@ -7,6 +7,8 @@ import { DateTimeNullableFilterSchema } from './DateTimeNullableFilterSchema';
 import { EnumRoleFilterSchema } from './EnumRoleFilterSchema';
 import { RoleSchema } from './RoleSchema';
 import { StringNullableFilterSchema } from './StringNullableFilterSchema';
+import { EnumGenderFilterSchema } from './EnumGenderFilterSchema';
+import { GenderSchema } from './GenderSchema';
 import { StudentNullableRelationFilterSchema } from './StudentNullableRelationFilterSchema';
 import { StudentWhereInputSchema } from './StudentWhereInputSchema';
 import { TeacherNullableRelationFilterSchema } from './TeacherNullableRelationFilterSchema';
@@ -38,7 +40,7 @@ export const UserWhereUniqueInputSchema: z.ZodType<Prisma.UserWhereUniqueInput> 
   role: z.union([ z.lazy(() => EnumRoleFilterSchema),z.lazy(() => RoleSchema) ]).optional(),
   image: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   address: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  teacherId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  gender: z.union([ z.lazy(() => EnumGenderFilterSchema),z.lazy(() => GenderSchema) ]).optional(),
   student: z.union([ z.lazy(() => StudentNullableRelationFilterSchema),z.lazy(() => StudentWhereInputSchema) ]).optional().nullable(),
   teacher: z.union([ z.lazy(() => TeacherNullableRelationFilterSchema),z.lazy(() => TeacherWhereInputSchema) ]).optional().nullable(),
   posts: z.lazy(() => PostListRelationFilterSchema).optional(),

@@ -10,7 +10,7 @@ import {
   stepIconClasses,
   styled,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import MotionButton from "@/components/Motion/MotionButton";
 import { useRouter } from "next/navigation";
@@ -33,7 +33,8 @@ export default function EnrollComponent() {
   const { theme } = useTheme();
   const router = useRouter();
   const methods = useForm<Student>({
-    reValidateMode: "onChange",
+    reValidateMode: "onBlur",
+    mode: "all",
     resolver: zodResolver(StudentSchema),
   });
 
@@ -43,7 +44,7 @@ export default function EnrollComponent() {
   const isLastStep = activeStep === totalSteps - 2;
   const allStepsCompleted = activeStep === totalSteps - 1;
 
-  const handleSubmitButtonClick = async () => {
+  const handleSubmitButtonClick = useCallback(async () => {
     if (allStepsCompleted) {
       router.back();
     } else if (!isLastStep) {
@@ -58,17 +59,17 @@ export default function EnrollComponent() {
         setActiveStep((lastStep) => lastStep + 1);
       }
     }
-  };
+  }, [allStepsCompleted, isLastStep, router, trigger]);
 
-  const handleReturnButtonClick: () => void = () => {
+  const handleReturnButtonClick = useCallback(() => {
     isFirstStep ? router.back() : setActiveStep((lastStep) => lastStep - 1);
-  };
+  }, [isFirstStep, router]);
 
-  const onSubmit: SubmitHandler<Student> = (data) => {
+  const onSubmit = useCallback<SubmitHandler<Student>>((data) => {
     console.log(data);
     createNewStudent({ ...data });
     setActiveStep((lastStep) => lastStep + 1);
-  };
+  }, []);
   return (
     <>
       <Box className="flex flex-col justify-center gap-7">
@@ -131,7 +132,11 @@ export default function EnrollComponent() {
             className="flex flex-col gap-7"
           >
             {steps[activeStep].component}
-            <Box className={`flex flex-row ${allStepsCompleted?"justify-end":"justify-between"} `}>
+            <Box
+              className={`flex flex-row ${
+                allStepsCompleted ? "justify-end" : "justify-between"
+              } `}
+            >
               {!allStepsCompleted && (
                 <Button
                   type="button"

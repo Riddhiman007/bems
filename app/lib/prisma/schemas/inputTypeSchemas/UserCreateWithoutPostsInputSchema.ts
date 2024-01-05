@@ -2,6 +2,7 @@ import type { Prisma } from '@prisma/client';
 
 import { z } from 'zod';
 import { RoleSchema } from './RoleSchema';
+import { GenderSchema } from './GenderSchema';
 import { StudentCreateNestedOneWithoutUserInputSchema } from './StudentCreateNestedOneWithoutUserInputSchema';
 import { TeacherCreateNestedOneWithoutUserInputSchema } from './TeacherCreateNestedOneWithoutUserInputSchema';
 import { AccountCreateNestedManyWithoutUserInputSchema } from './AccountCreateNestedManyWithoutUserInputSchema';
@@ -15,7 +16,7 @@ export const UserCreateWithoutPostsInputSchema: z.ZodType<Prisma.UserCreateWitho
   role: z.lazy(() => RoleSchema).optional(),
   image: z.string().optional().nullable(),
   address: z.string(),
-  teacherId: z.string().optional().nullable(),
+  gender: z.lazy(() => GenderSchema).optional(),
   student: z.lazy(() => StudentCreateNestedOneWithoutUserInputSchema).optional(),
   teacher: z.lazy(() => TeacherCreateNestedOneWithoutUserInputSchema).optional(),
   accounts: z.lazy(() => AccountCreateNestedManyWithoutUserInputSchema).optional(),

@@ -2,6 +2,7 @@ import type { Prisma } from '@prisma/client';
 
 import { z } from 'zod';
 import { RoleSchema } from './RoleSchema';
+import { GenderSchema } from './GenderSchema';
 
 export const UserCreateManyInputSchema: z.ZodType<Prisma.UserCreateManyInput> = z.object({
   id: z.string().optional(),
@@ -11,7 +12,7 @@ export const UserCreateManyInputSchema: z.ZodType<Prisma.UserCreateManyInput> = 
   role: z.lazy(() => RoleSchema).optional(),
   image: z.string().optional().nullable(),
   address: z.string(),
-  teacherId: z.string().optional().nullable()
+  gender: z.lazy(() => GenderSchema).optional()
 }).strict();
 
 export default UserCreateManyInputSchema;

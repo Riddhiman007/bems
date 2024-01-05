@@ -6,6 +6,8 @@ import { NullableDateTimeFieldUpdateOperationsInputSchema } from './NullableDate
 import { RoleSchema } from './RoleSchema';
 import { EnumRoleFieldUpdateOperationsInputSchema } from './EnumRoleFieldUpdateOperationsInputSchema';
 import { NullableStringFieldUpdateOperationsInputSchema } from './NullableStringFieldUpdateOperationsInputSchema';
+import { GenderSchema } from './GenderSchema';
+import { EnumGenderFieldUpdateOperationsInputSchema } from './EnumGenderFieldUpdateOperationsInputSchema';
 import { StudentUpdateOneWithoutUserNestedInputSchema } from './StudentUpdateOneWithoutUserNestedInputSchema';
 import { TeacherUpdateOneWithoutUserNestedInputSchema } from './TeacherUpdateOneWithoutUserNestedInputSchema';
 import { PostUpdateManyWithoutAuthorNestedInputSchema } from './PostUpdateManyWithoutAuthorNestedInputSchema';
@@ -19,7 +21,7 @@ export const UserUpdateInputSchema: z.ZodType<Prisma.UserUpdateInput> = z.object
   role: z.union([ z.lazy(() => RoleSchema),z.lazy(() => EnumRoleFieldUpdateOperationsInputSchema) ]).optional(),
   image: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   address: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  teacherId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
   student: z.lazy(() => StudentUpdateOneWithoutUserNestedInputSchema).optional(),
   teacher: z.lazy(() => TeacherUpdateOneWithoutUserNestedInputSchema).optional(),
   posts: z.lazy(() => PostUpdateManyWithoutAuthorNestedInputSchema).optional(),

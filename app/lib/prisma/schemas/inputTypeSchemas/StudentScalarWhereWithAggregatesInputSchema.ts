@@ -2,6 +2,8 @@ import type { Prisma } from '@prisma/client';
 
 import { z } from 'zod';
 import { StringWithAggregatesFilterSchema } from './StringWithAggregatesFilterSchema';
+import { EnumCasteWithAggregatesFilterSchema } from './EnumCasteWithAggregatesFilterSchema';
+import { CasteSchema } from './CasteSchema';
 import { BoolWithAggregatesFilterSchema } from './BoolWithAggregatesFilterSchema';
 import { EnumGenderWithAggregatesFilterSchema } from './EnumGenderWithAggregatesFilterSchema';
 import { GenderSchema } from './GenderSchema';
@@ -17,7 +19,7 @@ export const StudentScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Stude
   father_name: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   mother_name: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   contact: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
-  caste: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  caste: z.union([ z.lazy(() => EnumCasteWithAggregatesFilterSchema),z.lazy(() => CasteSchema) ]).optional(),
   address: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   isNew: z.union([ z.lazy(() => BoolWithAggregatesFilterSchema),z.boolean() ]).optional(),
   gender: z.union([ z.lazy(() => EnumGenderWithAggregatesFilterSchema),z.lazy(() => GenderSchema) ]).optional(),

@@ -2,6 +2,8 @@ import type { Prisma } from '@prisma/client';
 
 import { z } from 'zod';
 import { StringFilterSchema } from './StringFilterSchema';
+import { EnumCasteFilterSchema } from './EnumCasteFilterSchema';
+import { CasteSchema } from './CasteSchema';
 import { BoolFilterSchema } from './BoolFilterSchema';
 import { EnumGenderFilterSchema } from './EnumGenderFilterSchema';
 import { GenderSchema } from './GenderSchema';
@@ -21,7 +23,7 @@ export const StudentWhereInputSchema: z.ZodType<Prisma.StudentWhereInput> = z.ob
   father_name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   mother_name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   contact: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  caste: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  caste: z.union([ z.lazy(() => EnumCasteFilterSchema),z.lazy(() => CasteSchema) ]).optional(),
   address: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   isNew: z.union([ z.lazy(() => BoolFilterSchema),z.boolean() ]).optional(),
   gender: z.union([ z.lazy(() => EnumGenderFilterSchema),z.lazy(() => GenderSchema) ]).optional(),

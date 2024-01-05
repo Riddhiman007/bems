@@ -20,7 +20,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import MotionMuiBotton from "../Motion/MotionMuiButton";
 
 const loginSchema = z.object({
-  email: z.string().email({ message: "Please enter correct email address." }),
+  email: z
+    .string({ required_error: "Please enter your email address." })
+    .email({ message: "Please enter your email address correctly." }),
 });
 
 type LoginValidator = z.infer<typeof loginSchema>;
@@ -31,6 +33,8 @@ export default function LoginForm({
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const { control, handleSubmit } = useForm<LoginValidator>({
+    shouldUseNativeValidation: false,
+    mode: "all",
     resolver: zodResolver(loginSchema),
   });
   const onSubmit: SubmitHandler<LoginValidator> = async (data) => {
@@ -45,16 +49,11 @@ export default function LoginForm({
       <Controller
         control={control}
         name="email"
-        rules={{ required: true }}
         render={({ field: { ref, ...remainingProps }, fieldState: { error } }) => (
           <TextField
             error={Boolean(error)}
             helperText={
-              error && (
-                <Typography className="text-red-600">
-                  {error.type === "required" ? "Please fill this field" : ""}
-                </Typography>
-              )
+              error && <Typography className="text-red-600">{error.message}</Typography>
             }
             InputProps={{
               startAdornment: (

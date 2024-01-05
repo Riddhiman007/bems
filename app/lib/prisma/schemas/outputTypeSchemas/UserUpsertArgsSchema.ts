@@ -23,7 +23,7 @@ export const UserSelectSchema: z.ZodType<Prisma.UserSelect> = z.object({
   role: z.boolean().optional(),
   image: z.boolean().optional(),
   address: z.boolean().optional(),
-  teacherId: z.boolean().optional(),
+  gender: z.boolean().optional(),
   student: z.union([z.boolean(),z.lazy(() => StudentArgsSchema)]).optional(),
   teacher: z.union([z.boolean(),z.lazy(() => TeacherArgsSchema)]).optional(),
   posts: z.union([z.boolean(),z.lazy(() => PostArgsSchema)]).optional(),
