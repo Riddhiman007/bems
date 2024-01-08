@@ -90,7 +90,7 @@ const initialColumns: GridColDef[] = [
     headerName: "Contact",
     type: "number",
     editable: true,
-    valueParser: (value, params) => value.toString(),
+    valueParser: (value, params) => "" + value,
   },
   { field: "address", headerName: "Address", type: "text", width: 300, editable: true },
   { field: "isNew", headerName: "Is new student", type: "boolean", editable: true },
