@@ -57,11 +57,7 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
     setUserAnchorEl(null);
   };
   return (
-    <AppBar
-      component="header"
-      elevation={elevation}
-      className="bg-transparent py-4 lg:py-6"
-    >
+    <AppBar component="nav" elevation={elevation} className="bg-transparent py-4 lg:py-6">
       <Container className="flex flex-row justify-between gap-4">
         <Link href="/">
           <Box

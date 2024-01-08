@@ -4,7 +4,6 @@ import React from "react";
 import Image from "next/image";
 import MotionDiv from "./components/Motion/MotionDiv";
 import SchoolImage from "./1-PhotoRoom.png";
-import ExplosionImage from "./components/ExplosionImage";
 import ParticlesContainer from "./components/ParticlesContainer";
 import MotionLink from "./components/Motion/MotionLink";
 
@@ -13,21 +12,20 @@ export default function Home() {
   return (
     <>
       <ParticlesContainer />
-      <Box className="mb-40 flex flex-col gap-40">
+    <Box className="flex flex-col gap-20">
         <Box
-          component="main"
-          className="inset-0 flex flex-row  bg-none dark:bg-gradient-to-b dark:from-blue-950 dark:to-slate-950"
+          // component="main"
+          className="inset-0 flex h-dvh flex-row bg-none dark:bg-gradient-to-b dark:from-blue-950 dark:to-slate-950"
         >
           <Image
             src={SchoolImage}
             alt="school image"
-            className="absolute inset-0 z-10 opacity-30 mix-blend-color-dodge"
+            className="inset-0 z-10 aspect-video opacity-30 mix-blend-color-dodge"
             fill
           />
-          {/* <ExplosionImage /> */}
 
           <Container
-            className="relative inset-0 ml-0 mt-40 flex flex-row dark:bg-transparent"
+            className="relative inset-0 ml-0 mt-40 flex flex-row bg-transparent"
             component={MotionDiv}
             initial={{ opacity: 0, y: 400 }}
             animate={{ opacity: 1, y: 0 }}
@@ -56,37 +54,37 @@ export default function Home() {
             </Box>
           </Container>
         </Box>
-      </Box>
-      <Container className="mt-20 flex flex-col gap-10 pl-0">
-        <MotionDiv
-          initial={{ opacity: 0, y: 200 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ ease: "easeIn" }}
-        >
-          <Typography
-            variant="h4"
-            className="ml-10 md:ml-0 md:text-4xl lg:text-6xl dark:text-slate-50"
-          >
-            Admission Open for <Typography className="inline">2024-25</Typography>
-          </Typography>
-        </MotionDiv>
-        <Box className="mb-10 flex flex-row justify-center">
-          <Button
-            variant="contained"
-            color="success"
-            className="z-[100] rounded bg-green-700 px-7 py-4 text-xl text-green-50 hover:bg-green-900"
-            component={MotionLink}
+
+        <Container className="mb-10 flex flex-col gap-10 pl-0">
+          <MotionDiv
             initial={{ opacity: 0, y: 200 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ ease: "easeIn" }}
-            whileHover={{ scale: 1.2 }}
-            href="/enroll"
           >
-            Enroll now...
-          </Button>
-          <div></div>
-        </Box>
-      </Container>
+            <Typography
+              variant="h4"
+              className="ml-10 md:ml-0 md:text-4xl lg:text-6xl dark:text-slate-50"
+            >
+              Admission Open for <Typography className="inline">2024-25</Typography>
+            </Typography>
+          </MotionDiv>
+          <Box className="mb-10 flex flex-row justify-center">
+            <Button
+              variant="contained"
+              color="success"
+              className="z-[100] rounded bg-green-700 px-7 py-4 text-xl text-green-50 hover:bg-green-900"
+              component={MotionLink}
+              initial={{ opacity: 0, y: 100 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ ease: "easeIn", delay: 0.5 }}
+              whileHover={{ scale: 1.2 }}
+              href="/enroll"
+            >
+              Enroll now...
+            </Button>
+          </Box>
+        </Container>
+      </Box>
     </>
   );
 }

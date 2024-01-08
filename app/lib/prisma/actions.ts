@@ -1,9 +1,10 @@
 "use server";
 
 import { Role } from "@prisma/client";
-// import { Student } from "@prisma/client";
+import { Student as PrismaStudentModel } from "@prisma/client";
 import prisma from ".";
 import { Student } from "./schemas";
+import { revalidatePath } from "next/cache";
 
 export async function createNewStudent({
   fullname,
@@ -62,33 +63,29 @@ export async function createNewStudent({
     },
   });
   console.log(student);
+  revalidatePath("/admin");
   return student;
 }
 
-// export async function createOrUpdateStudent({
-//   caste,
-//   email,
-//   father_name,
-//   firstname,
-//   grade,
-//   lastname,
-//   mother_name,
-//   username,
-//   middlename,
-// }: StudentInterface) {
-//   await prisma.student.upsert({
-//     create: {
-//       caste,
-//       father_name,
-//       firstname,
-//       lastname,
-//       mother_name,
-//       username,
-//       email,
-//       grade_name: grade,
-//     },
-//     update: {
+export async function fetchAllStudents(): Promise<PrismaStudentModel[]> {
+  return await prisma.student.findMany();
+}
 
-//     }
-//   });
-// }
+export async function updateStudent(
+  oldRow: PrismaStudentModel,
+  newRow: PrismaStudentModel,
+): Promise<Student> {
+  const { id, ...t } = newRow;
+  const student = await prisma.student.update({
+    data: { ...t },
+    where: oldRow,
+  });
+  revalidatePath("/admin");
+  return student;
+}
+
+export async function deleteStudent(student: Student) {
+  let d = await prisma.student.delete({ where: student });
+  revalidatePath("/admin");
+  return d;
+}

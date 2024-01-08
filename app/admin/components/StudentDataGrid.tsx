@@ -11,10 +11,12 @@ import {
   GridEventListener,
   GridRowEditStopReasons,
   GridRowId,
+  GridValidRowModel,
+  DataGridProps,
 } from "@mui/x-data-grid";
-import { Button } from "@mui/material";
-import React, { useMemo, useState, useCallback } from "react";
-import { Add } from "@mui/icons-material";
+import { Button, ButtonGroup, CircularProgress, Typography } from "@mui/material";
+import React, { useMemo, useState, useCallback, useRef } from "react";
+import { Add, Save } from "@mui/icons-material";
 import { randomId } from "@mui/x-data-grid-generator";
 import { allGrades } from "@/lib/prisma/helper";
 import {
@@ -23,114 +25,159 @@ import {
   Edit as EditIcon,
   Save as SaveIcon,
 } from "@mui/icons-material";
-
-interface RowDefinition {
-  id: string;
-  fullname: string;
-  fathername: string;
-}
+import { StudentDatagridEditToolBarProps, StudentRowModel, UnsavedChanges } from ".";
+import { updateRow } from "./StudentDataGridBackend";
+import { deleteStudent } from "@/lib/prisma";
 
 const initialColumns: GridColDef[] = [
   {
     field: "fullname",
     type: "string",
     headerName: "Full name",
-    flex: 3,
+    resizable: true,
     editable: true,
-    cellClassName: "overflow-x-auto",
+    // cellClassName: "overflow-x-auto",
+    width: 200,
   },
   {
-    field: "fathername",
+    field: "father_name",
     headerName: "Father name",
+    resizable: true,
     type: "string",
-    flex: 3,
     editable: true,
+    width: 200,
   },
   {
-    field: "mothername",
+    field: "mother_name",
     headerName: "Mother name",
     type: "string",
-    flex: 3,
+    width: 200,
+    resizable: true,
     editable: true,
   },
   {
     field: "email",
     headerName: "Email",
+    resizable: true,
     type: "string",
-    flex: 2,
+    width: 200,
     editable: true,
   },
-  {
-    field: "username",
-    headerName: "Username",
-    type: "string",
-    // flex: 2,
-    editable: true,
-  },
+
   {
     field: "caste",
     headerName: "Caste",
     type: "string",
-    flex: 2,
+
     editable: true,
   },
   {
-    field: "grade",
+    field: "grade_name",
     headerName: "Grade",
     type: "singleSelect",
     valueOptions: allGrades,
-  },
-];
-const initialRows: GridRowsProp = [
-  {
-    id: "1",
-    fullname: "Riddhiman Chowdhury",
-    fathername: "Rudranarayan chowdhury",
+    editable: true,
   },
   {
-    id: "2",
-    fullname: "Riddhiman Chowdhury",
-    fathername: "Rudranarayan chowdhury",
+    field: "gender",
+    headerName: "Gender",
+    type: "singleSelect",
+    valueOptions: ["Male", "Female"],
+    editable: true,
   },
   {
-    id: "3",
-    fullname: "Riddhiman Chowdhury",
-    fathername: "Rudranarayan chowdhury",
+    field: "contact",
+    headerName: "Contact",
+    type: "number",
+    editable: true,
+    valueParser: (value, params) => value.toString(),
   },
-  {
-    id: "4",
-    fullname: "Riddhiman Chowdhury",
-    fathername: "Rudranarayan chowdhury",
-  },
+  { field: "address", headerName: "Address", type: "text", width: 300, editable: true },
+  { field: "isNew", headerName: "Is new student", type: "boolean", editable: true },
 ];
 
-interface EditToolBarProps {
-  setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
-  setRowModesModel: (
-    newModel: (oldModel: GridRowModesModel) => GridRowModesModel,
-  ) => void;
-}
-function EditToolbar({ setRows, setRowModesModel }: EditToolBarProps) {
-  const handleClick = () => {
+function EditToolbar({
+  apiRef,
+  isSaving,
+  setRows,
+  setRowModesModel,
+  handleSaveAllClick,
+  hasUnsavedRows,
+  handleDiscardChanges,
+  setHasUnsavedRows,
+  unsavedChangesRef,
+}: StudentDatagridEditToolBarProps) {
+  const handleNewStudClick = () => {
     const id = randomId();
-    setRows((oldRows) => [...oldRows, { id, fullname: "", fathername: "", grade: "I" }]);
+    const row: StudentRowModel = {
+      id,
+      fullname: "",
+      fathername: "",
+      address: "",
+      caste: "Gen",
+      email: "",
+      father_name: "",
+      gender: "Male",
+      isNew: true,
+      grade_name: "IX",
+      mother_name: "",
+      contact: "",
+    };
+    setRows((oldRows) => [...oldRows, row]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: "fullname" },
     }));
+    unsavedChangesRef.current.unsavedRows[id] = row;
+    if (!unsavedChangesRef.current.rowsBeforeChange[id]) {
+      unsavedChangesRef.current.rowsBeforeChange[id] = row;
+    }
+    setHasUnsavedRows(true);
+    apiRef.current.updateRows([row]);
   };
 
   return (
-    <GridToolbarContainer>
-      <Button startIcon={<Add />} onClick={handleClick}>
+    <GridToolbarContainer className="flex flex-row justify-between">
+      <ButtonGroup>
+        <Button
+          startIcon={!isSaving && <Save />}
+          disabled={!hasUnsavedRows || isSaving}
+          color="success"
+          onClick={handleSaveAllClick}
+          variant="contained"
+          className="flex flex-row gap-2 bg-green-700 px-4 py-2 text-green-50 hover:bg-green-900 disabled:bg-green-900"
+        >
+          {isSaving && <CircularProgress size={20} className="text-green-50" />}
+          <Typography>Save all</Typography>
+        </Button>
+        <Button
+          startIcon={<DeleteIcon />}
+          disabled={!hasUnsavedRows || isSaving}
+          onClick={handleDiscardChanges}
+          color="error"
+        >
+          Discard
+        </Button>
+      </ButtonGroup>
+      <Button startIcon={<Add />} onClick={handleNewStudClick}>
         Add student
       </Button>
     </GridToolbarContainer>
   );
 }
-export default function StudentDataGrid() {
-  const [rows, setRows] = useState(initialRows);
+export default function StudentDataGrid({
+  initialRows,
+}: {
+  initialRows: StudentRowModel[];
+}) {
+  const [rows, setRows] = useState<StudentRowModel[]>(initialRows);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
+  const unsavedChangesRef = useRef<UnsavedChanges>({
+    unsavedRows: {},
+    rowsBeforeChange: {},
+  });
+  const [isSaving, setIsSaving] = useState(false);
+  const [hasUnsavedRows, setHasUnsavedRows] = useState(false);
 
   const apiRef = useGridApiRef();
 
@@ -142,10 +189,19 @@ export default function StudentDataGrid() {
   };
 
   const handleEditClick = useCallback(
-    (id: GridRowId) => {
+    (id: GridRowId, row: StudentRowModel) => {
       setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+      unsavedChangesRef.current.unsavedRows[id] = {
+        ...row,
+        _action: "edit",
+      };
+      if (!unsavedChangesRef.current.rowsBeforeChange[id]) {
+        unsavedChangesRef.current.rowsBeforeChange[id] = row;
+      }
+      setHasUnsavedRows(true);
+      apiRef.current.updateRows([row]); // to trigger row render
     },
-    [rowModesModel],
+    [rowModesModel, apiRef],
   );
 
   const handleSaveClick = useCallback(
@@ -155,12 +211,17 @@ export default function StudentDataGrid() {
     [rowModesModel],
   );
 
-  const handleDeleteClick = useCallback(
-    (id: GridRowId) => {
-      setRows(rows.filter((row) => row.id !== id));
-    },
-    [rows],
-  );
+  const handleDeleteClick = useCallback((id: GridRowId, row: StudentRowModel) => {
+    unsavedChangesRef.current.unsavedRows[id] = {
+      ...row,
+      _action: "delete",
+    };
+    if (!unsavedChangesRef.current.rowsBeforeChange[id]) {
+      unsavedChangesRef.current.rowsBeforeChange[id] = row;
+    }
+    setHasUnsavedRows(true);
+    // apiRef.current.updateRows([row]); // to trigger row render
+  }, []);
 
   const handleCancelClick = useCallback(
     (id: GridRowId) => {
@@ -176,18 +237,75 @@ export default function StudentDataGrid() {
     },
     [rows, rowModesModel],
   );
-  const processRowUpdate = (newRow: any, oldRow: any) => {
+
+  const handleDiscardChanges = useCallback(() => {
+    setHasUnsavedRows(false);
+    apiRef.current.updateRows(Object.values(unsavedChangesRef.current.rowsBeforeChange));
+    unsavedChangesRef.current = { rowsBeforeChange: {}, unsavedRows: {} };
+  }, [apiRef]);
+
+  const handleSaveAllClick = useCallback(async () => {
+    try {
+      setIsSaving(true);
+      // TODO: call process row update
+
+      const rowsToSave = Object.values(unsavedChangesRef.current.unsavedRows).filter(
+        (row) => row._action === "edit",
+      );
+      rowsToSave.map((row) => {
+        setRowModesModel((lastRows) => ({
+          ...lastRows,
+          [row.id]: { mode: GridRowModes.View },
+        }));
+      });
+
+      const rowsToDelete = Object.values(unsavedChangesRef.current.unsavedRows).filter(
+        (row) => row._action === "delete",
+      );
+      rowsToDelete.map(async (row) => {
+        const { _action, ...t } = row;
+        const deletedStudent = await deleteStudent(t);
+        setRows((lastRow) => lastRow.filter((val) => val.id !== row.id));
+        console.log(deletedStudent);
+      });
+
+      setHasUnsavedRows(false);
+      unsavedChangesRef.current = {
+        rowsBeforeChange: {},
+        unsavedRows: {},
+      };
+
+      setIsSaving(false);
+    } catch (error) {
+      setIsSaving(false);
+    }
+  }, []);
+  const processRowUpdate: NonNullable<
+    DataGridProps<StudentRowModel>["processRowUpdate"]
+  > = async (newRow, oldRow) => {
     console.log(newRow, oldRow);
+
+    const rowId = newRow.id;
+    unsavedChangesRef.current.unsavedRows[rowId] = newRow;
+    if (!unsavedChangesRef.current.rowsBeforeChange[rowId]) {
+      unsavedChangesRef.current.rowsBeforeChange[rowId] = oldRow;
+    }
+
+    // backend work
+    await updateRow(newRow, oldRow);
+    setHasUnsavedRows(true);
+    return newRow;
   };
   // memoizes the columns
-  const columns = useMemo<GridColDef[]>(
+  const columns = useMemo<GridColDef<StudentRowModel>[]>(
     () => [
       ...initialColumns,
       {
         field: "actions",
         type: "actions",
         width: 100,
-        getActions({ id }) {
+        // cellClassName: "fixed",
+        getActions({ id, row }) {
           const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
           if (isInEditMode) {
             return [
@@ -195,16 +313,14 @@ export default function StudentDataGrid() {
                 key="save"
                 icon={<SaveIcon />}
                 label="Save"
-                sx={{
-                  color: "primary.main",
-                }}
+                className="text-green-300"
                 onClick={() => handleSaveClick(id)}
               />,
               <GridActionsCellItem
                 key="cancel"
                 icon={<CancelIcon />}
                 label="Cancel"
-                className="text-blue-600"
+                className="text-red-600"
                 onClick={() => handleCancelClick(id)}
                 color="inherit"
               />,
@@ -216,15 +332,16 @@ export default function StudentDataGrid() {
               key="edit"
               icon={<EditIcon />}
               label="Edit"
-              className="text-blue-600"
-              onClick={() => handleEditClick(id)}
+              className=""
+              onClick={() => handleEditClick(id, row)}
               color="inherit"
             />,
             <GridActionsCellItem
               key="delete"
               icon={<DeleteIcon />}
               label="Delete"
-              onClick={() => handleDeleteClick(id)}
+              className="text-red-600"
+              onClick={() => handleDeleteClick(id, row)}
               color="inherit"
             />,
           ];
@@ -244,7 +361,6 @@ export default function StudentDataGrid() {
     <DataGrid
       apiRef={apiRef}
       columns={columns}
-      className="overflow-x-auto"
       rows={rows}
       rowModesModel={rowModesModel}
       editMode="row"
@@ -254,7 +370,19 @@ export default function StudentDataGrid() {
         console.log(e);
       }}
       slots={{ toolbar: EditToolbar }}
-      slotProps={{ toolbar: { setRows, setRowModesModel } }}
+      slotProps={{
+        toolbar: {
+          apiRef,
+          unsavedChangesRef,
+          isSaving,
+          handleSaveAllClick,
+          hasUnsavedRows,
+          handleDiscardChanges,
+          setRows,
+          setRowModesModel,
+          setHasUnsavedRows,
+        },
+      }}
     />
   );
 }

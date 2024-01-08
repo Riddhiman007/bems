@@ -67,7 +67,7 @@ export default function EnrollComponent() {
 
   const onSubmit = useCallback<SubmitHandler<Student>>((data) => {
     console.log(data);
-    createNewStudent({ ...data });
+    createNewStudent(data);
     setActiveStep((lastStep) => lastStep + 1);
   }, []);
   return (

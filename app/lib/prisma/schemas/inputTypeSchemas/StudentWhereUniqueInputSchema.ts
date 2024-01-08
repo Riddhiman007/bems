@@ -51,7 +51,7 @@ export const StudentWhereUniqueInputSchema: z.ZodType<Omit<Prisma.StudentWhereUn
   fullname: z.union([ z.lazy(() => StringFilterSchema),z.string({required_error:"We don't know what is your name"}) ]).optional(),
   father_name: z.union([ z.lazy(() => StringFilterSchema),z.string({required_error:"Who is your father?"}) ]).optional(),
   mother_name: z.union([ z.lazy(() => StringFilterSchema),z.string({required_error:"Who is your mother?"}) ]).optional(),
-  contact: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  contact: z.union([ z.lazy(() => StringFilterSchema),z.string({required_error:"Please enter your contact number."}).length(10,{message:"Contact numbers must be 10 digits long."}) ]).optional(),
   caste: z.union([ z.lazy(() => EnumCasteFilterSchema),z.lazy(() => CasteSchema) ]).optional(),
   address: z.union([ z.lazy(() => StringFilterSchema),z.string({required_error:"Can you please tell us where do you live?"}) ]).optional(),
   // omitted: isNew: z.union([ z.lazy(() => BoolFilterSchema),z.boolean() ]).optional(),

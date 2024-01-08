@@ -9,11 +9,11 @@ generator client {
 }
 
 // generator zod {
-//   provider         = "npx zod-prisma-types"
-//   output           = "../app/lib/prisma/schemas"
-//   useMultipleFiles = true
-//   writeBarrelFiles = true
-//   createInputTypes = true
+//  provider         = "npx zod-prisma-types"
+//  output           = "../app/lib/prisma/schemas"
+//  useMultipleFiles = true
+//  writeBarrelFiles = true
+//  createInputTypes = true
 // }
 
 model Account {
@@ -100,7 +100,7 @@ model Student {
   fullname    String /// @zod.string({required_error:"We don't know what is your name"})
   father_name String /// @zod.string({required_error:"Who is your father?"})
   mother_name String /// @zod.string({required_error:"Who is your mother?"})
-  contact     String /// @zod.string({required_error:"Please enter your contact number."}).length(10, {message:"Contact numbers must be 10 digits long."})
+  contact     String /// @zod.custom.use(z.string({required_error:"Please enter your contact number."}).length(10,{message:"Contact numbers must be 10 digits long."}))
   caste       Caste     @default(Gen)
   address     String /// @zod.string({required_error:"Can you please tell us where do you live?"})
   isNew       Boolean /// @zod.custom.omit([model, input])

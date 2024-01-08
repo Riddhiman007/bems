@@ -12,7 +12,7 @@ export const StudentUpdateWithoutGradeInputSchema: z.ZodType<Omit<Prisma.Student
   fullname: z.union([ z.string({required_error:"We don't know what is your name"}),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   father_name: z.union([ z.string({required_error:"Who is your father?"}),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   mother_name: z.union([ z.string({required_error:"Who is your mother?"}),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  contact: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  contact: z.union([ z.string({required_error:"Please enter your contact number."}).length(10,{message:"Contact numbers must be 10 digits long."}),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   caste: z.union([ z.lazy(() => CasteSchema),z.lazy(() => EnumCasteFieldUpdateOperationsInputSchema) ]).optional(),
   address: z.union([ z.string({required_error:"Can you please tell us where do you live?"}),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   // omitted: isNew: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),

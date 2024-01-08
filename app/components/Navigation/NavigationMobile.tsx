@@ -112,7 +112,11 @@ const NavigationMobile = ({
   ];
   return (
     <>
-      <AppBar elevation={elevation} className="bg-transparent py-4 lg:py-6">
+      <AppBar
+        elevation={elevation}
+        component="nav"
+        className="bg-transparent py-4 lg:py-6"
+      >
         <Container className="flex flex-row text-center">
           <Box className=" mx-auto flex flex-row gap-2">
             <Image src={image} alt="braves" height={50} width={50} />
