@@ -27,7 +27,7 @@ import {
 } from "@mui/icons-material";
 import { StudentDatagridEditToolBarProps, StudentRowModel, UnsavedChanges } from ".";
 import { updateRow } from "./StudentDataGridBackend";
-import { deleteStudent } from "@/lib/prisma";
+import { CasteSchema, deleteStudent } from "@/lib/prisma";
 
 const initialColumns: GridColDef[] = [
   {
@@ -67,8 +67,8 @@ const initialColumns: GridColDef[] = [
   {
     field: "caste",
     headerName: "Caste",
-    type: "string",
-
+    type: "singleSelect",
+    valueOptions: ["Gen", "SC", "ST", "OBC", "NT"],
     editable: true,
   },
   {
@@ -90,7 +90,7 @@ const initialColumns: GridColDef[] = [
     headerName: "Contact",
     type: "number",
     editable: true,
-    valueParser: (value, params) => value.toString(),
+    valueParser: (value, params) => "" + value,
   },
   { field: "address", headerName: "Address", type: "text", width: 300, editable: true },
   { field: "isNew", headerName: "Is new student", type: "boolean", editable: true },
@@ -128,7 +128,7 @@ function EditToolbar({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: "fullname" },
     }));
-    unsavedChangesRef.current.unsavedRows[id] = row;
+    unsavedChangesRef.current.unsavedRows[id] = { ...row, _action: "edit" };
     if (!unsavedChangesRef.current.rowsBeforeChange[id]) {
       unsavedChangesRef.current.rowsBeforeChange[id] = row;
     }
@@ -263,8 +263,7 @@ export default function StudentDataGrid({
         (row) => row._action === "delete",
       );
       rowsToDelete.map(async (row) => {
-        const { _action, ...t } = row;
-        const deletedStudent = await deleteStudent(t);
+        const deletedStudent = await deleteStudent(row.email);
         setRows((lastRow) => lastRow.filter((val) => val.id !== row.id));
         console.log(deletedStudent);
       });

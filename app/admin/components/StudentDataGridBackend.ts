@@ -2,14 +2,19 @@
 
 import { DataGridProps } from "@mui/x-data-grid";
 import { StudentRowModel } from ".";
-import { updateStudent } from "@/lib/prisma";
+import { createNewStudent, updateStudent } from "@/lib/prisma";
 
 export const updateRow: NonNullable<
   DataGridProps<StudentRowModel>["processRowUpdate"]
-  > = async (newRow, oldRow) => {
-  const {_action, ...oldRowRows} = oldRow
-  const {_action:t, ...newRowRows} = newRow
-  const student = await updateStudent(oldRowRows, newRowRows);
+> = async (newRow, oldRow) => {
+  const { _action, ...newRowRows } = newRow;
+  let student;
+  if (oldRow.email === "") {
+    student = await createNewStudent(newRowRows);
+  } else {
+    student = await updateStudent(oldRow.email, newRowRows);
+  }
+
   console.log(student);
 
   return student as StudentRowModel;

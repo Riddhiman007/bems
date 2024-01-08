@@ -72,20 +72,50 @@ export async function fetchAllStudents(): Promise<PrismaStudentModel[]> {
 }
 
 export async function updateStudent(
-  oldRow: PrismaStudentModel,
-  newRow: PrismaStudentModel,
+  email: string,
+  {
+    address,
+    caste,
+    contact,
+    email: newEmail,
+    father_name,
+    fullname,
+    gender,
+    grade_name,
+    isNew,
+    mother_name,
+  }: PrismaStudentModel,
 ): Promise<Student> {
-  const { id, ...t } = newRow;
   const student = await prisma.student.update({
-    data: { ...t },
-    where: oldRow,
+    data: {
+      address,
+      caste,
+      contact,
+      email: newEmail,
+      father_name,
+      fullname,
+      mother_name,
+      isNew,
+
+      gender,
+      grade_name,
+    },
+    where: { email },
+  });
+
+  const t = await prisma.user.update({
+    where: { email },
+    data: { address, email: newEmail, fullname },
   });
   revalidatePath("/admin");
   return student;
 }
 
-export async function deleteStudent(student: Student) {
-  let d = await prisma.student.delete({ where: student });
+export async function deleteStudent(email: string) {
+  let d = await prisma.student.delete({
+    where: { email },
+  });
+  let e = await prisma.user.delete({ where: { email } });
   revalidatePath("/admin");
   return d;
 }
