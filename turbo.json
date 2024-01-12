@@ -2,9 +2,10 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "build": {
+      "dependsOn": ["^build"],
+      "env": ["MONGODB_URI", "EMAIL_HASH", "EMAIL_SERVER", "AUTH_SECRET"],
       "outputs": [".next/**", "!.next/cache/**"]
     }
   },
-  "globalDependencies": ["tsconfig.json"],
-  "globalDotEnv": [".env"]
+  "globalDependencies": ["tsconfig.json"]
 }
