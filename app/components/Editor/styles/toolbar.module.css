@@ -1,0 +1,6 @@
+.ltr {
+  @apply text-left;
+}
+.rtl {
+  @apply text-right;
+}
