@@ -25,7 +25,6 @@ import {
 } from "react";
 
 export interface ToolbarProps {
-  activeEditor: LexicalEditor;
   currentAlignment: ElementFormatType;
   isBold: boolean;
   isItalic: boolean;
@@ -35,7 +34,6 @@ export interface ToolbarProps {
   setCurrentAlignment: React.Dispatch<React.SetStateAction<ElementFormatType>>;
 }
 const ToolbarContext: Context<ToolbarProps> = createContext<ToolbarProps>({
-  activeEditor: createEditor(),
   currentAlignment: "",
   isBold: false,
   isEditable: true,
@@ -51,9 +49,8 @@ export function useToolbar() {
 }
 export default function ToolbarProvider({ children }: { children: React.ReactNode }) {
   const [editor] = useLexicalComposerContext();
-  const [activeEditor, setActiveEditor] = useState(editor);
   const [isBold, setIsBold] = useState(false);
-  const [isEditable, setIsEditable] = useState(activeEditor.isEditable());
+  const [isEditable, setIsEditable] = useState(editor.isEditable());
   const [isItalic, setIsItalic] = useState(false);
   const [isUnderlined, setIsUnderlined] = useState(false);
   const [isStrikeThrough, setIsStrikeThrough] = useState(false);
@@ -79,10 +76,10 @@ export default function ToolbarProvider({ children }: { children: React.ReactNod
       editor.registerEditableListener((editable) => {
         setIsEditable(editable);
       }),
-      activeEditor.registerUpdateListener(({ editorState }) => {
+      editor.registerUpdateListener(({ editorState }) => {
         editorState.read(() => $updateToolbar());
       }),
-      activeEditor.registerCommand(
+      editor.registerCommand(
         FORMAT_ELEMENT_COMMAND,
         (payload) => {
           setCurrentAlignment(payload);
@@ -91,29 +88,27 @@ export default function ToolbarProvider({ children }: { children: React.ReactNod
         },
         COMMAND_PRIORITY_EDITOR,
       ),
-
-      activeEditor.registerCommand(
-        UNDO_COMMAND,
-        () => {
-          $updateToolbar();
-          return false;
-        },
-        COMMAND_PRIORITY_CRITICAL,
-      ),
-      activeEditor.registerCommand(
-        REDO_COMMAND,
-        () => {
-          $updateToolbar();
-          return false;
-        },
-        COMMAND_PRIORITY_CRITICAL,
-      ),
+      // editor.registerCommand(
+      //   UNDO_COMMAND,
+      //   () => {
+      //     $updateToolbar();
+      //     return false;
+      //   },
+      //   COMMAND_PRIORITY_CRITICAL,
+      // ),
+      // editor.registerCommand(
+      //   REDO_COMMAND,
+      //   () => {
+      //     $updateToolbar();
+      //     return false;
+      //   },
+      //   COMMAND_PRIORITY_CRITICAL,
+      // ),
     );
-  }, [activeEditor, editor, $updateToolbar]);
+  }, [editor, editor, $updateToolbar]);
   return (
     <ToolbarContext.Provider
       value={{
-        activeEditor,
         currentAlignment,
         isBold,
         isEditable,

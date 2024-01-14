@@ -16,8 +16,9 @@ import {
   FORMAT_TEXT_COMMAND,
   TextFormatType,
 } from "lexical";
-import React, { useMemo, useState } from "react";
-import { useToolbar } from "./ToolbarContext";
+import React, { useMemo } from "react";
+import { useToolbar } from "../ToolbarContext";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 
 interface DefaultFormattingProps {
   icon: React.ReactNode;
@@ -33,8 +34,8 @@ interface AligningProps extends DefaultFormattingProps {
   name: ElementFormatType;
 }
 export default function FormatText() {
+  const [editor] = useLexicalComposerContext();
   const {
-    activeEditor,
     isBold,
     isItalic,
     isStrikeThrough,
@@ -49,7 +50,7 @@ export default function FormatText() {
         icon: <FormatBold />,
         name: "bold",
         handleClick() {
-          activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
+          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
         },
       },
       {
@@ -57,7 +58,7 @@ export default function FormatText() {
         icon: <FormatItalic />,
         name: "italic",
         handleClick() {
-          activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
+          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
         },
       },
       {
@@ -65,7 +66,7 @@ export default function FormatText() {
         icon: <FormatUnderlined />,
         name: "underline",
         handleClick() {
-          activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
+          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
         },
       },
       {
@@ -73,11 +74,11 @@ export default function FormatText() {
         icon: <FormatStrikethrough />,
         name: "strikethrough",
         handleClick() {
-          activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough");
+          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough");
         },
       },
     ],
-    [activeEditor, isBold, isItalic, isUnderlined, isStrikeThrough],
+    [editor, isBold, isItalic, isUnderlined, isStrikeThrough],
   );
   const alignmentOptions = useMemo<AligningProps[]>(
     () => [
@@ -85,7 +86,7 @@ export default function FormatText() {
         icon: <FormatAlignLeft />,
         name: "left",
         handleClick() {
-          activeEditor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
+          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
           setCurrentAlignment("left");
         },
       },
@@ -93,7 +94,7 @@ export default function FormatText() {
         icon: <FormatAlignCenter />,
         name: "center",
         handleClick() {
-          activeEditor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
+          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
           setCurrentAlignment("center");
         },
       },
@@ -101,7 +102,7 @@ export default function FormatText() {
         icon: <FormatAlignRight />,
         name: "right",
         handleClick() {
-          activeEditor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
+          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
           setCurrentAlignment("right");
         },
       },
@@ -109,12 +110,12 @@ export default function FormatText() {
         icon: <FormatAlignJustify />,
         name: "justify",
         handleClick() {
-          activeEditor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
+          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
           setCurrentAlignment("justify");
         },
       },
     ],
-    [activeEditor, setCurrentAlignment],
+    [editor, setCurrentAlignment],
   );
 
   return (
@@ -123,10 +124,12 @@ export default function FormatText() {
         {formattingOptions.map(({ active, icon, name, handleClick }) => (
           <IconButton
             size="small"
+            title={name}
             key={name}
+            centerRipple={false}
             onClick={handleClick}
             TouchRippleProps={{ className: "rounded-md" }}
-            className={`rounded-md p-1 text-xs dark:text-slate-50 ${
+            className={`rounded-md p-1 text-xs text-slate-900 dark:text-slate-50 ${
               active ? "bg-zinc-300 dark:bg-slate-700" : ""
             }`}
           >
@@ -138,10 +141,11 @@ export default function FormatText() {
         {alignmentOptions.map(({ handleClick, icon, name }) => (
           <IconButton
             size="small"
+            title={name}
             key={name}
             onClick={handleClick}
             TouchRippleProps={{ className: "rounded-md" }}
-            className={`rounded-md p-1 text-xs dark:text-slate-50 ${
+            className={`rounded-md p-1 text-xs text-slate-900 dark:text-slate-50 ${
               currentAlignment === name ? "bg-zinc-300 dark:bg-slate-700" : ""
             }`}
           >
