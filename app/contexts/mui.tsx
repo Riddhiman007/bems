@@ -43,7 +43,7 @@ export default function MuiTheme({ children }: { children: React.ReactNode }) {
       },
     },
     palette: {
-      mode: CurrentTheme === "light" ? "light" : "dark",
+      mode: CurrentTheme as PaletteMode,
     },
   });
   return (
