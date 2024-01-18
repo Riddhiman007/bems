@@ -35,12 +35,12 @@ export default function Editor() {
             contentEditable={
               <ContentEditable
                 placeholder="Please enter content"
-                className=" rounded-b-md rounded-t-none border border-solid border-slate-600 px-4 outline-none focus:border-2 focus:border-blue-400 dark:border-slate-700"
+                className=" rounded-b-md rounded-t-none border border-solid border-slate-600 px-4 outline-none focus:border-2 focus:border-blue-400 dark:border-slate-700 dark:text-slate-50"
               />
             }
             placeholder={(isEditable) =>
               isEditable ? (
-                <Typography className="relative bottom-10 left-5 inline">
+                <Typography className="relative bottom-10 left-5 inline dark:text-slate-50">
                   Please enter content
                 </Typography>
               ) : null

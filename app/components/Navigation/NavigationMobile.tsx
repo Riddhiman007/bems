@@ -34,7 +34,7 @@ import {
 import { CloseOutlined, DashboardOutlined, LogoutOutlined } from "@mui/icons-material";
 
 import "@fontsource/shrikhand";
-import { useTheme } from "next-themes";
+import { useDarkMode } from "@/contexts";
 
 import { usePathname } from "next/navigation";
 import Image from "next/image";
@@ -59,7 +59,7 @@ const NavigationMobile = ({
   children: React.ReactNode;
   elevation: number;
 }) => {
-  const { theme, setTheme } = useTheme();
+  const { isDark, setIsDark } = useDarkMode();
   const currentRoute = usePathname();
   const { data: session } = useSession();
   const navItems: Array<NavItem> = [
@@ -129,8 +129,8 @@ const NavigationMobile = ({
             </Typography>
           </Box>
           <Box className="flex flex-row gap-2 md:gap-4">
-            <IconButton onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
-              {theme === "dark" ? (
+            <IconButton onClick={() => setIsDark(!isDark)}>
+              {isDark ? (
                 <MoonIcon className="h-7 w-7 dark:text-slate-50" />
               ) : (
                 <SunIcon className="h-7 w-7 dark:text-slate-50" />

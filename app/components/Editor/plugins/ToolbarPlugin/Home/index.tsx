@@ -1,5 +1,5 @@
 "use client";
-import { Box, Divider } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import React from "react";
 import FormatText from "./FormatText";
 import StyleText from "./StyleText";
@@ -11,7 +11,7 @@ export default function Home() {
       <Divider orientation="vertical" flexItem />
       <FormatText />
       <Divider orientation="vertical" flexItem />
-      other features
+      <Typography>other</Typography>
     </Box>
   );
 }

@@ -12,7 +12,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
 import { MoonIcon, SunIcon, UserIcon } from "@heroicons/react/24/solid";
-import { useTheme } from "next-themes";
+import { useDarkMode } from "@/contexts";
 import Link from "next/link";
 import Image from "next/image";
 import image from "../../photo-removebg.png";
@@ -40,14 +40,13 @@ const UserMenuItems = [
   { name: "my achievements", href: "/myachievements", icon: <Dashboard /> },
 ];
 const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
-  const { theme, setTheme } = useTheme();
-  const [CurrentTheme, setCurrentTheme] = useState<string | undefined>("light");
+  const { isDark, setIsDark } = useDarkMode();
   const [UserAnchorEl, setUserAnchorEl] = useState<null | HTMLElement>(null);
 
   // get session
   const { data: session } = useSession();
 
-  useEffect(() => setCurrentTheme(theme), [theme]);
+  // useEffect(() => setCurrentTheme(theme), [theme]);
 
   // ui logic
   const handleUserMenuOpen = (e: React.MouseEvent<HTMLElement>) => {
@@ -92,10 +91,10 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
           </Box>
           <Box className="flex flex-row">
             <IconButton
-              onClick={(e) => setTheme(theme === "light" ? "dark" : "light")}
+              onClick={(e) => setIsDark(!isDark)}
               className="mx-1 mb-1 mt-3 h-fit w-fit hover:scale-[1.1]"
             >
-              {CurrentTheme === "dark" ? (
+              {isDark ? (
                 <MoonIcon className=" h-7 w-7 dark:text-slate-100" />
               ) : (
                 <SunIcon className=" h-7 w-7 dark:text-slate-100" />

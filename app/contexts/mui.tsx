@@ -6,17 +6,18 @@ import {
   ThemeProvider,
   createTheme,
 } from "@mui/material";
-import { useTheme } from "next-themes";
+import { TypographyOptions } from "@mui/material/styles/createTypography";
+import { useDarkMode } from "./DarkModeProvider";
 import React, { useEffect, useState, useContext } from "react";
 
 export default function MuiTheme({ children }: { children: React.ReactNode }) {
   const [root, setRoot] = useState<HTMLElement | null>(null);
-  const { theme: CurrentTheme } = useTheme();
+  const { isDark } = useDarkMode();
   useEffect(() => {
     setRoot(document.querySelector("body"));
   }, []);
 
-  const theme = createTheme({
+  const MuiTheme = createTheme({
     breakpoints: {
       values: {
         xs: 0,
@@ -27,6 +28,12 @@ export default function MuiTheme({ children }: { children: React.ReactNode }) {
         xxl: 1536,
       },
     },
+    // typography(palette) {
+    //   if (palette.mode === "dark") {
+    //     return { allVariants: { color: "rgb(16 19 23)" } };
+    //   }
+    //   return { allVariants: { color: "rgb(250 250 250)" } };
+    // },
     components: {
       MuiPopover: {
         defaultProps: {
@@ -43,11 +50,11 @@ export default function MuiTheme({ children }: { children: React.ReactNode }) {
       },
     },
     palette: {
-      mode: CurrentTheme as PaletteMode,
+      mode: isDark ? "dark" : "light",
     },
   });
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={MuiTheme}>
       <CssBaseline enableColorScheme />
       {children}
     </ThemeProvider>

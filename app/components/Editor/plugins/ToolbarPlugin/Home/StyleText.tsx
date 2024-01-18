@@ -96,14 +96,26 @@ export default function StyleText() {
       <Autocomplete
         value={currentStyle}
         onChange={handleChange}
-        classes={{ paper: "dark:bg-slate-800" }}
+        classes={{
+          paper: "dark:bg-slate-800",
+          clearIndicator: "dark:text-slate-100",
+          endAdornment: "dark:text-slate-50",
+          expanded: "dark:text-slate-50",
+          inputRoot: "dark:text-slate-50",
+          input: "dark:after:bottom-slate-50",
+        }}
         size="small"
         options={textStyles}
         getOptionLabel={(option) => {
           return blockTypeToBlockName[option];
         }}
-        renderInput={(params) => (
-          <TextField variant="standard" label="Styles" {...params} />
+        renderInput={({ InputLabelProps, ...params }) => (
+          <TextField
+            variant="standard"
+            label="Styles"
+            InputLabelProps={{ classes: { root: "dark:text-slate-100" } }}
+            {...params}
+          />
         )}
       />
     </Box>

@@ -20,7 +20,7 @@ import Done from "./Done";
 import { Student, StudentSchema } from "@/lib/prisma/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createNewStudent } from "@/lib/prisma/actions";
-import { useTheme } from "next-themes";
+import { useDarkMode } from "@/contexts";
 
 const steps = [
   { label: "Personal details", component: <PersonalForm /> },
@@ -30,7 +30,7 @@ const steps = [
 
 export default function EnrollComponent() {
   const [activeStep, setActiveStep] = useState(0);
-  const { theme } = useTheme();
+  const { isDark } = useDarkMode();
   const router = useRouter();
   const methods = useForm<Student>({
     reValidateMode: "onBlur",
@@ -102,17 +102,15 @@ export default function EnrollComponent() {
                     [`&.${stepIconClasses.active}`]: {
                       scale: 1.2,
                       color: "transparent !important",
-                      borderColor:
-                        theme === "dark"
-                          ? "rgb(74 222 128)!important"
-                          : "rgb(21 168 61)!important",
+                      borderColor: isDark
+                        ? "rgb(74 222 128)!important"
+                        : "rgb(21 168 61)!important",
                       border: "1px solid",
                       borderRadius: "990px",
                       [`& .${stepIconClasses.text}`]: {
-                        fill:
-                          theme === "dark"
-                            ? "rgb(74 222 128)!important"
-                            : "rgb(21 168 61)!important",
+                        fill: isDark
+                          ? "rgb(74 222 128)!important"
+                          : "rgb(21 168 61)!important",
                       },
                     },
                     [`&.${stepIconClasses.completed}`]: {
