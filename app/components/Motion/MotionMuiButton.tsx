@@ -3,5 +3,5 @@
 import { Button } from "@mui/material";
 import { motion } from "framer-motion";
 
-const MotionMuiBotton = motion(Button);
-export default MotionMuiBotton;
+const MotionMuiButton = motion(Button);
+export default MotionMuiButton;

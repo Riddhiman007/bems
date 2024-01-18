@@ -5,8 +5,8 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import MotionDiv from "@/components/Motion/MotionDiv";
-import Button from "@mui/material/Button";
-import MotionLink from "@/components/Motion/MotionLink";
+import Link from "next/link";
+import MotionMuiButton from "@/components/Motion/MotionMuiButton";
 
 export default function page() {
   return (
@@ -28,8 +28,8 @@ export default function page() {
         </Box>
         <Typography>Sorry, you are unauthenticated. Please log in</Typography>
         <Box className="flex flex-row justify-end">
-          <Button
-            LinkComponent={MotionLink}
+          <MotionMuiButton
+            LinkComponent={Link}
             color="success"
             variant="contained"
             className="bg-green-700 px-4 py-2 text-green-50 hover:bg-green-900"
@@ -37,7 +37,7 @@ export default function page() {
             whileHover={{ scale: 1.1 }}
           >
             Log in
-          </Button>
+          </MotionMuiButton>
         </Box>
       </CardContent>
     </Card>

@@ -2,7 +2,7 @@
 import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
-import { Engine, Container, RecursivePartial, IOptions } from "@tsparticles/engine";
+import { Container, RecursivePartial, IOptions } from "@tsparticles/engine";
 import { IsMobileContext } from "@/contexts/IsMobileContext";
 
 export default function ParticlesContainer() {

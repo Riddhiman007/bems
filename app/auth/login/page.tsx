@@ -1,17 +1,7 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Container,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Card, CardContent, Typography } from "@mui/material";
 
 import MotionDiv from "@/components/Motion/MotionDiv";
-import MotionButton from "@/components/Motion/MotionButton";
-import AnimatePresence from "@/components/Motion/AnimatePresence";
 import LoginForm from "@/components/Forms/Login";
 import CardBackgroundForLightMode from "@/components/CardBackgroundForLightMode";
 

@@ -1,12 +1,12 @@
 "use client";
-import { useTheme } from "next-themes";
+import { useDarkMode } from "@/contexts";
 import React from "react";
 
 export default function CardBackgroundForLightMode() {
-  const { theme } = useTheme();
+  const { isDark } = useDarkMode();
   return (
     <>
-      {theme === "light" && (
+      {!isDark && (
         <>
           <span className="animate-pink-background-slide absolute m-auto ml-20 mt-7 h-32 w-32 rounded-full bg-pink-600/20 mix-blend-multiply blur-lg"></span>
           <span className="animate-blue-background-slide absolute ml-40 mt-7 h-32 w-32 rounded-full bg-blue-600/20 mix-blend-multiply blur-lg"></span>

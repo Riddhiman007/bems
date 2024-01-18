@@ -5,9 +5,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
-import Button from "@mui/material/Button";
 import React from "react";
-import MotionButton from "@/components/Motion/MotionButton";
 import LoginForm from "@/components/Forms/Login";
 import CardBackgroundForLightMode from "@/components/CardBackgroundForLightMode";
 
