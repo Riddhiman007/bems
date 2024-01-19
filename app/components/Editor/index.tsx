@@ -10,6 +10,8 @@ import { Box, Typography } from "@mui/material";
 import { ToolbarPlugin } from "./plugins";
 import { ActionsPlugin } from "./plugins";
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
+import { YoutubeNode } from "./nodes/YoutubeNode";
+import YoutubePlugin from "./plugins/YoutubePlugin";
 
 export default function Editor() {
   const initialConfig = useMemo<InitialConfigType>(
@@ -20,7 +22,7 @@ export default function Editor() {
       },
       editable: true,
       theme: theme,
-      nodes: [HeadingNode, QuoteNode],
+      nodes: [HeadingNode, QuoteNode, YoutubeNode],
     }),
     [],
   );
@@ -50,6 +52,7 @@ export default function Editor() {
         <ActionsPlugin />
       </Box>
       <HistoryPlugin />
+      <YoutubePlugin />
     </LexicalComposer>
   );
 }

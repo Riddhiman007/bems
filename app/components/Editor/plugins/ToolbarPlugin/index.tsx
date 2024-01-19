@@ -3,6 +3,7 @@ import { Box, Tab, Tabs, Typography } from "@mui/material";
 import React, { useState } from "react";
 import Home from "./Home";
 import ToolbarProvider from "./ToolbarContext";
+import Insert from "./Insert";
 
 interface TabPanelProps<T> {
   children: React.ReactNode;
@@ -43,7 +44,7 @@ export default function ToolbarPlugin() {
             <Home />
           </TabPanel>
           <TabPanel value="Insert" index={idx}>
-            <Typography>Insert</Typography>
+            <Insert />
           </TabPanel>
           <TabPanel value="2" index={idx}>
             <Typography>2</Typography>

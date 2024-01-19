@@ -6,9 +6,7 @@ import {
   AutocompleteChangeDetails,
   AutocompleteChangeReason,
   Box,
-  Paper,
   TextField,
-  Typography,
 } from "@mui/material";
 import {
   $INTERNAL_isPointSelection,
@@ -105,12 +103,7 @@ export default function StyleText() {
           return blockTypeToBlockName[option];
         }}
         renderInput={(params) => (
-          <TextField
-            variant="standard"
-            label="Styles"
-            // InputLabelProps={{ classes: { root: "dark:text-slate-100" } }}
-            {...params}
-          />
+          <TextField variant="standard" label="Styles" {...params} />
         )}
       />
     </Box>
