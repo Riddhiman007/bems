@@ -5,6 +5,8 @@ import { Container } from "@mui/material";
 import Navigation from "./components/Navigation";
 import { Metadata } from "next";
 import { auth } from "./lib/auth";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "Braves Foundation",
@@ -28,6 +30,8 @@ export default async function RootLayout({
             {children}
           </Navigation>
         </Context>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
