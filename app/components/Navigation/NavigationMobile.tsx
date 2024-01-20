@@ -164,7 +164,7 @@ const NavigationMobile = ({
             id={item.label}
             TouchRippleProps={{ className: "z-20" }}
             label={item.label}
-            LinkComponent={MotionLink}
+            component={MotionLink}
             className={`dark:bg-slate-900  ${
               item.href === currentRoute
                 ? `${styles.indicator} dark:[--shadow-color:#0f172a;]`
@@ -172,7 +172,7 @@ const NavigationMobile = ({
             }`}
             href={item.href}
             icon={item.href == currentRoute ? item.icon : item.iconOutline}
-            // whileHover={{ scale: 1.2 }}
+            whileHover={{ scale: 1.2 }}
           />
         ))}
       </BottomNavigation>

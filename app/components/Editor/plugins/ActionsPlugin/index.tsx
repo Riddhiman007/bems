@@ -50,7 +50,7 @@ export default function ActionsPlugin() {
         console.log(isClear);
       }),
     );
-  }, [editor]);
+  }, [editor, isClear]);
   const actionOptions = useMemo<ActionProps[]>(
     () => [
       {

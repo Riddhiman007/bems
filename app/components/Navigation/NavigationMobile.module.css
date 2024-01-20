@@ -16,8 +16,8 @@
   z-index: 40;
   height: 20px;
   width: 20px;
-  box-shadow: 23px 19px 0 -4px var(--shadow-color);
-  border-radius: 50%;
+  box-shadow: 23px 19px 0 -4px var(--shadow-color) !important;
+  border-radius: 50% !important;
   z-index: 0;
 }
 .indicator::after {
@@ -29,8 +29,8 @@
   z-index: 40;
   height: 20px;
   width: 20px;
-  box-shadow: 23px 19px 0 -4px var(--shadow-color);
-  border-radius: 50%;
+  box-shadow: 23px 19px 0 -4px var(--shadow-color) !important;
+  border-radius: 50% !important ;
   z-index: 0;
 }
 
