@@ -2,8 +2,7 @@
 
 import { Role } from "@prisma/client";
 import { Student as PrismaStudentModel } from "@prisma/client";
-import prisma from ".";
-import { Student } from "./schemas";
+import prisma, { StudentFields } from ".";
 import { revalidatePath } from "next/cache";
 
 export async function createNewStudent({
@@ -15,8 +14,8 @@ export async function createNewStudent({
   contact,
   gender,
   caste,
-  grade_name,
-}: Student): Promise<Student> {
+  grade,
+}: StudentFields): Promise<PrismaStudentModel> {
   console.log(
     "before push " +
       JSON.stringify(
@@ -29,7 +28,7 @@ export async function createNewStudent({
           contact,
           gender,
           caste,
-          grade_name,
+          grade,
         },
         null,
         2,
@@ -38,22 +37,21 @@ export async function createNewStudent({
 
   const student = await prisma.student.create({
     data: {
-      address,
       caste,
       fullname,
       mother_name,
-      contact,
       father_name,
       isNew: true,
       grade: {
         connect: {
-          grade: grade_name,
+          grade,
         },
       },
       user: {
         create: {
           fullname,
           email,
+          contact,
 
           role: "Student" as Role,
 
@@ -67,8 +65,8 @@ export async function createNewStudent({
   return student;
 }
 
-export async function fetchAllStudents(): Promise<PrismaStudentModel[]> {
-  return await prisma.student.findMany();
+export async function fetchAllStudents() {
+  return await prisma.student.findMany({ include: { user: true } });
 }
 
 export async function updateStudent(
@@ -81,41 +79,65 @@ export async function updateStudent(
     father_name,
     fullname,
     gender,
-    grade_name,
+    grade,
     isNew,
     mother_name,
-  }: PrismaStudentModel,
-): Promise<Student> {
-  const student = await prisma.student.update({
+  }: StudentFields,
+): Promise<StudentFields | null | undefined> {
+  const student = await prisma.user.update({
     data: {
-      address,
-      caste,
-      contact,
-      email: newEmail,
-      father_name,
       fullname,
-      mother_name,
-      isNew,
-
+      address,
+      email: newEmail,
       gender,
-      grade_name,
+      contact,
+      student: {
+        update: {
+          data: {
+            caste,
+            father_name,
+            fullname,
+            mother_name,
+            isNew,
+            grade: {
+              connect: { grade },
+            },
+          },
+        },
+      },
     },
     where: { email },
+    // include: { student: { select: { caste, } } },
+    include: {
+      student: { include: { grade: { select: { grade: true } } } },
+    },
   });
 
-  const t = await prisma.user.update({
-    where: { email },
-    data: { address, email: newEmail, fullname },
-  });
+  // const t = await prisma.user.update({
+  //   where: { email },
+  //   data: { address, email: newEmail, fullname },
+  // });
   revalidatePath("/admin");
-  return student;
+  return {
+    father_name: student.student?.father_name,
+    mother_name: student.student?.mother_name,
+    gender: student.gender,
+    grade: student.student?.grade.grade,
+    isNew: student.student?.isNew,
+    address: student.address,
+    email: student.email,
+    contact: student.contact,
+    fullname: student.fullname,
+    caste: student.student?.caste,
+  };
 }
 
 export async function deleteStudent(email: string) {
-  let d = await prisma.student.delete({
-    where: { email },
-  });
-  let e = await prisma.user.delete({ where: { email } });
+  // let d = await prisma.student.delete({
+  //   where: { user: { email } },
+  //   include: { user: true },
+  // });
+  let e = await prisma.user.delete({ where: { email }, include: { student: true } });
   revalidatePath("/admin");
-  return d;
+  return e.student;
 }

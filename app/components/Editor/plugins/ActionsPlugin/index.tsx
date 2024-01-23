@@ -45,10 +45,10 @@ export default function ActionsPlugin() {
         },
         COMMAND_PRIORITY_CRITICAL,
       ),
-      editor.registerUpdateListener(({ prevEditorState }) => {
-        setIsClear(prevEditorState.isEmpty());
-        console.log(isClear);
-      }),
+      // editor.registerUpdateListener(({ editorState }) => {
+      //   setIsClear(editorState.isEmpty());
+      //   console.log(isClear);
+      // }),
     );
   }, [editor, isClear]);
   const actionOptions = useMemo<ActionProps[]>(
@@ -87,7 +87,7 @@ export default function ActionsPlugin() {
         },
       },
     ],
-    [editor, canUndo, canRedo, isClear, $getRoot],
+    [editor, canUndo, canRedo, isClear],
   );
   return (
     <Box className="py-4">

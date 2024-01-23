@@ -1,6 +1,5 @@
 "use client";
-import { allGrades } from "@/lib/prisma/helper";
-import { Student } from "@/lib/prisma/schemas";
+import { StudentFields, allGrades } from "@/lib/prisma/helper";
 import { AcademicCapIcon } from "@heroicons/react/24/solid";
 import { Email, Face, Face2, Phone } from "@mui/icons-material";
 import { Box, InputAdornment, MenuItem, TextField, Typography } from "@mui/material";
@@ -8,7 +7,7 @@ import React, { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 export default function PersonalForm() {
   const [gender, setGender] = useState<"Male" | "Female" | boolean>(false);
-  const { control } = useFormContext<Student>();
+  const { control } = useFormContext<StudentFields>();
   return (
     <Box className="flex flex-col gap-6">
       <Controller
@@ -98,7 +97,7 @@ export default function PersonalForm() {
       <Box className="flex flex-row gap-6">
         <Controller
           control={control}
-          name="grade_name"
+          name="grade"
           render={({ field: { ref, ...remainingProps }, fieldState: { error } }) => (
             <>
               <TextField

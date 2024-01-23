@@ -31,10 +31,7 @@ const blockTypeToBlockName: { [k: string]: string } = {
 export default function StyleText() {
   const [editor] = useLexicalComposerContext();
 
-  const textStyles = useMemo(
-    () => Object.keys(blockTypeToBlockName),
-    [blockTypeToBlockName],
-  );
+  const textStyles = useMemo(() => Object.keys(blockTypeToBlockName), []);
   const [currentStyle, setCurrentStyle] = useState<string | null>(textStyles[7]);
   const handleChange = (
     event: React.SyntheticEvent,
@@ -46,14 +43,12 @@ export default function StyleText() {
   };
 
   const formatParagraph = useCallback(() => {
-    if (currentStyle === "paragraph") {
-      editor.update(() => {
-        const selection = $getSelection();
-        if ($isRangeSelection(selection) || $INTERNAL_isPointSelection(selection)) {
-          $setBlocksType(selection, () => $createParagraphNode());
-        }
-      });
-    }
+    editor.update(() => {
+      const selection = $getSelection();
+      if ($isRangeSelection(selection) || $INTERNAL_isPointSelection(selection)) {
+        $setBlocksType(selection, () => $createParagraphNode());
+      }
+    });
   }, [editor]);
 
   const formatHeading = useCallback(
@@ -88,7 +83,7 @@ export default function StyleText() {
         formatHeading(currentStyle as HeadingTagType);
       }
     }
-  }, [currentStyle]);
+  }, [currentStyle, formatParagraph, formatHeading, formatQuote]);
   return (
     <Box className="flex w-40 flex-col">
       <Autocomplete

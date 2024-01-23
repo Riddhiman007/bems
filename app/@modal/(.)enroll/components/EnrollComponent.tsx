@@ -17,10 +17,10 @@ import { useRouter } from "next/navigation";
 import PersonalForm from "./PersonalForm";
 import ParentalForm from "./ParentalForm";
 import Done from "./Done";
-import { Student, StudentSchema } from "@/lib/prisma/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createNewStudent } from "@/lib/prisma/actions";
 import { useDarkMode } from "@/contexts";
+import { StudentFieldValidator, StudentFields } from "@/lib/prisma";
 
 const steps = [
   { label: "Personal details", component: <PersonalForm /> },
@@ -32,10 +32,10 @@ export default function EnrollComponent() {
   const [activeStep, setActiveStep] = useState(0);
   const { isDark } = useDarkMode();
   const router = useRouter();
-  const methods = useForm<Student>({
+  const methods = useForm<StudentFields>({
     reValidateMode: "onBlur",
     mode: "all",
-    resolver: zodResolver(StudentSchema),
+    resolver: zodResolver(StudentFieldValidator),
   });
 
   const { handleSubmit, trigger } = methods;
@@ -50,7 +50,7 @@ export default function EnrollComponent() {
     } else if (!isLastStep) {
       const isCorrect = await trigger([
         "gender",
-        "grade_name",
+        "grade",
         "fullname",
         "email",
         "contact",
@@ -65,7 +65,7 @@ export default function EnrollComponent() {
     isFirstStep ? router.back() : setActiveStep((lastStep) => lastStep - 1);
   }, [isFirstStep, router]);
 
-  const onSubmit = useCallback<SubmitHandler<Student>>((data) => {
+  const onSubmit = useCallback<SubmitHandler<StudentFields>>((data) => {
     console.log(data);
     createNewStudent(data);
     setActiveStep((lastStep) => lastStep + 1);
@@ -124,7 +124,7 @@ export default function EnrollComponent() {
             </Step>
           ))}
         </Stepper>
-        <FormProvider<Student> {...methods}>
+        <FormProvider<StudentFields> {...methods}>
           <form
             onSubmit={handleSubmit(onSubmit, (e) => console.log(e))}
             className="flex flex-col gap-7"

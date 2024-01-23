@@ -1,3 +1,4 @@
+import { StudentFields } from "@/lib/prisma";
 import { GridRowsProp, GridRowModesModel, GridValidRowModel } from "@mui/x-data-grid";
 import { GridApiCommunity } from "@mui/x-data-grid/internals";
 import { Student } from "@prisma/client";
@@ -8,7 +9,7 @@ export interface UnsavedChanges {
   rowsBeforeChange: Record<GridRowId, StudentRowModel>;
 }
 
-export interface StudentRowModel extends Student, GridValidRowModel {
+export interface StudentRowModel extends StudentFields, GridValidRowModel {
   [key: string]: any;
   [key: symbol]: any;
 }

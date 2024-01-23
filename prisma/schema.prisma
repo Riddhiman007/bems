@@ -55,6 +55,7 @@ model User {
   image         String?
   address       String
   gender        Gender    @default(Female)
+  contact       String
   student       Student?
   teacher       Teacher?
   posts         Post[]
@@ -100,15 +101,12 @@ model Student {
   fullname    String /// @zod.string({required_error:"We don't know what is your name"})
   father_name String /// @zod.string({required_error:"Who is your father?"})
   mother_name String /// @zod.string({required_error:"Who is your mother?"})
-  contact     String /// @zod.custom.use(z.string({required_error:"Please enter your contact number."}).length(10,{message:"Contact numbers must be 10 digits long."}))
   caste       Caste     @default(Gen)
-  address     String /// @zod.string({required_error:"Can you please tell us where do you live?"})
   isNew       Boolean /// @zod.custom.omit([model, input])
-  gender      Gender    @default(Male) /// @zod.enum({required_error:"Are you a boy or a girl?"})
-  email       String    @unique /// @zod.string({required_error:"Can you please enter your email address?"})
   grade       Grade     @relation(fields: [grade_name], references: [grade], onDelete: NoAction)
   grade_name  GradeType @unique
-  user        User      @relation(fields: [email], references: [email], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String    @unique @db.ObjectId
 
   @@map("students")
 }
@@ -116,8 +114,10 @@ model Student {
 model Post {
   id          String @id @default(auto()) @map("_id") @db.ObjectId
   title       String
-  description String
-  content     String
+  desc        String
+  category    String
+  subCategory String
+  content     Json
   author      User   @relation(fields: [author_id], references: [id], onDelete: NoAction)
   author_id   String @db.ObjectId
 

@@ -119,7 +119,7 @@ function EditToolbar({
       father_name: "",
       gender: "Male",
       isNew: true,
-      grade_name: "IX",
+      grade: "IX",
       mother_name: "",
       contact: "",
     };

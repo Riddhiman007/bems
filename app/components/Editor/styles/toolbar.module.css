@@ -1,6 +1,6 @@
 .ltr {
-  @apply text-left;
+  text-align: left;
 }
 .rtl {
-  @apply text-right;
+  text-align: right;
 }

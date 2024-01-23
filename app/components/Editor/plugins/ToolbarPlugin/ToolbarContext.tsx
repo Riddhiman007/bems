@@ -105,7 +105,7 @@ export default function ToolbarProvider({ children }: { children: React.ReactNod
       //   COMMAND_PRIORITY_CRITICAL,
       // ),
     );
-  }, [editor, editor, $updateToolbar]);
+  }, [editor, $updateToolbar]);
   return (
     <ToolbarContext.Provider
       value={{

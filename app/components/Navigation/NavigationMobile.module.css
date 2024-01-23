@@ -3,7 +3,7 @@
 }
 
 .indicator {
-  border-radius: 200%;
+  border-radius: 200% !important;
   @apply relative -top-7 z-10 w-10;
 }
 

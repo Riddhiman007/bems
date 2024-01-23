@@ -1,8 +1,8 @@
 import { EditorThemeClasses } from "lexical";
 import styles from "../styles/toolbar.module.css";
 export const theme: EditorThemeClasses = {
-  ltr: "text-left",
-  rtl: "text-right",
+  ltr: styles.ltr,
+  rtl: styles.rtl,
   text: {
     bold: "font-bold",
     italic: "italic",
