@@ -27,7 +27,7 @@ import {
 } from "@mui/icons-material";
 import { StudentDatagridEditToolBarProps, StudentRowModel, UnsavedChanges } from ".";
 import { updateRow } from "./StudentDataGridBackend";
-import { CasteSchema, deleteStudent } from "@/lib/prisma";
+import { deleteStudent } from "@/lib/prisma";
 
 const initialColumns: GridColDef[] = [
   {
@@ -72,7 +72,7 @@ const initialColumns: GridColDef[] = [
     editable: true,
   },
   {
-    field: "grade_name",
+    field: "grade",
     headerName: "Grade",
     type: "singleSelect",
     valueOptions: allGrades,

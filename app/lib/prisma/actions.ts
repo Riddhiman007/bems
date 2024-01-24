@@ -4,6 +4,7 @@ import { Role } from "@prisma/client";
 import { Student as PrismaStudentModel } from "@prisma/client";
 import prisma, { StudentFields } from ".";
 import { revalidatePath } from "next/cache";
+import { StudentRowModel } from "@/admin/components";
 
 export async function createNewStudent({
   fullname,
@@ -15,7 +16,7 @@ export async function createNewStudent({
   gender,
   caste,
   grade,
-}: StudentFields): Promise<PrismaStudentModel> {
+}: StudentFields): Promise<StudentRowModel> {
   console.log(
     "before push " +
       JSON.stringify(
@@ -44,7 +45,7 @@ export async function createNewStudent({
       isNew: true,
       grade: {
         connect: {
-          grade,
+          grade:grade,
         },
       },
       user: {
@@ -59,14 +60,40 @@ export async function createNewStudent({
         },
       },
     },
+    include: { user: true },
   });
   console.log(student);
   revalidatePath("/admin");
-  return student;
+  return {
+    address: student.user.address,
+    contact: student.user.contact,
+    email: student.user.email,
+    father_name: student.father_name,
+    fullname: student.fullname,
+    gender: student.user.gender,
+    grade: student.grade_name,
+    id: student.id,
+    mother_name: student.mother_name,
+    caste: student.caste,
+    isNew: student.isNew,
+  };
 }
 
-export async function fetchAllStudents() {
-  return await prisma.student.findMany({ include: { user: true } });
+export async function fetchAllStudents(): Promise<StudentRowModel[]> {
+  const student = await prisma.student.findMany({ include: { user: true, grade: true } });
+  return student.map<StudentRowModel>((v) => ({
+    address: v.user.address,
+    contact: v.user.contact,
+    email: v.user.email,
+    father_name: v.father_name,
+    mother_name: v.mother_name,
+    fullname: v.fullname,
+    gender: v.user.gender,
+    grade: v.grade.grade,
+    id: v.id,
+    caste: v.caste,
+    isNew: v.isNew,
+  }));
 }
 
 export async function updateStudent(

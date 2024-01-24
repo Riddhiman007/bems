@@ -1,5 +1,10 @@
 import { StudentFields } from "@/lib/prisma";
-import { GridRowsProp, GridRowModesModel, GridValidRowModel } from "@mui/x-data-grid";
+import {
+  GridRowsProp,
+  GridRowModesModel,
+  GridValidRowModel,
+  GridRowId,
+} from "@mui/x-data-grid";
 import { GridApiCommunity } from "@mui/x-data-grid/internals";
 import { Student } from "@prisma/client";
 import React from "react";
@@ -10,8 +15,7 @@ export interface UnsavedChanges {
 }
 
 export interface StudentRowModel extends StudentFields, GridValidRowModel {
-  [key: string]: any;
-  [key: symbol]: any;
+  id: GridRowId;
 }
 export interface StudentDatagridEditToolBarProps {
   apiRef: React.MutableRefObject<GridApiCommunity>;

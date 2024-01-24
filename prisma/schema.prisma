@@ -104,7 +104,7 @@ model Student {
   caste       Caste     @default(Gen)
   isNew       Boolean /// @zod.custom.omit([model, input])
   grade       Grade     @relation(fields: [grade_name], references: [grade], onDelete: NoAction)
-  grade_name  GradeType @unique
+  grade_name  GradeType
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String    @unique @db.ObjectId
 

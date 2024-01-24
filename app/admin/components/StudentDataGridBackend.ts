@@ -7,7 +7,7 @@ import { createNewStudent, updateStudent } from "@/lib/prisma";
 export const updateRow: NonNullable<
   DataGridProps<StudentRowModel>["processRowUpdate"]
 > = async (newRow, oldRow) => {
-  const { _action, ...newRowRows } = newRow;
+  const { _action, id, ...newRowRows } = newRow;
   let student;
   if (oldRow.email === "") {
     student = await createNewStudent(newRowRows);
