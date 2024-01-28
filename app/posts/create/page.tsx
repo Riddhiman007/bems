@@ -2,8 +2,14 @@ import Editor from "@/components/Editor";
 import { Card, CardContent, Container, CssBaseline, Typography } from "@mui/material";
 import React from "react";
 import { CreatePost } from "./components";
+import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
-export default function page() {
+export default async function page() {
+  const session = await auth();
+  if (session === null) {
+    redirect("/err?code=unauthenticated");
+  }
   return (
     <Container className="mt-24">
       <Card className="dark:bg-slate-900">

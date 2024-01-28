@@ -33,3 +33,12 @@
     @apply border-green-800;
   }
 }
+
+::-webkit-scrollbar {
+  width: 4px;
+  @apply m-1;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  @apply rounded-md bg-slate-500;
+}

@@ -2,7 +2,7 @@
 
 import { Role } from "@prisma/client";
 import { Student as PrismaStudentModel } from "@prisma/client";
-import prisma, { StudentFields } from ".";
+import prisma, { StudentFields } from "..";
 import { revalidatePath } from "next/cache";
 import { StudentRowModel } from "@/admin/components";
 
@@ -45,7 +45,7 @@ export async function createNewStudent({
       isNew: true,
       grade: {
         connect: {
-          grade:grade,
+          grade: grade,
         },
       },
       user: {

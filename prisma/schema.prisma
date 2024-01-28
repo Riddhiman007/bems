@@ -47,20 +47,21 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
   fullname      String
-  email         String    @unique
+  email         String        @unique
   emailVerified DateTime?
-  role          Role      @default(Student)
+  role          Role          @default(Student)
   image         String?
   address       String
-  gender        Gender    @default(Female)
+  gender        Gender        @default(Female)
   contact       String
   student       Student?
   teacher       Teacher?
   posts         Post[]
   accounts      Account[]
   sessions      Session[]
+  StarredPost   StarredPost[] @relation("StarredPost")
 
   @@map("users")
 }
@@ -111,15 +112,24 @@ model Student {
   @@map("students")
 }
 
+model StarredPost {
+  id           String @id @map("_id") @db.ObjectId
+  starredPost  Post   @relation("StarredPost", fields: [postId], references: [id])
+  postId       String @db.ObjectId
+  starringUser User   @relation("StarredPost", fields: [userId], references: [id])
+  userId       String @db.ObjectId
+}
+
 model Post {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
   title       String
-  desc        String
+  desc        String?
   category    String
   subCategory String
   content     Json
-  author      User   @relation(fields: [author_id], references: [id], onDelete: NoAction)
-  author_id   String @db.ObjectId
+  author      User          @relation(fields: [author_id], references: [id], onDelete: NoAction)
+  author_id   String        @db.ObjectId
+  StarredPost StarredPost[] @relation("StarredPost")
 
   @@map("posts")
 }

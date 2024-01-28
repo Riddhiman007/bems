@@ -1,11 +1,11 @@
 "use client";
-import { Student } from "@/lib/prisma/schemas";
+import { StudentFields } from "@/lib/prisma";
 import { Cast, Face, Face2, LocationCity } from "@mui/icons-material";
 import { Box, InputAdornment, MenuItem, TextField, Typography } from "@mui/material";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 export default function ParentalForm() {
-  const { control } = useFormContext<Student>();
+  const { control } = useFormContext<StudentFields>();
 
   return (
     <Box className="flex flex-col gap-4">
@@ -122,14 +122,17 @@ export default function ParentalForm() {
                 </InputAdornment>
               ),
             }}
+            SelectProps={{
+              MenuProps: {
+                classes: {
+                  list: "dark:bg-slate-800",
+                },
+              },
+            }}
             {...remainingProps}
           >
             {["Gen", "SC", "ST", "OBC", "NT"].map((caste) => (
-              <MenuItem
-                key={caste}
-                value={caste}
-                className=" dark:bg-slate-900 dark:hover:bg-slate-800"
-              >
+              <MenuItem key={caste} value={caste} className="dark:hover:bg-slate-800">
                 {caste}
               </MenuItem>
             ))}

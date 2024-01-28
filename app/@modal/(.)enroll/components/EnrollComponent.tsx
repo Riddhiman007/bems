@@ -18,9 +18,8 @@ import PersonalForm from "./PersonalForm";
 import ParentalForm from "./ParentalForm";
 import Done from "./Done";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createNewStudent } from "@/lib/prisma/actions";
 import { useDarkMode } from "@/contexts";
-import { StudentFieldValidator, StudentFields } from "@/lib/prisma";
+import { StudentFieldValidator, StudentFields, createNewStudent } from "@/lib/prisma";
 
 const steps = [
   { label: "Personal details", component: <PersonalForm /> },
@@ -129,7 +128,7 @@ export default function EnrollComponent() {
             onSubmit={handleSubmit(onSubmit, (e) => console.log(e))}
             className="flex flex-col gap-7"
           >
-            {steps[activeStep].component}
+            <Box className="h-40 overflow-y-auto">{steps[activeStep].component}</Box>
             <Box
               className={`flex flex-row ${
                 allStepsCompleted ? "justify-end" : "justify-between"

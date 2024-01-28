@@ -21,10 +21,10 @@ import { EditorState, LexicalEditor } from "lexical";
 interface EditorProps {
   error?: boolean;
   helperText?: React.ReactNode;
-  ref?: React.Ref<LexicalEditor | null | undefined>;
-  onChange?: (editorState: EditorState, editor: LexicalEditor, tags: Set<String>) => void;
+  // ref: React.RefCallback<LexicalEditor | null | undefined>;
+  onChange: (editorState: EditorState, editor: LexicalEditor, tags: Set<String>) => void;
 }
-export default function Editor({ error, helperText, onChange, ref }: EditorProps) {
+export default function Editor({ error, helperText, onChange }: EditorProps) {
   const initialConfig = useMemo<InitialConfigType>(
     () => ({
       namespace: "Events and post editor",
@@ -71,12 +71,13 @@ export default function Editor({ error, helperText, onChange, ref }: EditorProps
               ) : null
             }
           />
+          {helperText}
         </Box>
         <ActionsPlugin />
       </Box>
       <HistoryPlugin />
-      {onChange && <OnChangePlugin onChange={onChange} />}
-      {ref && <EditorRefPlugin editorRef={ref} />}
+      <OnChangePlugin onChange={onChange} />
+      {/* <EditorRefPlugin editorRef={ref} /> */}
       <YoutubePlugin />
     </LexicalComposer>
   );

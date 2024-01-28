@@ -42,7 +42,7 @@ export default function Youtube() {
   const onSubmit: SubmitHandler<FormProps> = ({ ytLink }) => {
     editor.dispatchCommand(INSERT_YOUTUBE_VIDEO, {
       className: { base: "", focus: "" },
-      videoId: ytLink,
+      ytLink,
     });
     setIsModalOpen(false);
   };

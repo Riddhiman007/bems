@@ -1,5 +1,5 @@
 "use client";
-import { StudentFields, allGrades } from "@/lib/prisma/helper";
+import { StudentFields, allGrades } from "@/lib/prisma/helpers";
 import { AcademicCapIcon } from "@heroicons/react/24/solid";
 import { Email, Face, Face2, Phone } from "@mui/icons-material";
 import { Box, InputAdornment, MenuItem, TextField, Typography } from "@mui/material";
@@ -117,17 +117,13 @@ export default function PersonalForm() {
                 placeholder="Please enter your grade"
                 SelectProps={{
                   MenuProps: {
-                    className: "w-fit dark:bg-slate-900",
+                    classes: { list: "dark:bg-slate-900" },
                   },
                 }}
                 {...remainingProps}
               >
                 {allGrades.map((grade) => (
-                  <MenuItem
-                    key={grade}
-                    value={grade}
-                    className=" dark:bg-slate-900 dark:hover:bg-slate-800"
-                  >
+                  <MenuItem key={grade} value={grade} className="dark:hover:bg-slate-800">
                     {grade}
                   </MenuItem>
                 ))}
@@ -162,7 +158,9 @@ export default function PersonalForm() {
                 placeholder="Please enter your gender"
                 SelectProps={{
                   MenuProps: {
-                    className: "w-fit dark:bg-slate-900",
+                    classes: {
+                      list: "w-fit dark:bg-slate-800",
+                    },
                   },
                 }}
                 InputProps={{
@@ -178,7 +176,7 @@ export default function PersonalForm() {
                   <MenuItem
                     key={gender}
                     value={gender}
-                    className=" dark:bg-slate-900 dark:hover:bg-slate-800"
+                    className="dark:hover:bg-slate-800"
                   >
                     {gender}
                   </MenuItem>

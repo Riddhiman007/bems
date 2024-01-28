@@ -1,5 +1,6 @@
 import { Caste, GradeType, Gender } from "@prisma/client";
 import { z } from "zod";
+import { SerializedEditorState } from "lexical";
 
 export const allGrades = [
   "nursery",
@@ -52,4 +53,58 @@ export interface StudentFields {
   email: string;
   gender: Gender;
   isNew?: boolean;
+}
+
+export type Category = "Science" | "Maths" | "Computer" | "Literature" | "Social Science";
+export type SubCategory =
+  | "Archeaology"
+  | "Programming"
+  | "Physics"
+  | "Biology"
+  | "Chemistry"
+  | "Business"
+  | "Grammar"
+  | "Geography"
+  | "Politics"
+  | "Economics"
+  | "Zoology"
+  | "Geometry"
+  | "Quantum"
+  | "Algebra";
+
+export const category: readonly [string, ...string[]] = [
+  "Science",
+  "Maths",
+  "Computer",
+  "Literature",
+  "Social Science",
+];
+export const subCategory: readonly [string, ...string[]] = [
+  "Archaeology",
+  "Programming",
+  "Physics",
+  "Biology",
+  "Chemistry",
+  "Business",
+  "Grammar",
+  "Geography",
+  "Politics",
+  "Economics",
+  "Zoology",
+  "Algebra",
+  "Geometry",
+];
+
+export const PostFieldsValidator = z.object({
+  title: z.string({ required_error: "Please give a suitable title" }),
+  category: z.enum(category, { required_error: "What is the category of the post?" }),
+  subCategory: z.enum(subCategory, { required_error: "What type of post is this?" }),
+  desc: z
+    .string({ description: "A description would be good for posting in social media" })
+    .optional(),
+});
+
+export type InternalPostFields = z.infer<typeof PostFieldsValidator>;
+export interface PostFields extends InternalPostFields {
+  content: SerializedEditorState;
 }

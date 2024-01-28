@@ -1,59 +1,66 @@
 "use client";
 import Editor from "@/components/Editor";
 import { MotionButton } from "@/components/Motion";
+import {
+  Category,
+  InternalPostFields,
+  PostFieldsValidator,
+  SubCategory,
+  category,
+  createPost,
+} from "@/lib/prisma";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, TextField, Typography } from "@mui/material";
-import { EditorState } from "lexical";
-import React from "react";
-import { Controller, useForm } from "react-hook-form";
-import { z } from "zod";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  MenuItem,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { EditorState, LexicalEditor, SerializedEditorState } from "lexical";
+import React, { useRef, useState } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
-type Category = "science" | "maths" | "computer" | "literature" | "history";
-type SubCategory =
-  | "archeaology"
-  | "programming"
-  | "physics"
-  | "biology"
-  | "chemistry"
-  | "business"
-  | "grammar";
-
-const category: readonly [string, ...string[]] = [
-  "science",
-  "maths",
-  "computer",
-  "literature",
-  "history",
-];
-const subCategory: readonly [string, ...string[]] = [
-  "archaeology",
-  "programming",
-  "physics",
-  "biology",
-  "chemistry",
-  "business",
-  "grammar",
-];
-
-const PostFieldsValidator = z.object({
-  title: z.string({ required_error: "Please give a suitable title" }),
-  category: z.enum(category, { required_error: "What is the category of the post?" }),
-  subCategory: z.enum(subCategory, { required_error: "What type of post is this?" }),
-  desc: z
-    .string({ description: "A description would be good for posting in social media" })
-    .optional(),
-  content: z.object({}),
-});
-
-type PostFields = z.infer<typeof PostFieldsValidator>;
 export default function CreatePost() {
-  const { control, handleSubmit, watch } = useForm<PostFields>({
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  const [editorErr, setEditorErr] = useState<{ message: string } | null>(null);
+  const { control, handleSubmit, watch } = useForm<InternalPostFields>({
     mode: "all",
     resolver: zodResolver(PostFieldsValidator),
   });
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const editorRef = useRef<SerializedEditorState>();
+  type CurrentSubcatProps = {
+    [key in Category]: SubCategory[];
   };
+  const currentSubCategory: CurrentSubcatProps = {
+    Science: ["Physics", "Biology", "Chemistry", "Zoology"],
+    Maths: ["Algebra", "Geometry"],
+    Computer: ["Programming", "Business"],
+    "Social Science": ["Economics", "Geography", "Politics"],
+    Literature: ["Grammar"],
+  };
+  const onSubmit: SubmitHandler<InternalPostFields> = async (data) => {
+    console.log(data);
+    console.log(editorRef.current);
+    setIsSubmitting(true);
+    if (!(editorRef.current === undefined)) {
+      createPost({ content: editorRef.current, ...data })
+        .then(() => setIsSubmitting(false))
+        .catch((e) => {
+          setIsSubmitting(false);
+          alert(e);
+        });
+    } else {
+      setEditorErr({ message: "Please fill the content of your post." });
+    }
+    // setIsSubmitting(false);
+  };
+  const editorOnChange = (editorState: EditorState, editor: LexicalEditor) => {
+    editorRef.current = editorState.toJSON();
+  };
+
   return (
     <Box
       component="form"
@@ -111,31 +118,126 @@ export default function CreatePost() {
           />
         )}
       />
-
       <Controller
         control={control}
-        name="content"
-        render={({ field: { ref, onChange }, fieldState: { error } }) => (
-          <Editor ref={ref} onChange={onChange} error={Boolean(error)} />
-        )}
         rules={{
-          required: true,
-          onChange(event) {
-            let t = event.target.value as EditorState;
-            console.log(t);
+          onChange(ev) {
+            setSelectedCategory(ev.target.value);
           },
         }}
+        name="category"
+        render={({ field: { ref, ...other }, fieldState: { error } }) => (
+          <TextField
+            label="Category"
+            placeholder="What is the category of your post?"
+            variant="standard"
+            select
+            error={Boolean(error)}
+            helperText={
+              error && (
+                <Typography
+                  variant="caption"
+                  color="red"
+                  className="text-xs text-red-600 xl:text-base"
+                >
+                  {error.message}
+                </Typography>
+              )
+            }
+            SelectProps={{
+              MenuProps: {
+                classes: {
+                  list: "dark:bg-slate-800",
+                },
+              },
+            }}
+            inputRef={ref}
+            {...other}
+          >
+            {category.map((cat) => (
+              <MenuItem value={cat}>{cat}</MenuItem>
+            ))}
+          </TextField>
+        )}
+      />
+      <Controller
+        control={control}
+        name="subCategory"
+        render={({ field: { ref, ...other }, fieldState: { error } }) => (
+          <TextField
+            label="Sub Category"
+            placeholder="What is the category of your post?"
+            variant="standard"
+            select
+            InputLabelProps={{
+              className: "dark:disabled:text-slate-400",
+            }}
+            className="dark:disabled:bg-slate-950"
+            disabled={!Boolean(selectedCategory)}
+            error={Boolean(error)}
+            helperText={
+              error && (
+                <Typography
+                  variant="caption"
+                  color="red"
+                  className="text-xs text-red-600 xl:text-base"
+                >
+                  {error.message}
+                </Typography>
+              )
+            }
+            SelectProps={{
+              disabled: !Boolean(selectedCategory),
+              MenuProps: {
+                classes: {
+                  list: "dark:bg-slate-800",
+                },
+              },
+            }}
+            inputRef={ref}
+            {...other}
+          >
+            {selectedCategory !== null &&
+              currentSubCategory[selectedCategory].map((cat) => (
+                <MenuItem value={cat}>{cat}</MenuItem>
+              ))}
+          </TextField>
+        )}
+      />
+
+      <Editor
+        onChange={editorOnChange}
+        // ref={editorRef}
+        // onChange={onChange}
+        // error={Boolean(error)}
+        // helperText={
+        //   error && (
+        //     <Typography
+        //       variant="caption"
+        //       color="red"
+        //       className="text-xs text-red-600 xl:text-base"
+        //     >
+        //       {error.message}
+        //     </Typography>
+        //   )
+        // }
       />
 
       <Box className="flex flex-row justify-end">
         <Button
           type="submit"
+          disabled={isSubmitting}
           component={MotionButton}
           whileHover={{ scale: 1.1 }}
           color="success"
-          className="bg-green-700 px-4 py-2 text-green-50 hover:bg-green-800"
+          className={`${
+            isSubmitting ? "flex flex-row justify-between gap-2" : undefined
+          } bg-green-700 px-4 py-2 text-green-50 hover:bg-green-800 disabled:bg-black`}
         >
-          Submit
+          {isSubmitting && (
+            <CircularProgress size={20} color="success" className="text-green-50" />
+          )}
+          <Typography>Submit</Typography>
         </Button>
       </Box>
       <pre>{JSON.stringify(watch(), null, 2)}</pre>

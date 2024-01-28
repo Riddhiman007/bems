@@ -18,7 +18,7 @@ import { Button, ButtonGroup, CircularProgress, Typography } from "@mui/material
 import React, { useMemo, useState, useCallback, useRef } from "react";
 import { Add, Save } from "@mui/icons-material";
 import { randomId } from "@mui/x-data-grid-generator";
-import { allGrades } from "@/lib/prisma/helper";
+import { allGrades } from "@/lib/prisma/helpers";
 import {
   Delete as DeleteIcon,
   Cancel as CancelIcon,

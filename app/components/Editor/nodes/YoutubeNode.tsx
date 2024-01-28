@@ -80,7 +80,7 @@ export class YoutubeNode extends DecoratorBlockNode {
 
   exportDOM(editor: LexicalEditor): DOMExportOutput {
     const video = document.createElement("iframe");
-    video.src = this.__videoId;
+    video.src = `https://www.youtube.com/embed/${this.__videoId}`;
     // video.className = this.__iframeClassName;
 
     return { element: video };
