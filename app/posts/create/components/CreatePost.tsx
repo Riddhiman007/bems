@@ -26,7 +26,7 @@ export default function CreatePost() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [editorErr, setEditorErr] = useState<{ message: string } | null>(null);
-  const { control, handleSubmit, watch } = useForm<InternalPostFields>({
+  const { control, handleSubmit } = useForm<InternalPostFields>({
     mode: "all",
     resolver: zodResolver(PostFieldsValidator),
   });
@@ -201,9 +201,7 @@ export default function CreatePost() {
           >
             {selectedCategory !== null &&
               currentSubCategory[selectedCategory].map((cat) => (
-                <MenuItem key={cat} value={cat}>
-                  {cat}
-                </MenuItem>
+                <MenuItem key={cat} value={cat}>{cat}</MenuItem>
               ))}
           </TextField>
         )}
@@ -244,7 +242,6 @@ export default function CreatePost() {
           <Typography>Submit</Typography>
         </Button>
       </Box>
-      <pre>{JSON.stringify(watch(), null, 2)}</pre>
     </Box>
   );
 }
