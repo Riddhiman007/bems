@@ -201,7 +201,9 @@ export default function CreatePost() {
           >
             {selectedCategory !== null &&
               currentSubCategory[selectedCategory].map((cat) => (
-                <MenuItem key={cat} value={cat}>{cat}</MenuItem>
+                <MenuItem key={cat} value={cat}>
+                  {cat}
+                </MenuItem>
               ))}
           </TextField>
         )}
@@ -209,20 +211,18 @@ export default function CreatePost() {
 
       <Editor
         onChange={editorOnChange}
-        // ref={editorRef}
-        // onChange={onChange}
-        // error={Boolean(error)}
-        // helperText={
-        //   error && (
-        //     <Typography
-        //       variant="caption"
-        //       color="red"
-        //       className="text-xs text-red-600 xl:text-base"
-        //     >
-        //       {error.message}
-        //     </Typography>
-        //   )
-        // }
+        error={Boolean(editorErr)}
+        helperText={
+          editorErr && (
+            <Typography
+              variant="caption"
+              color="red"
+              className="text-xs text-red-600 xl:text-base"
+            >
+              {editorErr.message}
+            </Typography>
+          )
+        }
       />
 
       <Box className="flex flex-row justify-end">
