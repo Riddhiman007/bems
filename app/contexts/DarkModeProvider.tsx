@@ -36,7 +36,10 @@ export default function DarkModeProvider({
   };
   return (
     <DarkModeContext.Provider value={{ isDark, setIsDark }}>
-      <Script id="dark-mode">{`const root = document.documentElement;
+      <Script
+        id="dark-mode"
+        strategy="beforeInteractive"
+      >{`const root = document.documentElement;
 const theme = localStorage.getItem("theme");
 if (theme === null) {
   const query = window.matchMedia("(prefers-color-scheme:dark)");
