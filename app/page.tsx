@@ -20,7 +20,7 @@ export default function Home() {
           <Image
             src={SchoolImage}
             alt="school image"
-            className="inset-0 z-10 aspect-video opacity-30 mix-blend-color-dodge"
+            className="inset-0  z-10 aspect-video opacity-30 mix-blend-color-dodge"
             fill
           />
 

@@ -155,7 +155,9 @@ export default function CreatePost() {
             {...other}
           >
             {category.map((cat) => (
-              <MenuItem value={cat}>{cat}</MenuItem>
+              <MenuItem key={cat} value={cat}>
+                {cat}
+              </MenuItem>
             ))}
           </TextField>
         )}
@@ -199,7 +201,9 @@ export default function CreatePost() {
           >
             {selectedCategory !== null &&
               currentSubCategory[selectedCategory].map((cat) => (
-                <MenuItem value={cat}>{cat}</MenuItem>
+                <MenuItem key={cat} value={cat}>
+                  {cat}
+                </MenuItem>
               ))}
           </TextField>
         )}

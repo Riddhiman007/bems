@@ -56,6 +56,8 @@
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
     "framer-motion": "^10.16.12",
+    "interweave": "^13.1.0",
+    "interweave-ssr": "^2.0.0",
     "lexical": "^0.13.1",
     "next": "^14.1.0",
     "next-auth": "^5.0.0-beta.4",

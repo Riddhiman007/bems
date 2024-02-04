@@ -82,3 +82,5 @@ export default function Editor({ error, helperText, onChange }: EditorProps) {
     </LexicalComposer>
   );
 }
+
+export { default as DisplayContent } from "./DisplayContent";

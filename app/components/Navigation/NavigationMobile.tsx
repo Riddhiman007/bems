@@ -183,7 +183,7 @@ const NavigationMobile = ({
           FabProps={{
             style: { zIndex: 100 },
             className:
-              "h-[4.25rem] w-[4.25rem] relative bottom-10 bg-green-700 hover:bg-green-900 hover:scale-150 z-[140]",
+              "h-[4.25rem] w-[4.25rem] relative bottom-10 bg-green-700 active:bg-green-900 active:scale-150 z-[140]",
           }}
           ariaLabel="user info"
           openIcon={<CloseOutlined />}

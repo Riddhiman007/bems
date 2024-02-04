@@ -31,6 +31,6 @@ export default function YoutubePlugin(): React.ReactNode {
       },
       COMMAND_PRIORITY_EDITOR,
     );
-  }, [editor, INSERT_YOUTUBE_VIDEO]);
+  }, [editor]);
   return null;
 }

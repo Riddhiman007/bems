@@ -113,7 +113,7 @@ model Student {
 }
 
 model StarredPost {
-  id           String @id @map("_id") @db.ObjectId
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
   starredPost  Post   @relation("StarredPost", fields: [postId], references: [id])
   postId       String @db.ObjectId
   starringUser User   @relation("StarredPost", fields: [userId], references: [id])

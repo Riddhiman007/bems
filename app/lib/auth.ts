@@ -2,6 +2,11 @@ import NextAuth from "next-auth";
 import EmailProvider from "@auth/core/providers/email";
 import prisma from "./prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import { User as PrismaUser } from "@prisma/client";
+type ISODateString = string;
+declare module "next-auth" {
+  interface User extends PrismaUser {}
+}
 
 export const { handlers, auth, signIn, signOut, update } = NextAuth({
   providers: [
