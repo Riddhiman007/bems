@@ -23,7 +23,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma db push"
+    "postinstall": "prisma db push && node db_setup.mjs"
   },
   "dependencies": {
     "@auth/core": "^0.18.4",

@@ -9,13 +9,14 @@ import {
   CardContent,
   CardHeader,
   CardMedia,
+  Chip,
   Divider,
   Icon,
   IconButton,
   Typography,
 } from "@mui/material";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import testImg from "@/explosion.png";
 import { MotionButton } from "@/components/Motion";
 import { Session } from "next-auth";
@@ -24,30 +25,32 @@ import { addStar, removeStar } from "@/lib/prisma";
 interface Post {
   id: string;
   title: string;
+  isStarred?: string;
+  stars: number;
   desc?: string | null;
 }
 export default function PostCard({
   key,
-  post: { id, title, desc },
+  post: { id, title, desc, isStarred, stars },
   session,
 }: {
   key: string;
   post: Post;
   session: Session | null;
 }) {
-  const [isStarred, setIsStarred] = useState<any>(false);
+  const [isPostStarred, setIsPostStarred] = useState(isStarred);
 
   const handleStar = () => {
-    if (isStarred && session?.user) {
-      removeStar(isStarred.StarredPost.id, id).then(() => setIsStarred(false));
-    }
-    if (!isStarred && session?.user) {
-      let t = addStar(session.user?.id, id).then((val) => {
-        setIsStarred(val);
-      });
+    if (session?.user) {
+      if (isPostStarred) {
+        removeStar(isPostStarred).then(() => {
+          setIsPostStarred(undefined);
+        });
+      } else {
+        addStar(session.user.id, id).then((val) => setIsPostStarred(val.id));
+      }
     }
   };
-
   return (
     <Card className="dark:bg-slate-900">
       <CardActionArea component={Link} href={`/posts/${id}`}>
@@ -73,18 +76,22 @@ export default function PostCard({
         </CardContent>
       </CardActionArea>
       <Divider />
-      <CardActions className="flex flex-row justify-end">
-        <IconButton
-          component={MotionButton}
-          whileTap={{ scale: 1.1 }}
-          onClick={handleStar}
-        >
-          {isStarred ? (
-            <Star className="text-yellow-500" />
-          ) : (
-            <StarBorder className="dark:text-slate-50" />
-          )}
-        </IconButton>
+      <CardActions className="flex flex-col justify-center">
+        <Box className="flex w-full flex-row justify-end">
+          <Chip
+            component={MotionButton}
+            label={stars.toString()}
+            whileTap={{ scale: 1.1 }}
+            onClick={handleStar}
+            icon={
+              Boolean(isPostStarred) ? (
+                <Star className="text-yellow-500" />
+              ) : (
+                <StarBorder className="dark:text-slate-50" />
+              )
+            }
+          />
+        </Box>
       </CardActions>
     </Card>
   );

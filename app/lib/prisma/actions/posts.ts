@@ -66,16 +66,24 @@ export async function fetchAllPosts() {
 }
 
 export async function addStar(user_id: string, post_id: string) {
-  let t = await prisma.post.update({
-    data: { StarredPost: { create: { starringUser: { connect: { id: user_id } } } } },
-    where: { id: post_id },
-    include: { StarredPost: true },
-  });
-  return t;
+  return await prisma.starredPost.create({ data: { postId: post_id, userId: user_id } });
 }
-export async function removeStar(star_id: string, post_id: string) {
-  await prisma.post.update({
-    where: { id: post_id },
-    data: { StarredPost: { delete: { id: star_id } } },
-  });
+export async function removeStar(id: string) {
+  await prisma.starredPost.delete({ where: { id } });
+}
+
+export async function isStarredPost(postId: string, userId?: string) {
+  if (userId) {
+    let starredPost = await prisma.starredPost.findUnique({
+      where: { postId_userId: { postId, userId } },
+    });
+    return starredPost;
+  }
+  // return false;
+}
+
+export async function fetchAllStarredUsers(postId: string) {
+  let t = await prisma.starredPost.findMany({ where: { postId } });
+  // revalidatePath("/posts");
+  return t;
 }

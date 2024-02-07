@@ -4,14 +4,10 @@ import { Avatar, Box, Card, CardContent, Container, Typography } from "@mui/mate
 import { SerializedEditorState } from "lexical";
 import React from "react";
 
-// export async function generateStaticParams() {
-//   let allPosts = await fetchAllPosts();
-//   return {
-//     params: {
-
-//     }
-//   };
-// }
+export async function generateStaticParams() {
+  let allPosts = await fetchAllPosts();
+  return allPosts.map((post) => ({ id: post.id }));
+}
 export default async function Post({ params: { id } }: { params: { id: string } }) {
   let post = await fetchPost(id);
   if (!post) {

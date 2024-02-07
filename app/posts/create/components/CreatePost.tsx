@@ -19,11 +19,13 @@ import {
   Typography,
 } from "@mui/material";
 import { EditorState, LexicalEditor, SerializedEditorState } from "lexical";
+import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 export default function CreatePost() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState<boolean | string>(false);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [editorErr, setEditorErr] = useState<{ message: string } | null>(null);
   const { control, handleSubmit } = useForm<InternalPostFields>({
@@ -47,7 +49,10 @@ export default function CreatePost() {
     setIsSubmitting(true);
     if (!(editorRef.current === undefined)) {
       createPost({ content: editorRef.current, ...data })
-        .then(() => setIsSubmitting(false))
+        .then((val) => {
+          setIsSubmitting("Redirecting...");
+          router.push(`/posts/${val.id}`);
+        })
         .catch((e) => {
           setIsSubmitting(false);
           alert(e);
@@ -228,18 +233,22 @@ export default function CreatePost() {
       <Box className="flex flex-row justify-end">
         <Button
           type="submit"
-          disabled={isSubmitting}
+          disabled={typeof isSubmitting === "string" || Boolean(isSubmitting)}
           component={MotionButton}
           whileHover={{ scale: 1.1 }}
           color="success"
           className={`${
-            isSubmitting ? "flex flex-row justify-between gap-2" : undefined
-          } bg-green-700 px-4 py-2 text-green-50 hover:bg-green-800 disabled:bg-black`}
+            typeof isSubmitting === "string" || Boolean(isSubmitting)
+              ? "flex flex-row justify-between gap-2"
+              : undefined
+          } bg-green-600 px-4 py-2 text-green-50 hover:bg-green-800 disabled:bg-black`}
         >
           {isSubmitting && (
             <CircularProgress size={20} color="success" className="text-green-50" />
           )}
-          <Typography>Submit</Typography>
+          <Typography>
+            {typeof isSubmitting === "string" ? isSubmitting : "Submit"}
+          </Typography>
         </Button>
       </Box>
     </Box>
