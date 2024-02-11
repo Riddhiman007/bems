@@ -2,10 +2,9 @@ import { Box, Container, Typography, duration, Button } from "@mui/material";
 import TypeAnimation from "./components/TypeWriter";
 import React from "react";
 import Image from "next/image";
-import MotionDiv from "./components/Motion/MotionDiv";
 import SchoolImage from "./1-PhotoRoom.png";
 import ParticlesContainer from "./components/ParticlesContainer";
-import MotionLink from "./components/Motion/MotionLink";
+import { MotionLink, MotionDiv } from "./components/Motion";
 
 // export const runtime = "edge";
 export default function Home() {
@@ -20,26 +19,31 @@ export default function Home() {
           <Image
             src={SchoolImage}
             alt="school image"
-            className="inset-0  z-10 aspect-video opacity-30 mix-blend-color-dodge"
+            className="inset-0 z-10 aspect-video opacity-30 mix-blend-color-dodge"
             fill
           />
 
           <Container
             className="relative inset-0 ml-0 mt-40 flex flex-row bg-transparent"
-            component={MotionDiv}
-            initial={{ opacity: 0, y: 400 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ ease: "easeIn", duration: 0.5, delay: 0.2 }}
+            // component={MotionDiv}
+            // initial={{ opacity: 0, y: 400 }}
+            // animate={{ opacity: 1, y: 0 }}
+            // transition={{ ease: "easeIn", duration: 0.5, delay: 0.2 }}
           >
-            <Box className="ml-10 flex flex-col gap-4">
-              <Box>
-                <Typography
-                  variant="body2"
-                  className="ml-4 text-sm md:text-base lg:text-6xl dark:text-slate-50"
-                >
-                  We believe in
-                </Typography>
-              </Box>
+            <Box
+              className="ml-10 flex flex-col gap-2"
+              component={MotionDiv}
+              initial={{ x: -200, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.5, ease: "easeIn" }}
+            >
+              <Typography
+                variant="body2"
+                className="ml-4 text-2xl md:text-4xl lg:text-6xl dark:text-slate-50"
+              >
+                We believe in
+              </Typography>
+
               <Box className="flex flex-row">
                 <Typography className="text-[10rem] md:text-[6rem] lg:text-[12rem] dark:text-blue-50">
                   C

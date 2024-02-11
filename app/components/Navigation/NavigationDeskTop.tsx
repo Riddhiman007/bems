@@ -22,7 +22,8 @@ import React, { useEffect, useState } from "react";
 import MotionLink from "../Motion/MotionLink";
 import { useSession } from "next-auth/react";
 import { Divider, Icon } from "@mui/material";
-import { Dashboard, Logout } from "@mui/icons-material";
+import { Dashboard, Logout, Search } from "@mui/icons-material";
+import { MotionNav } from "../Motion";
 interface AppBarItem {
   name: string;
   href: string;
@@ -56,7 +57,14 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
     setUserAnchorEl(null);
   };
   return (
-    <AppBar component="nav" elevation={elevation} className="bg-transparent py-4 lg:py-6">
+    <AppBar
+      component={MotionNav}
+      initial={{ opacity: 0, y: -100 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: "easeIn" }}
+      elevation={elevation}
+      className="bg-transparent py-4 lg:py-6"
+    >
       <Container className="flex flex-row justify-between gap-4">
         <Link href="/">
           <Box
@@ -90,9 +98,13 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
             ))}
           </Box>
           <Box className="flex flex-row">
+            <IconButton className=" mt-3 h-fit w-fit hover:scale-[1.1]">
+              <Search className="h-7 w-7 dark:text-slate-50" />
+            </IconButton>
+
             <IconButton
               onClick={(e) => setIsDark(!isDark)}
-              className="mx-1 mb-1 mt-3 h-fit w-fit hover:scale-[1.1]"
+              className="mt-3 h-fit w-fit hover:scale-[1.1]"
             >
               {isDark ? (
                 <MoonIcon className=" h-7 w-7 dark:text-slate-100" />
@@ -108,7 +120,9 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
                     className="m-1 h-fit w-fit hover:scale-[1.1]"
                     onClick={handleUserMenuOpen}
                   >
-                    <Avatar className="bg-teal-700 dark:text-slate-100">R</Avatar>
+                    <Avatar className="bg-teal-700 dark:text-slate-100">
+                      {session.user?.fullname[0]}
+                    </Avatar>
                   </IconButton>
                 </Tooltip>
 

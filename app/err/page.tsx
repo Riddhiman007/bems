@@ -1,4 +1,3 @@
-"use client";
 import { err_type } from "@/utils";
 import { Card, CardContent, Container, Typography } from "@mui/material";
 import React from "react";

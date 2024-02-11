@@ -3,7 +3,8 @@ import { auth } from "@/lib/auth";
 import prisma, { PostFields } from "..";
 import { Session } from "next-auth";
 import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
+import { SerializedEditorState } from "lexical";
 
 export async function createPost({
   category,
@@ -66,10 +67,16 @@ export async function fetchAllPosts() {
 }
 
 export async function addStar(user_id: string, post_id: string) {
-  return await prisma.starredPost.create({ data: { postId: post_id, userId: user_id } });
+  let addedStar = await prisma.starredPost.create({
+    data: { postId: post_id, userId: user_id },
+  });
+  revalidatePath("/posts");
+  return addedStar;
 }
 export async function removeStar(id: string) {
-  await prisma.starredPost.delete({ where: { id } });
+  let removedStar = await prisma.starredPost.delete({ where: { id } });
+  revalidateTag("/posts");
+  return removedStar;
 }
 
 export async function isStarredPost(postId: string, userId?: string) {
@@ -82,8 +89,33 @@ export async function isStarredPost(postId: string, userId?: string) {
   // return false;
 }
 
-export async function fetchAllStarredUsers(postId: string) {
-  let t = await prisma.starredPost.findMany({ where: { postId } });
-  // revalidatePath("/posts");
-  return t;
+export async function allStarredUsers(postId: string) {
+  let stars = await prisma.starredPost.count({ where: { postId } });
+  return stars;
+}
+
+export async function createComment(
+  content: SerializedEditorState,
+  postId: string,
+  userId: string,
+) {
+  let comment = await prisma.comment.create({
+    data: {
+      // @ts-ignore
+      content: content,
+      post: { connect: { id: postId } },
+      user: { connect: { id: userId } },
+    },
+  });
+  revalidatePath(`/posts/${postId}`);
+  return comment;
+}
+
+export async function fetchAllComments(postId: string) {
+  let comments = await prisma.comment.findMany({
+    where: { postId },
+    // orderBy: { createdOn: "desc" },
+    include: { user: true },
+  });
+  return comments;
 }

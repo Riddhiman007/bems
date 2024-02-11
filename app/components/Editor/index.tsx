@@ -21,10 +21,18 @@ import { EditorState, LexicalEditor } from "lexical";
 interface EditorProps {
   error?: boolean;
   helperText?: React.ReactNode;
+  isToolbarShown?: boolean;
+  isActionShown?: boolean;
   // ref: React.RefCallback<LexicalEditor | null | undefined>;
   onChange: (editorState: EditorState, editor: LexicalEditor, tags: Set<String>) => void;
 }
-export default function Editor({ error, helperText, onChange }: EditorProps) {
+export default function Editor({
+  error,
+  helperText,
+  onChange,
+  isActionShown,
+  isToolbarShown,
+}: EditorProps) {
   const initialConfig = useMemo<InitialConfigType>(
     () => ({
       namespace: "Events and post editor",
@@ -41,7 +49,9 @@ export default function Editor({ error, helperText, onChange }: EditorProps) {
   return (
     <LexicalComposer initialConfig={initialConfig}>
       <Box className="flex flex-col ">
-        <ToolbarPlugin />
+        {typeof isToolbarShown === "undefined" || isToolbarShown ? (
+          <ToolbarPlugin />
+        ) : undefined}
         <Box>
           <RichTextPlugin
             ErrorBoundary={ErrorBoundary}
@@ -73,7 +83,9 @@ export default function Editor({ error, helperText, onChange }: EditorProps) {
           />
           {helperText}
         </Box>
-        <ActionsPlugin />
+        {typeof isActionShown === "undefined" || isActionShown ? (
+          <ActionsPlugin />
+        ) : undefined}
       </Box>
       <HistoryPlugin />
       <OnChangePlugin onChange={onChange} />

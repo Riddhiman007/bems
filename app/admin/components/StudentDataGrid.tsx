@@ -145,7 +145,7 @@ function EditToolbar({
           color="success"
           onClick={handleSaveAllClick}
           variant="contained"
-          className="flex flex-row gap-2 bg-green-700 px-4 py-2 text-green-50 hover:bg-green-900 disabled:bg-green-900"
+          className="flex flex-row gap-2 bg-green-700 px-4 py-2 text-green-50 hover:bg-green-900 disabled:bg-green-900 disabled:text-green-400"
         >
           {isSaving && <CircularProgress size={20} className="text-green-50" />}
           <Typography>Save all</Typography>
@@ -170,6 +170,7 @@ export default function StudentDataGrid({
 }: {
   initialRows: StudentRowModel[];
 }) {
+  const [editedRows, setEditedRows] = useState<GridRowId[]>([]);
   const [rows, setRows] = useState<StudentRowModel[]>(initialRows);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
   const unsavedChangesRef = useRef<UnsavedChanges>({
@@ -198,6 +199,7 @@ export default function StudentDataGrid({
       if (!unsavedChangesRef.current.rowsBeforeChange[id]) {
         unsavedChangesRef.current.rowsBeforeChange[id] = row;
       }
+      setEditedRows((editedRows) => [...editedRows, id]);
       setHasUnsavedRows(true);
       apiRef.current.updateRows([row]); // to trigger row render
     },
@@ -235,14 +237,22 @@ export default function StudentDataGrid({
         setRows(rows.filter((row) => row.id !== id));
       }
     },
+
     [rows, rowModesModel],
   );
 
   const handleDiscardChanges = useCallback(() => {
-    setHasUnsavedRows(false);
+    editedRows.map((id) => {
+      setRowModesModel({
+        ...rowModesModel,
+        [id]: { mode: GridRowModes.View, ignoreModifications: true },
+      });
+    });
+    setEditedRows([]);
     apiRef.current.updateRows(Object.values(unsavedChangesRef.current.rowsBeforeChange));
     unsavedChangesRef.current = { rowsBeforeChange: {}, unsavedRows: {} };
-  }, [apiRef]);
+    setHasUnsavedRows(false);
+  }, [apiRef, rowModesModel]);
 
   const handleSaveAllClick = useCallback(async () => {
     try {
@@ -292,7 +302,7 @@ export default function StudentDataGrid({
 
     // backend work
     await updateRow(newRow, oldRow);
-    setHasUnsavedRows(true);
+    setHasUnsavedRows(false);
     return newRow;
   };
   // memoizes the columns
@@ -364,6 +374,7 @@ export default function StudentDataGrid({
       rowModesModel={rowModesModel}
       editMode="row"
       onRowEditStop={handleRowEditStop}
+      
       processRowUpdate={processRowUpdate}
       onProcessRowUpdateError={(e) => {
         console.log(e);

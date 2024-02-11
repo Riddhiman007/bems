@@ -1,5 +1,4 @@
 "use client";
-import Script from "next/script";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 const DarkModeContext = createContext<{
@@ -36,25 +35,6 @@ export default function DarkModeProvider({
   };
   return (
     <DarkModeContext.Provider value={{ isDark, setIsDark }}>
-      <Script
-        id="dark-mode"
-        strategy="beforeInteractive"
-      >{`const root = document.documentElement;
-const theme = localStorage.getItem("theme");
-if (theme === null) {
-  const query = window.matchMedia("(prefers-color-scheme:dark)");
-  if (query.matches) {
-    localStorage.setItem("theme", "dark");
-  } else {
-    localStorage.setItem("theme", "light");
-  }
-} else if (theme === "dark") {
-  root.classList.add("dark");
-} else {
-  root.classList.remove("dark");
-}
-
-      `}</Script>
       {children}
     </DarkModeContext.Provider>
   );

@@ -31,7 +31,12 @@ import {
   ChatBubbleLeftIcon as ChatBubbleLeftIconOutline,
   BellIcon as BellIconOutline,
 } from "@heroicons/react/24/outline";
-import { CloseOutlined, DashboardOutlined, LogoutOutlined } from "@mui/icons-material";
+import {
+  CloseOutlined,
+  DashboardOutlined,
+  LogoutOutlined,
+  Search,
+} from "@mui/icons-material";
 
 import "@fontsource/shrikhand";
 import { useDarkMode } from "@/contexts";
@@ -44,6 +49,7 @@ import MotionLink from "../Motion/MotionLink";
 import styles from "./NavigationMobile.module.css";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { MotionNav } from "../Motion";
 
 interface NavItem {
   href: string;
@@ -66,27 +72,37 @@ const NavigationMobile = ({
     {
       label: "Home",
       href: "/",
-      icon: <HomeIcon className="h-7 w-7 dark:text-slate-50" />,
-      iconOutline: <HomeIconOutline className="h-7 w-7 dark:text-slate-50" />,
+      icon: <HomeIcon className="h-7 w-7 active:scale-110 dark:text-slate-50 " />,
+      iconOutline: (
+        <HomeIconOutline className="h-7 w-7 active:scale-110 dark:text-slate-50" />
+      ),
     },
 
     {
       label: "Events",
       href: "/events",
-      icon: <CalendarIcon className="h-7 w-7 dark:text-slate-50" />,
-      iconOutline: <CalenderIconOutline className="h-7 w-7 dark:text-slate-50" />,
+      icon: <CalendarIcon className="h-7 w-7 active:scale-110 dark:text-slate-50" />,
+      iconOutline: (
+        <CalenderIconOutline className="h-7 w-7 active:scale-110 dark:text-slate-50" />
+      ),
     },
     {
       label: "Posts",
       href: "/posts",
-      icon: <ChatBubbleLeftIcon className="h-7 w-7 dark:text-slate-50" />,
-      iconOutline: <ChatBubbleLeftIconOutline className="h-7 w-7 dark:text-slate-50" />,
+      icon: (
+        <ChatBubbleLeftIcon className="h-7 w-7 active:scale-110 dark:text-slate-50" />
+      ),
+      iconOutline: (
+        <ChatBubbleLeftIconOutline className="h-7 w-7 active:scale-110 dark:text-slate-50" />
+      ),
     },
     {
       label: "Me",
       href: "/me",
-      icon: <UserCircleIcon className="h-7 w-7 dark:text-slate-50" />,
-      iconOutline: <UserCircleIconOutline className="h-7 w-7 dark:text-slate-50" />,
+      icon: <UserCircleIcon className="h-7 w-7 active:scale-110 dark:text-slate-50" />,
+      iconOutline: (
+        <UserCircleIconOutline className="h-7 w-7 active:scale-110 dark:text-slate-50" />
+      ),
     },
   ];
 
@@ -114,7 +130,10 @@ const NavigationMobile = ({
     <>
       <AppBar
         elevation={elevation}
-        component="nav"
+        component={MotionNav}
+        initial={{ opacity: 0, y: -100 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeIn" }}
         className="bg-transparent py-4 lg:py-6"
       >
         <Container className="flex flex-row text-center">
@@ -129,14 +148,20 @@ const NavigationMobile = ({
             </Typography>
           </Box>
           <Box className="flex flex-row gap-2 md:gap-4">
-            <IconButton onClick={() => setIsDark(!isDark)}>
+            <IconButton className=" mt-3 h-fit w-fit hover:scale-[1.1]">
+              <Search className="h-7 w-7 dark:text-slate-50" />
+            </IconButton>
+            <IconButton
+              className=" mt-3 h-fit w-fit hover:scale-[1.1]"
+              onClick={() => setIsDark(!isDark)}
+            >
               {isDark ? (
-                <MoonIcon className="h-7 w-7 dark:text-slate-50" />
+                <MoonIcon className="h-7 w-7 dark:text-slate-50 " />
               ) : (
                 <SunIcon className="h-7 w-7 dark:text-slate-50" />
               )}
             </IconButton>
-            <IconButton>
+            <IconButton className=" mt-3 h-fit w-fit hover:scale-[1.1]">
               <BellIconOutline
                 aria-label="notifications"
                 className="h-7 w-7 dark:text-slate-50"
@@ -156,7 +181,7 @@ const NavigationMobile = ({
         </Container>
       </AppBar>
       {children}
-      <BottomNavigation className="fixed inset-x-0 bottom-0 z-[120] gap-7 px-7 shadow-md shadow-gray-950 dark:bg-slate-900">
+      <BottomNavigation className=" fixed inset-x-0 bottom-0 z-[120] gap-7 px-7 shadow-md shadow-gray-950 dark:bg-slate-900">
         {navItems.map((item) => (
           <BottomNavigationAction
             showLabel={item.href === currentRoute}
@@ -172,7 +197,6 @@ const NavigationMobile = ({
             }`}
             href={item.href}
             icon={item.href == currentRoute ? item.icon : item.iconOutline}
-            whileHover={{ scale: 1.2 }}
           />
         ))}
       </BottomNavigation>

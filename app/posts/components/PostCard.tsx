@@ -16,7 +16,7 @@ import {
   Typography,
 } from "@mui/material";
 import Image from "next/image";
-import React, { useReducer, useState } from "react";
+import React, { useState } from "react";
 import testImg from "@/explosion.png";
 import { MotionButton } from "@/components/Motion";
 import { Session } from "next-auth";
