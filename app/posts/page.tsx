@@ -1,4 +1,4 @@
-import { allStarredUsers, fetchAllPosts, isStarredPost } from "@/lib/prisma";
+import { allStarredUsers, fetchAllPosts } from "@/lib/prisma";
 import {
   Box,
   Card,
@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { Suspense } from "react";
-import { PostCard } from "./components";
+import PostCard  from "./components/PostCard";
 import { auth } from "@/lib/auth";
 import { Search } from "@mui/icons-material";
 
@@ -54,7 +54,6 @@ export default async function Posts() {
         <Suspense fallback={<FallBack />}>
           {posts.map(async (post) => {
             const { id, title, desc } = post;
-            let isStarred = await isStarredPost(id, session?.user?.id);
             let allStars = await allStarredUsers(id);
             return (
               <PostCard
@@ -63,7 +62,6 @@ export default async function Posts() {
                   id,
                   title,
                   desc,
-                  isStarred: isStarred?.id,
                   stars: allStars,
                 }}
                 session={session}

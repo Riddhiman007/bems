@@ -38,7 +38,7 @@ export async function createPost({
 }
 
 export async function fetchPost(id: string) {
-  return await prisma.post.findUnique({
+  let post = await prisma.post.findUnique({
     where: { id },
     include: {
       author: {
@@ -50,10 +50,11 @@ export async function fetchPost(id: string) {
       StarredPost: true,
     },
   });
+  return post;
 }
 
 export async function fetchAllPosts() {
-  return await prisma.post.findMany({
+  let posts = await prisma.post.findMany({
     include: {
       author: {
         include: {
@@ -64,6 +65,7 @@ export async function fetchAllPosts() {
       StarredPost: true,
     },
   });
+  return posts;
 }
 
 export async function addStar(user_id: string, post_id: string) {

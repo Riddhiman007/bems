@@ -252,7 +252,7 @@ export default function StudentDataGrid({
     apiRef.current.updateRows(Object.values(unsavedChangesRef.current.rowsBeforeChange));
     unsavedChangesRef.current = { rowsBeforeChange: {}, unsavedRows: {} };
     setHasUnsavedRows(false);
-  }, [apiRef, rowModesModel]);
+  }, [apiRef, rowModesModel, editedRows]);
 
   const handleSaveAllClick = useCallback(async () => {
     try {
@@ -374,7 +374,6 @@ export default function StudentDataGrid({
       rowModesModel={rowModesModel}
       editMode="row"
       onRowEditStop={handleRowEditStop}
-      
       processRowUpdate={processRowUpdate}
       onProcessRowUpdateError={(e) => {
         console.log(e);

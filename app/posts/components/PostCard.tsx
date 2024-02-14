@@ -1,5 +1,3 @@
-"use client";
-import { Star, StarBorder } from "@mui/icons-material";
 import {
   Avatar,
   Box,
@@ -9,48 +7,30 @@ import {
   CardContent,
   CardHeader,
   CardMedia,
-  Chip,
   Divider,
-  Icon,
-  IconButton,
   Typography,
 } from "@mui/material";
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import testImg from "@/explosion.png";
-import { MotionButton } from "@/components/Motion";
-import { Session } from "next-auth";
 import Link from "next/link";
-import { addStar, removeStar } from "@/lib/prisma";
+import StarPost from "./StarPost";
+import { isStarredPost } from "@/lib/prisma";
+import { Session } from "next-auth";
 interface Post {
   id: string;
   title: string;
-  isStarred?: string;
   stars: number;
   desc?: string | null;
 }
-export default function PostCard({
-  key,
-  post: { id, title, desc, isStarred, stars },
+export default async function PostCard({
+  post: { id, title, desc, stars },
   session,
 }: {
-  key: string;
   post: Post;
   session: Session | null;
 }) {
-  const [isPostStarred, setIsPostStarred] = useState(isStarred);
-
-  const handleStar = () => {
-    if (session?.user) {
-      if (isPostStarred) {
-        removeStar(isPostStarred).then(() => {
-          setIsPostStarred(undefined);
-        });
-      } else {
-        addStar(session.user.id, id).then((val) => setIsPostStarred(val.id));
-      }
-    }
-  };
+  const isStarred = await isStarredPost(id, session?.user?.id);
   return (
     <Card className="dark:bg-slate-900">
       <CardActionArea component={Link} href={`/posts/${id}`}>
@@ -78,18 +58,11 @@ export default function PostCard({
       <Divider />
       <CardActions className="flex flex-col justify-center">
         <Box className="flex w-full flex-row justify-end">
-          <Chip
-            component={MotionButton}
-            label={stars.toString()}
-            whileTap={{ scale: 1.1 }}
-            onClick={handleStar}
-            icon={
-              Boolean(isPostStarred) ? (
-                <Star className="text-yellow-500" />
-              ) : (
-                <StarBorder className="dark:text-slate-50" />
-              )
-            }
+          <StarPost
+            postId={id}
+            session={session}
+            stars={stars}
+            isStarred={isStarred?.id}
           />
         </Box>
       </CardActions>
