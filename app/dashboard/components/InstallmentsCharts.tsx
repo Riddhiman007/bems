@@ -31,7 +31,7 @@ export default function InstallMentsCharts() {
         ]}
         height={400}
         width={400}
-        className="self-center"
+        className="self-center justify-self-center align-middle "
         skipAnimation
         disableAxisListener
         slotProps={{

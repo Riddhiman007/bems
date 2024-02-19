@@ -17,27 +17,33 @@ export default function StarPost({
   session: Session | null;
   isStarred?: string;
 }) {
-  const [isPostStarred, setIsPostStarred] = useState(isStarred);
-
-  const handleStar = () => {
+  const [isPostStarred, setIsPostStarred] = useState({
+    isStarred: Boolean(isStarred),
+    stars,
+  });
+  const [starId, setStarId] = useState(isStarred);
+  const handleStar = async () => {
     if (session?.user) {
-      if (isPostStarred) {
-        removeStar(isPostStarred).then(() => {
-          setIsPostStarred(undefined);
-        });
+      if (isPostStarred.isStarred) {
+        setIsPostStarred({ isStarred: false, stars: isPostStarred.stars - 1 });
+        // @ts-ignore
+        await removeStar(starId);
+        setStarId(undefined);
       } else {
-        addStar(session.user.id, postId).then((val) => setIsPostStarred(val.id));
+        setIsPostStarred({ isStarred: true, stars: isPostStarred.stars + 1 });
+        let res = await addStar(session.user.id, postId);
+        setStarId(res.id);
       }
     }
   };
   return (
     <Chip
       component={MotionButton}
-      label={stars.toString()}
+      label={isPostStarred.stars.toString()}
       whileTap={{ scale: 1.1 }}
       onClick={handleStar}
       icon={
-        Boolean(isPostStarred) ? (
+        isPostStarred.isStarred ? (
           <Star className="text-yellow-500" />
         ) : (
           <StarBorder className="dark:text-slate-50" />

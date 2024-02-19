@@ -66,7 +66,7 @@ export default function AcademicProgressBarChart() {
   const isMobile = useContext(IsMobileContext);
   return (
     <>
-      <Card className="shadow-xl shadow-gray-400 dark:bg-slate-950 dark:shadow dark:shadow-black">
+      <Card className="shadow-xl shadow-gray-400 dark:bg-slate-900 dark:shadow dark:shadow-black">
         <CardBackgroundForLightMode />
         <CardContent>
           <Box className="flex flex-row justify-center overflow-y-auto">

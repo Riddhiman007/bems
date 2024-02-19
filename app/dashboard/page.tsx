@@ -10,11 +10,25 @@ import {
   Container,
   Typography,
 } from "@mui/material";
+import dynamic from "next/dynamic";
 
 // styles
 import React from "react";
-import AcademicProgressBarChart from "./components/AcademicProgressBarChart";
-import InstallMentsCharts from "./components/InstallmentsCharts";
+const AcademicProgressBarChart = dynamic(
+  () => import("./components/AcademicProgressBarChart"),
+  {
+    ssr: false,
+    loading() {
+      return <Typography variant="h3">Loading...</Typography>;
+    },
+  },
+);
+const InstallmentsCharts = dynamic(() => import("./components/InstallmentsCharts"), {
+  ssr: false,
+  loading() {
+    return <Typography variant="h3">Loading...</Typography>;
+  },
+});
 
 // datasets
 interface AcademicProgressDataset {
@@ -37,7 +51,7 @@ export default async function Dashboard() {
     >
       <Box className="flex flex-col gap-7 ">
         {/* identity */}
-        <Card className="flex flex-row rounded-md px-4 shadow-xl shadow-gray-400 dark:bg-slate-950 dark:shadow dark:shadow-black">
+        <Card className="flex flex-row rounded-md px-4 shadow-xl shadow-gray-400 dark:bg-slate-900 dark:shadow dark:shadow-black">
           <CardMedia className=" h-full">
             <Avatar className="mt-4">R</Avatar>
           </CardMedia>
@@ -60,10 +74,13 @@ export default async function Dashboard() {
         <AcademicProgressBarChart />
       </Box>
 
-      <Box className="w-2/5">
-        <Card className="h-full w-full shadow-xl shadow-gray-400 dark:bg-slate-950 dark:shadow dark:shadow-black">
-          <CardContent>
-            <InstallMentsCharts />
+      <Box className="">
+        <Card className="h-full w-full shadow-xl shadow-gray-400 dark:bg-slate-900 dark:shadow dark:shadow-black">
+          <CardContent className="flex flex-col">
+            <Typography>Installments</Typography>
+            <Box className="flex flex-col">
+              <InstallmentsCharts />
+            </Box>
           </CardContent>
         </Card>
       </Box>

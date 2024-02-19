@@ -1,0 +1,20 @@
+.main {
+  grid-template-areas: "students admin";
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  @apply mt-24 grid gap-3;
+}
+.admin {
+  grid-area: "admin";
+}
+:is(:where(.dark) .admin) {
+  @apply bg-slate-900;
+}
+
+.students {
+  grid-area: "students";
+}
+
+:is(:where(.dark) .students) {
+  @apply bg-slate-900;
+}

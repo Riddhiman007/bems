@@ -1,21 +1,23 @@
 .main {
+  grid-template-areas: "profile" "academic" "installments";
+  grid-template-columns: 1fr;
   @apply grid w-screen gap-4 md:gap-6 lg:gap-7;
 }
 
 @media (min-width: 600px) {
   .main {
-    grid-template-areas: "identity installments" "academic installments";
-    grid-template-columns: 60% auto;
+    grid-template-areas: "profile installments" "academic installments";
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 1fr;
   }
 }
 
-.main:nth-child(1) {
-  grid-area: identity;
+.academic_progess {
+  grid-area: "academic";
 }
-.main:nth-child(2) {
-  grid-area: installments;
-  grid-row: 1/3;
+.profile {
+  grid-area: "profile";
 }
-.main:nth-child(3) {
-  grid-area: academic;
+.fees {
+  grid-area: "installments";
 }

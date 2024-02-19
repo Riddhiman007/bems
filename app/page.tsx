@@ -1,11 +1,14 @@
-import { Box, Container, Typography, duration, Button } from "@mui/material";
+import { Box, Container, Typography, Button } from "@mui/material";
 import TypeAnimation from "./components/TypeWriter";
 import React from "react";
 import Image from "next/image";
 import SchoolImage from "./1-PhotoRoom.png";
-import ParticlesContainer from "./components/ParticlesContainer";
 import { MotionLink, MotionDiv } from "./components/Motion";
+import dynamic from "next/dynamic";
 
+const ParticlesContainer = dynamic(() => import("./components/ParticlesContainer"), {
+  ssr: false,
+});
 // export const runtime = "edge";
 export default function Home() {
   return (

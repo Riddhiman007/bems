@@ -26,6 +26,12 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="bg-gray-100 dark:bg-slate-950">
+        <Context session={session}>
+          <Navigation>
+            {modal}
+            {children}
+          </Navigation>
+        </Context>
         <Script
           id="dark-mode"
           strategy="beforeInteractive"
@@ -45,12 +51,6 @@ if (theme === null) {
 }
 
       `}</Script>
-        <Context session={session}>
-          <Navigation>
-            {modal}
-            {children}
-          </Navigation>
-        </Context>
         <Analytics />
         <SpeedInsights />
       </body>
