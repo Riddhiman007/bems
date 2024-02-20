@@ -10,13 +10,17 @@ import { Session } from "next-auth";
 export default function Context({
   children,
   session,
-}: React.PropsWithChildren<{ session: Session | null | undefined }>) {
+  nonce,
+}: React.PropsWithChildren<{
+  session: Session | null | undefined;
+  nonce?: string;
+}>) {
   return (
     <SessionProvider session={session}>
       <IsMobileProvider>
         <DarkModeProvider>
           {/* <AppRouterCacheProvider> */}
-          <MuiTheme>{children}</MuiTheme>
+          <MuiTheme nonce={nonce}>{children}</MuiTheme>
           {/* </AppRouterCacheProvider> */}
         </DarkModeProvider>
       </IsMobileProvider>

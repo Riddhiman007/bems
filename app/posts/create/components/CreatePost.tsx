@@ -19,12 +19,16 @@ import {
   Typography,
 } from "@mui/material";
 import { EditorState, LexicalEditor, SerializedEditorState } from "lexical";
+import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
-export default function CreatePost() {
+export default function CreatePost({ session }: { session: Session | null }) {
   const router = useRouter();
+  if (!session) {
+    router.push("/err?code=unauthenticated");
+  }
   const [isSubmitting, setIsSubmitting] = useState<boolean | string>(false);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [editorErr, setEditorErr] = useState<{ message: string } | null>(null);

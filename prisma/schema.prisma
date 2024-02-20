@@ -83,32 +83,62 @@ model Grade {
   class_teacher Teacher   @relation(fields: [teacher_name], references: [id], onDelete: NoAction)
   teacher_name  String    @unique @db.ObjectId
 
-  students Student[]
+  students       Student[]
+  subjectsTaught SubjectTaughtByInWhichGrade[]
 
   @@map("grades")
 }
 
 model Teacher {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  name  String
-  email String @unique
-  class Grade?
-  User  User   @relation(fields: [email], references: [email], onDelete: Cascade)
+  id                          String                        @id @default(auto()) @map("_id") @db.ObjectId
+  name                        String
+  email                       String                        @unique
+  class                       Grade?
+  User                        User                          @relation(fields: [email], references: [email], onDelete: Cascade)
+  SubjectTaughtByInWhichGrade SubjectTaughtByInWhichGrade[]
 
   @@map("teachers")
 }
 
+model SubjectTaughtByInWhichGrade {
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  subject        SubjectList[]
+  grade          Grade         @relation(fields: [gradeId], references: [id])
+  gradeId        String        @db.ObjectId
+  subjectTeacher Teacher       @relation(fields: [teacherId], references: [id])
+  teacherId      String        @db.ObjectId
+
+  @@unique([subject, gradeId, teacherId])
+}
+
+model ExamRecord {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        Student  @relation(fields: [studentId], references: [id])
+  studentId   String   @db.ObjectId
+  examType    ExamType
+  English     Int      @default(0)
+  Hindi       Int      @default(0)
+  Mathematics Int      @default(0)
+  Science     Int      @default(0)
+  SST         Int      @default(0)
+  Marathi     Int?     @default(0)
+  Computer    String?
+
+  @@unique([studentId, examType])
+}
+
 model Student {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId /// @zod.custom.omit([model, input])
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId /// @zod.custom.omit([model, input])
   fullname    String /// @zod.string({required_error:"We don't know what is your name"})
   father_name String /// @zod.string({required_error:"Who is your father?"})
   mother_name String /// @zod.string({required_error:"Who is your mother?"})
-  caste       Caste     @default(Gen)
+  caste       Caste        @default(Gen)
   isNew       Boolean /// @zod.custom.omit([model, input])
-  grade       Grade     @relation(fields: [grade_name], references: [grade], onDelete: NoAction)
+  grade       Grade        @relation(fields: [grade_name], references: [grade], onDelete: NoAction)
   grade_name  GradeType
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      String    @unique @db.ObjectId
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String       @unique @db.ObjectId
+  examRecords ExamRecord[]
 
   @@map("students")
 }
@@ -134,19 +164,19 @@ model Post {
   author_id   String        @db.ObjectId
   StarredPost StarredPost[] @relation("StarredPost")
   Comment     Comment[]
-  // createdOn   DateTime      @default(now())
+  postedOn    DateTime  @default(now())
 
   @@map("posts")
 }
 
 model Comment {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String   @db.ObjectId
-  user      User     @relation(fields: [userId], references: [id])
-  post      Post     @relation(fields: [postId], references: [id])
-  postId    String   @db.ObjectId
-  content   Json
-  createdOn DateTime @default(now())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String   @db.ObjectId
+  user        User     @relation(fields: [userId], references: [id])
+  post        Post     @relation(fields: [postId], references: [id])
+  postId      String   @db.ObjectId
+  content     Json
+  commentedOn DateTime  @default(now())
 
   @@map("comments")
 }
@@ -184,4 +214,29 @@ enum Caste {
   ST
   OBC
   NT
+}
+
+enum SubjectList {
+  English
+  Hindi
+  Marathi
+  Algebra
+  Geometry
+  Physics
+  Chemistry
+  Biology
+  History
+  Civics
+  Geography
+  Economics
+}
+
+enum ExamType {
+  FA1
+  SA1
+  FA2
+  SA2
+  Prelim1
+  Prelim2
+  Board
 }

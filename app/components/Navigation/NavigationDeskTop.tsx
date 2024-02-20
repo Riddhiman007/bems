@@ -22,7 +22,12 @@ import React, { useEffect, useState } from "react";
 import MotionLink from "../Motion/MotionLink";
 import { useSession } from "next-auth/react";
 import { Divider, Icon } from "@mui/material";
-import { Dashboard, Logout, Search } from "@mui/icons-material";
+import {
+  Dashboard,
+  Logout,
+  NoEncryptionGmailerrorredTwoTone,
+  Search,
+} from "@mui/icons-material";
 import { MotionNav } from "../Motion";
 interface AppBarItem {
   name: string;
@@ -40,7 +45,13 @@ const UserMenuItems = [
   { name: "dashboard", href: "/dashboard", icon: <Dashboard /> },
   { name: "my achievements", href: "/myachievements", icon: <Dashboard /> },
 ];
-const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
+const NavigationDeskTop = ({
+  elevation,
+  nonce,
+}: {
+  elevation: number;
+  nonce?: string;
+}) => {
   const { isDark, setIsDark } = useDarkMode();
   const [UserAnchorEl, setUserAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -58,6 +69,7 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
   };
   return (
     <AppBar
+      nonce={nonce}
       component={MotionNav}
       initial={{ opacity: 0, y: -100 }}
       animate={{ opacity: 1, y: 0 }}
@@ -68,6 +80,7 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
       <Container className="flex flex-row justify-between gap-4">
         <Link href="/">
           <Box
+            nonce={nonce}
             component={MotionDiv}
             whileHover={{ scale: 1.1 }}
             className="flex grow-[3] flex-row gap-1"
@@ -86,6 +99,7 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
           <Box className="flex flex-row gap-4">
             {AppBarItems.map((item) => (
               <Button
+                nonce={nonce}
                 component={MotionLink}
                 whileHover={{ scale: 1.1 }}
                 className="text-xs  dark:text-slate-50"
@@ -98,11 +112,12 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
             ))}
           </Box>
           <Box className="flex flex-row">
-            <IconButton className=" mt-3 h-fit w-fit hover:scale-[1.1]">
+            <IconButton nonce={nonce} className=" mt-3 h-fit w-fit hover:scale-[1.1]">
               <Search className="h-7 w-7 dark:text-slate-50" />
             </IconButton>
 
             <IconButton
+              nonce={nonce}
               onClick={(e) => setIsDark(!isDark)}
               className="mt-3 h-fit w-fit hover:scale-[1.1]"
             >
@@ -115,8 +130,9 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
 
             {session ? (
               <>
-                <Tooltip title="me">
+                <Tooltip title="me" nonce={nonce}>
                   <IconButton
+                    nonce={nonce}
                     className="m-1 h-fit w-fit hover:scale-[1.1]"
                     onClick={handleUserMenuOpen}
                   >
@@ -128,6 +144,7 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
 
                 <Menu
                   anchorEl={UserAnchorEl}
+                  nonce={nonce}
                   component="div"
                   open={Boolean(UserAnchorEl)}
                   onClose={handleUserMenuClose}
@@ -138,6 +155,7 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
                   {UserMenuItems.map((item) => (
                     <MenuItem
                       key={item.name}
+                      nonce={nonce}
                       component={Link}
                       // LinkComponent={Link}
                       href={item.href}
@@ -150,6 +168,7 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
 
                   <Divider />
                   <MenuItem
+                    nonce={nonce}
                     component={Link}
                     className="flex flex-row gap-4"
                     href="/auth/logout"
@@ -164,6 +183,7 @@ const NavigationDeskTop = ({ elevation }: { elevation: number }) => {
             ) : (
               <Button
                 className="my-2 bg-green-700 !py-1 px-4 text-green-50 hover:bg-green-900"
+                nonce={nonce}
                 component={MotionLink}
                 whileHover={{ scale: 1.1 }}
                 href="/auth/login"

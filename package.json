@@ -23,7 +23,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma db push"
+    "postinstall": "prisma db push",
+    "studio": "prisma studio"
   },
   "dependencies": {
     "@auth/core": "^0.18.4",

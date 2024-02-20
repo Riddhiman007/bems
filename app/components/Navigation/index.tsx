@@ -5,7 +5,13 @@ import NavigationMobile from "./NavigationMobile";
 import NavigationDeskTop from "./NavigationDeskTop";
 import { Box, useScrollTrigger } from "@mui/material";
 
-const Navigation = ({ children }: { children: React.ReactNode }) => {
+const Navigation = ({
+  children,
+  nonce,
+}: {
+  children: React.ReactNode;
+  nonce?: string;
+}) => {
   const IsMobile = useContext<boolean>(IsMobileContext);
   const triggerElevation = useScrollTrigger({
     disableHysteresis: true,
@@ -19,7 +25,7 @@ const Navigation = ({ children }: { children: React.ReactNode }) => {
         </NavigationMobile>
       ) : (
         <>
-          <NavigationDeskTop elevation={triggerElevation ? 4 : 0} />
+          <NavigationDeskTop elevation={triggerElevation ? 4 : 0} nonce={nonce} />
           {children}
         </>
       )}

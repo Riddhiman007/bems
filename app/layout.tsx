@@ -8,6 +8,7 @@ import { auth } from "./lib/auth";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
+import { headers } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Braves Foundation",
@@ -21,18 +22,20 @@ export default async function RootLayout({
   children: React.ReactNode;
   modal: React.ReactNode;
 }) {
+  const nonce = headers().get("x-nonce");
   const session = await auth();
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-gray-100 dark:bg-slate-950">
-        <Context session={session}>
-          <Navigation>
+      <body className="bg-gray-100 dark:bg-slate-950" nonce={nonce ? nonce : undefined}>
+        <Context session={session} nonce={nonce ? nonce : undefined}>
+          <Navigation nonce={nonce ? nonce : undefined}>
             {modal}
             {children}
           </Navigation>
         </Context>
         <Script
+          nonce={nonce ? nonce : undefined}
           id="dark-mode"
           strategy="beforeInteractive"
         >{`const root = document.documentElement;

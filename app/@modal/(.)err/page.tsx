@@ -12,9 +12,9 @@ export default function Err({ searchParams }: { searchParams?: { code: string } 
       animate={{ opacity: 1, marginTop: "2.5vh !important" }}
       transition={{ delay: 0.25, ease: "easeInOut" }}
       exit={{ opacity: 0, marginTop: "-10vh!important" }}
-      className="m-auto w-fit overflow-auto rounded-md shadow-2xl shadow-neutral-950 dark:bg-slate-900"
+      className="m-auto mt-7 w-fit overflow-auto rounded-md shadow-2xl shadow-neutral-950 dark:bg-slate-900"
     >
-      <CardContent className="m-4 flex flex-row justify-center">
+      <CardContent className="m-4 flex flex-col justify-center gap-7">
         {searchParams && (
           <Typography variant="h3">{err_type[searchParams.code].title}</Typography>
         )}

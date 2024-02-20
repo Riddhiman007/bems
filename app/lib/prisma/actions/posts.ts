@@ -27,6 +27,7 @@ export async function createPost({
         author: { connect: { id: user?.id } },
         // @ts-ignore
         content: content,
+        // postedOn: new Date(Date.now()),
       },
     });
     console.log(post + "\n Created post successfully.");

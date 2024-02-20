@@ -9,8 +9,16 @@ import {
 import { TypographyOptions } from "@mui/material/styles/createTypography";
 import { useDarkMode } from "./DarkModeProvider";
 import React, { useEffect, useState, useContext } from "react";
+import createCache from "@emotion/cache";
+import { CacheProvider } from "@emotion/react";
 
-export default function MuiTheme({ children }: { children: React.ReactNode }) {
+export default function MuiTheme({
+  children,
+  nonce,
+}: {
+  children: React.ReactNode;
+  nonce?: string;
+}) {
   const [root, setRoot] = useState<HTMLElement | null>(null);
   const { isDark } = useDarkMode();
   useEffect(() => {
@@ -53,10 +61,14 @@ export default function MuiTheme({ children }: { children: React.ReactNode }) {
       mode: isDark ? "dark" : "light",
     },
   });
+
+  const cache = createCache({ key: "emotion", nonce, prepend: true });
   return (
-    <ThemeProvider theme={MuiTheme}>
-      <CssBaseline enableColorScheme />
-      {children}
-    </ThemeProvider>
+    <CacheProvider value={cache}>
+      <ThemeProvider theme={MuiTheme}>
+        <CssBaseline enableColorScheme />
+        {children}
+      </ThemeProvider>
+    </CacheProvider>
   );
 }

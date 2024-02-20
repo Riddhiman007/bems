@@ -5,12 +5,14 @@ import Image from "next/image";
 import SchoolImage from "./1-PhotoRoom.png";
 import { MotionLink, MotionDiv } from "./components/Motion";
 import dynamic from "next/dynamic";
+import { headers } from "next/headers";
 
 const ParticlesContainer = dynamic(() => import("./components/ParticlesContainer"), {
   ssr: false,
 });
 // export const runtime = "edge";
 export default function Home() {
+  const nonce = headers().get("x-nonce");
   return (
     <>
       <ParticlesContainer />
@@ -20,9 +22,10 @@ export default function Home() {
           className="inset-0 flex h-dvh flex-row bg-none dark:bg-gradient-to-b dark:from-blue-950 dark:to-slate-950"
         >
           <Image
+            nonce={nonce ? nonce : undefined}
             src={SchoolImage}
             alt="school image"
-            className="inset-0 z-10 aspect-video opacity-30 mix-blend-color-dodge"
+            className="absolute inset-0 z-10 aspect-video h-dvh w-full opacity-30 mix-blend-color-dodge"
             fill
           />
 
