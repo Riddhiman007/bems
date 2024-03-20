@@ -61,6 +61,7 @@ export default async function TeacherDashBoard() {
                 <div className="flex flex-col gap-4" key={subject.grade.grade}>
                   <Typography variant="h6">{subject.grade.grade}</Typography>
                   <InsertMarks
+                    examType={incompleteExam.type}
                     subjects={subject.exam_Subjects}
                     students={students.map((stud) => {
                       let t: { [key: string]: number } = {};

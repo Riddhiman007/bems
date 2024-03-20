@@ -124,6 +124,8 @@ model ExamRecord {
   SST         Int      @default(0)
   Marathi     Int      @default(0)
   Computer    Int      @default(0)
+  totalMarks  Int      @default(0)
+  percentage  Float    @default(0.0)
   isComplete  Boolean  @default(false)
   Exam        Exam     @relation(fields: [examType], references: [type])
 
@@ -139,17 +141,13 @@ model Exam {
 }
 
 model GradeExamRel {
-  id                     String    @id @default(auto()) @map("_id") @db.ObjectId
-  grade                  Grade     @relation(fields: [gradeId], references: [grade])
-  gradeId                GradeType
-  exam_type              Exam      @relation(fields: [examId], references: [id])
-  examId                 String    @db.ObjectId
-  English_Full_Marks     Int       @default(0)
-  Hindi_Full_Marks       Int       @default(0)
-  Marathi_Full_Marks     Int       @default(0)
-  Mathematics_Full_Marks Int       @default(0)
-  Science_Full_Marks     Int       @default(0)
-  Computer_Full_Marks    Int       @default(0)
+  id                   String    @id @default(auto()) @map("_id") @db.ObjectId
+  grade                Grade     @relation(fields: [gradeId], references: [grade])
+  gradeId              GradeType
+  exam_type            Exam      @relation(fields: [examId], references: [id])
+  examId               String    @db.ObjectId
+  MainSubjectMarks     Int       @default(0)
+  OptionalSubjectMarks Int       @default(0)
 }
 
 model Student {

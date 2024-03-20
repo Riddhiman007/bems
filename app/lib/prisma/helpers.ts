@@ -1,4 +1,4 @@
-import { Caste, GradeType, Gender, ExamType } from "@prisma/client";
+import { Caste, GradeType, Gender, ExamType, ExamSubjectsList } from "@prisma/client";
 import { z } from "zod";
 import { SerializedEditorState } from "lexical";
 
@@ -164,3 +164,12 @@ export const primaryGrades: GradeType[] = ["I", "II", "III", "IV"];
 export const middleGrades: GradeType[] = ["V", "VI", "VII"];
 export const secondaryGrades: GradeType[] = ["VIII", "IX", "X"];
 export type GradeClass = "prep" | "primary" | "middle" | "secondary";
+
+export const MainSubjects: ExamSubjectsList[] = [
+  "English",
+  "Hindi",
+  "Marathi",
+  "Mathematics",
+  "SST",
+  "Science",
+];

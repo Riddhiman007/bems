@@ -1,8 +1,10 @@
 "use client";
 import { allGrades, getSubjectsAndGrades } from "@/lib/prisma";
 import { DataGrid, GridColDef, GridRowsProp, GridValidRowModel } from "@mui/x-data-grid";
-import { $Enums } from "@prisma/client";
+import { $Enums, ExamType } from "@prisma/client";
 import React, { useMemo } from "react";
+import { processRowUpdate } from "./InsertMarksBackend";
+import { StudentRow } from ".";
 
 const columns: GridColDef[] = [
   {
@@ -18,17 +20,15 @@ const columns: GridColDef[] = [
   //   valueOptions: allGrades,
   // },
 ];
-interface SudentRow extends GridValidRowModel {
-  id: string;
-  name: string;
-}
 
 export default function InsertMarks({
+  examType,
   subjects,
   students,
 }: {
+  examType: ExamType;
   subjects: $Enums.ExamSubjectsList[];
-  students: SudentRow[];
+  students: StudentRow[];
 }) {
   const updatedColumns = useMemo<GridColDef[]>(() => {
     let colArr = [...columns];
@@ -37,5 +37,11 @@ export default function InsertMarks({
     );
     return colArr;
   }, [subjects]);
-  return <DataGrid columns={updatedColumns} rows={students} />;
+  return (
+    <DataGrid
+      columns={updatedColumns}
+      rows={students}
+      processRowUpdate={(newRow, oldRow) => processRowUpdate(newRow, oldRow, examType)}
+    />
+  );
 }

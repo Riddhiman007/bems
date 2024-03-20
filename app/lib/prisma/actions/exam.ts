@@ -47,18 +47,17 @@ export async function createNewExam({
       GradeExamRel: {
         createMany: {
           data: grades.map((val) => {
-            const grade_class: GradeClass =
-              val in primaryGrades
-                ? "primary"
-                : val in middleGrades
-                  ? "middle"
-                  : val in secondaryGrades
-                    ? "secondary"
-                    : "prep";
+            const grade_class: GradeClass = primaryGrades.includes(val)
+              ? "primary"
+              : middleGrades.includes(val)
+                ? "middle"
+                : secondaryGrades.includes(val)
+                  ? "secondary"
+                  : "prep";
 
             return {
               gradeId: val,
-              Computer_Full_Marks:
+              OptionalSubjectMarks:
                 grade_class === "primary"
                   ? primary_optional_sub_marks
                     ? primary_optional_sub_marks
@@ -72,63 +71,7 @@ export async function createNewExam({
                         ? secondary_optional_sub_marks
                         : exam_defaults?.secondary_optional_sub_marks
                       : exam_defaults?.pre_primary_sub_marks,
-              English_Full_Marks:
-                grade_class === "primary"
-                  ? primary_main_sub_marks
-                    ? primary_main_sub_marks
-                    : exam_defaults?.primary_main_sub_marks
-                  : grade_class === "middle"
-                    ? middle_main_sub_marks
-                      ? middle_main_sub_marks
-                      : exam_defaults?.middle_main_sub_marks
-                    : grade_class === "secondary"
-                      ? secondary_main_sub_marks
-                        ? secondary_main_sub_marks
-                        : exam_defaults?.secondary_main_sub_marks
-                      : exam_defaults?.pre_primary_sub_marks,
-              Hindi_Full_Marks:
-                grade_class === "primary"
-                  ? primary_main_sub_marks
-                    ? primary_main_sub_marks
-                    : exam_defaults?.primary_main_sub_marks
-                  : grade_class === "middle"
-                    ? middle_main_sub_marks
-                      ? middle_main_sub_marks
-                      : exam_defaults?.middle_main_sub_marks
-                    : grade_class === "secondary"
-                      ? secondary_main_sub_marks
-                        ? secondary_main_sub_marks
-                        : exam_defaults?.secondary_main_sub_marks
-                      : exam_defaults?.pre_primary_sub_marks,
-              Marathi_Full_Marks:
-                grade_class === "primary"
-                  ? primary_main_sub_marks
-                    ? primary_main_sub_marks
-                    : exam_defaults?.primary_main_sub_marks
-                  : grade_class === "middle"
-                    ? middle_main_sub_marks
-                      ? middle_main_sub_marks
-                      : exam_defaults?.middle_main_sub_marks
-                    : grade_class === "secondary"
-                      ? secondary_main_sub_marks
-                        ? secondary_main_sub_marks
-                        : exam_defaults?.secondary_main_sub_marks
-                      : exam_defaults?.pre_primary_sub_marks,
-              Mathematics_Full_Marks:
-                grade_class === "primary"
-                  ? primary_main_sub_marks
-                    ? primary_main_sub_marks
-                    : exam_defaults?.primary_main_sub_marks
-                  : grade_class === "middle"
-                    ? middle_main_sub_marks
-                      ? middle_main_sub_marks
-                      : exam_defaults?.middle_main_sub_marks
-                    : grade_class === "secondary"
-                      ? secondary_main_sub_marks
-                        ? secondary_main_sub_marks
-                        : exam_defaults?.secondary_main_sub_marks
-                      : exam_defaults?.pre_primary_sub_marks,
-              Science_Full_Marks:
+              MainSubjectMarks:
                 grade_class === "primary"
                   ? primary_main_sub_marks
                     ? primary_main_sub_marks
