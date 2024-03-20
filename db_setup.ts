@@ -1,15 +1,16 @@
-import { PrismaClient, GradeType } from "@prisma/client";
+import { PrismaClient, GradeType, Prisma, $Enums } from "@prisma/client";
 import { z } from "zod";
 
 const prisma = new PrismaClient();
 //type Grade = z.infer<typeof GradeCreateInputSchema>;
 async function setupDb() {
-  const data = [
+  const data: Prisma.XOR<Prisma.GradeCreateInput, Prisma.GradeUncheckedCreateInput>[] = [
     {
       grade: "I",
       class_teacher: {
         create: {
           name: "123",
+
           User: {
             create: {
               fullname: "123",
@@ -146,6 +147,9 @@ async function setupDb() {
               contact: "1234567890",
             },
           },
+          SubjectTaughtByInWhichGrade: {
+            createMany: { data: { gradeId: "IX", subjects: ["Biology", "Geography"] } },
+          },
         },
       },
     },
@@ -162,6 +166,17 @@ async function setupDb() {
               role: "Teacher",
               gender: "Female",
               contact: "1234567890",
+            },
+          },
+          SubjectTaughtByInWhichGrade: {
+            createMany: {
+              data: [
+                {
+                  gradeId: "IX",
+                  exam_Subjects: ["SST"],
+                  subjects: ["History", "Civics", "Economics"],
+                },
+              ],
             },
           },
         },
@@ -182,19 +197,39 @@ async function setupDb() {
               gender: "Male",
             },
           },
+          SubjectTaughtByInWhichGrade: {
+            createMany: {
+              data: {
+                gradeId: "IX",
+                exam_Subjects: ["Mathematics", "Science"],
+                subjects: ["Algebra", "Chemistry", "Physics"],
+              },
+            },
+          },
         },
       },
     },
   ];
 
-  let grades = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
-  let gradesData = [];
+  let grades: $Enums.GradeType[] = [
+    "I",
+    "II",
+    "III",
+    "IV",
+    "V",
+    "VI",
+    "VII",
+    "VIII",
+    "IX",
+    "X",
+  ];
+  let gradesData: { id: string; grade: $Enums.GradeType; teacher_name: string }[] = [];
   try {
     grades.map(async (grade) => {
       const gradeData = await prisma.grade.findFirst({
         where: { grade: grade },
       });
-      gradesData.push(gradeData);
+      if (gradeData !== null) gradesData.push(gradeData);
     });
     console.log("db already setup");
   } catch (err) {

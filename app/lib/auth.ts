@@ -7,7 +7,7 @@ declare module "next-auth" {
   interface User extends PrismaUser {}
 }
 
-export const { handlers, auth, signIn, signOut, update } = NextAuth({
+export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     EmailProvider({
       server: process.env.EMAIL_SERVER,

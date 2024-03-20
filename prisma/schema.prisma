@@ -104,8 +104,8 @@ model SubjectTaughtByInWhichGrade {
   id             String             @id @default(auto()) @map("_id") @db.ObjectId
   subjects       SubjectList[]
   exam_Subjects  ExamSubjectsList[]
-  grade          Grade              @relation(fields: [gradeId], references: [id])
-  gradeId        String             @db.ObjectId
+  grade          Grade              @relation(fields: [gradeId], references: [grade])
+  gradeId        GradeType
   subjectTeacher Teacher            @relation(fields: [teacherId], references: [id])
   teacherId      String             @db.ObjectId
 
