@@ -9,7 +9,7 @@ import {
   FormatStrikethrough,
   FormatUnderlined,
 } from "@mui/icons-material";
-import { Box, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import {
   ElementFormatType,
   FORMAT_ELEMENT_COMMAND,
@@ -119,8 +119,8 @@ export default function FormatText() {
   );
 
   return (
-    <Box className="flex flex-col gap-4">
-      <Box className="flex flex-row ">
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-row ">
         {formattingOptions.map(({ active, icon, name, handleClick }) => (
           <IconButton
             size="small"
@@ -136,8 +136,8 @@ export default function FormatText() {
             {icon}
           </IconButton>
         ))}
-      </Box>
-      <Box className="flex flex-row">
+      </div>
+      <div className="flex flex-row">
         {alignmentOptions.map(({ handleClick, icon, name }) => (
           <IconButton
             size="small"
@@ -152,7 +152,7 @@ export default function FormatText() {
             {icon}
           </IconButton>
         ))}
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }

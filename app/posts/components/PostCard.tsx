@@ -1,6 +1,6 @@
 import {
   Avatar,
-  Box,
+  div,
   Card,
   CardActionArea,
   CardActions,
@@ -57,14 +57,14 @@ export default async function PostCard({
       </CardActionArea>
       <Divider />
       <CardActions className="flex flex-col justify-center">
-        <Box className="flex w-full flex-row justify-end">
+        <div className="flex w-full flex-row justify-end">
           <StarPost
             postId={id}
             session={session}
             stars={stars}
             isStarred={isStarred?.id}
           />
-        </Box>
+        </div>
       </CardActions>
     </Card>
   );

@@ -1,7 +1,6 @@
 "use client";
 
 import Avatar from "@mui/material/Avatar";
-import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import AppBar from "@mui/material/AppBar/AppBar";
 import Typography from "@mui/material/Typography/Typography";
@@ -21,7 +20,15 @@ import MotionDiv from "../Motion/MotionDiv";
 import React, { useEffect, useState } from "react";
 import MotionLink from "../Motion/MotionLink";
 import { useSession } from "next-auth/react";
-import { Divider, Icon } from "@mui/material";
+import {
+  Divider,
+  Icon,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  Popover,
+} from "@mui/material";
 import {
   Dashboard,
   Logout,
@@ -79,9 +86,8 @@ const NavigationDeskTop = ({
     >
       <Container className="flex flex-row justify-between gap-4">
         <Link href="/">
-          <Box
+          <MotionDiv
             nonce={nonce}
-            component={MotionDiv}
             whileHover={{ scale: 1.1 }}
             className="flex grow-[3] flex-row gap-1"
           >
@@ -93,10 +99,10 @@ const NavigationDeskTop = ({
             >
               Braves
             </Typography>
-          </Box>
+          </MotionDiv>
         </Link>
-        <Box className="flex flex-row justify-between gap-4 lg:gap-7">
-          <Box className="flex flex-row gap-4">
+        <div className="flex flex-row justify-between gap-4 lg:gap-7">
+          <div className="flex flex-row gap-4">
             {AppBarItems.map((item) => (
               <Button
                 nonce={nonce}
@@ -110,8 +116,8 @@ const NavigationDeskTop = ({
                 {item.name}
               </Button>
             ))}
-          </Box>
-          <Box className="flex flex-row">
+          </div>
+          <div className="flex flex-row">
             <IconButton nonce={nonce} className=" mt-3 h-fit w-fit hover:scale-[1.1]">
               <Search className="h-7 w-7 dark:text-slate-50" />
             </IconButton>
@@ -142,43 +148,55 @@ const NavigationDeskTop = ({
                   </IconButton>
                 </Tooltip>
 
-                <Menu
+                <Popover
                   anchorEl={UserAnchorEl}
                   nonce={nonce}
                   component="div"
+                  className=""
                   open={Boolean(UserAnchorEl)}
                   onClose={handleUserMenuClose}
                   onClick={handleUserMenuClose}
-                  MenuListProps={{ component: "div", className: "dark:bg-slate-900" }}
-                  elevation={6}
+                  anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                  elevation={24}
                 >
-                  {UserMenuItems.map((item) => (
-                    <MenuItem
-                      key={item.name}
-                      nonce={nonce}
-                      component={Link}
-                      // LinkComponent={Link}
-                      href={item.href}
-                      className="flex flex-row gap-4"
-                    >
-                      <Icon>{item.icon}</Icon>
-                      <Typography>{item.name}</Typography>
-                    </MenuItem>
-                  ))}
+                  <div className="p-2 dark:bg-slate-900">
+                    <div className="flex flex-row gap-4">
+                      <Avatar>E</Avatar>
+                      <div className="flex flex-col gap-2">
+                        <Typography>{session.user?.fullname}</Typography>
+                        <Typography>{session.user?.role}</Typography>
+                      </div>
+                    </div>
+                    <List component="div" className="dark:bg-slate-900">
+                      {UserMenuItems.map((item) => (
+                        <ListItemButton
+                          key={item.name}
+                          nonce={nonce}
+                          component={Link}
+                          // LinkComponent={Link}
+                          href={item.href}
+                          className="flex flex-row"
+                        >
+                          <ListItemIcon>{item.icon}</ListItemIcon>
+                          <Typography>{item.name}</Typography>
+                        </ListItemButton>
+                      ))}
 
-                  <Divider />
-                  <MenuItem
-                    nonce={nonce}
-                    component={Link}
-                    className="flex flex-row gap-4"
-                    href="/auth/logout"
-                  >
-                    <Icon>
-                      <Logout />
-                    </Icon>
-                    <Typography>Logout</Typography>
-                  </MenuItem>
-                </Menu>
+                      <Divider />
+                      <ListItemButton
+                        nonce={nonce}
+                        component={Link}
+                        className="flex flex-row "
+                        href="/auth/logout"
+                      >
+                        <ListItemIcon>
+                          <Logout />
+                        </ListItemIcon>
+                        <Typography>Logout</Typography>
+                      </ListItemButton>
+                    </List>
+                  </div>
+                </Popover>
               </>
             ) : (
               <Button
@@ -191,8 +209,8 @@ const NavigationDeskTop = ({
                 Login
               </Button>
             )}
-          </Box>
-        </Box>
+          </div>
+        </div>
       </Container>
     </AppBar>
   );

@@ -2,7 +2,7 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { mergeRegister } from "@lexical/utils";
 import { Delete, Redo, Undo } from "@mui/icons-material";
-import { Box, Divider, IconButton } from "@mui/material";
+import { Divider, IconButton } from "@mui/material";
 import {
   UNDO_COMMAND,
   REDO_COMMAND,
@@ -90,8 +90,8 @@ export default function ActionsPlugin() {
     [editor, canUndo, canRedo, isClear],
   );
   return (
-    <Box className="py-4">
-      <Box className="flex flex-row gap-4">
+    <div className="py-4">
+      <div className="flex flex-row gap-4">
         {actionOptions.map(({ handleClick, icon, isDisabled, name, needsDivider }) => (
           <React.Fragment key={name}>
             {needsDivider && <Divider orientation="vertical" flexItem />}
@@ -106,7 +106,7 @@ export default function ActionsPlugin() {
             </IconButton>
           </React.Fragment>
         ))}
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }

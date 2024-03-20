@@ -1,4 +1,4 @@
-import { Box, Container, Typography, Button } from "@mui/material";
+import { Container, Typography, Button } from "@mui/material";
 import TypeAnimation from "./components/TypeWriter";
 import React from "react";
 import Image from "next/image";
@@ -16,11 +16,8 @@ export default function Home() {
   return (
     <>
       <ParticlesContainer />
-      <Box className="flex flex-col gap-20">
-        <Box
-          // component="main"
-          className="inset-0 flex h-dvh flex-row bg-none dark:bg-gradient-to-b dark:from-blue-950 dark:to-slate-950"
-        >
+      <div className="flex flex-col gap-20">
+        <div className="inset-0 flex h-dvh flex-row bg-none dark:bg-gradient-to-b dark:from-blue-950 dark:to-slate-950">
           <Image
             nonce={nonce ? nonce : undefined}
             src={SchoolImage}
@@ -29,16 +26,9 @@ export default function Home() {
             fill
           />
 
-          <Container
-            className="relative inset-0 ml-0 mt-40 flex flex-row bg-transparent"
-            // component={MotionDiv}
-            // initial={{ opacity: 0, y: 400 }}
-            // animate={{ opacity: 1, y: 0 }}
-            // transition={{ ease: "easeIn", duration: 0.5, delay: 0.2 }}
-          >
-            <Box
+          <Container className="relative inset-0 ml-0 mt-40 flex flex-row bg-transparent">
+            <MotionDiv
               className="ml-10 flex flex-col gap-2"
-              component={MotionDiv}
               initial={{ x: -200, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.5, ease: "easeIn" }}
@@ -50,7 +40,7 @@ export default function Home() {
                 We believe in
               </Typography>
 
-              <Box className="flex flex-row">
+              <div className="flex flex-row">
                 <Typography className="text-[10rem] md:text-[6rem] lg:text-[12rem] dark:text-blue-50">
                   C
                 </Typography>
@@ -60,10 +50,10 @@ export default function Home() {
                   speed={10}
                   repeat={Infinity}
                 />
-              </Box>
-            </Box>
+              </div>
+            </MotionDiv>
           </Container>
-        </Box>
+        </div>
 
         <Container className="mb-10 flex flex-col gap-10 pl-0">
           <MotionDiv
@@ -78,7 +68,7 @@ export default function Home() {
               Admission Open for <Typography className="inline">2024-25</Typography>
             </Typography>
           </MotionDiv>
-          <Box className="mb-10 flex flex-row justify-center">
+          <div className="mb-10 flex flex-row justify-center">
             <Button
               variant="contained"
               color="success"
@@ -86,15 +76,15 @@ export default function Home() {
               component={MotionLink}
               initial={{ opacity: 0, y: 100 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ ease: "easeIn", delay: 0.5 }}
+              transition={{ ease: "easeIn", delay: 0.3 }}
               whileHover={{ scale: 1.2 }}
               href="/enroll"
             >
               Enroll now...
             </Button>
-          </Box>
+          </div>
         </Container>
-      </Box>
+      </div>
     </>
   );
 }

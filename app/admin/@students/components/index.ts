@@ -1,3 +1,4 @@
+export { default as StudentDataGrid } from "./StudentDataGrid";
 import { StudentFields } from "@/lib/prisma";
 import {
   GridRowsProp,

@@ -3,7 +3,7 @@ import { IsMobileContext } from "@/contexts/IsMobileContext";
 import React, { useContext } from "react";
 import NavigationMobile from "./NavigationMobile";
 import NavigationDeskTop from "./NavigationDeskTop";
-import { Box, useScrollTrigger } from "@mui/material";
+import { useScrollTrigger } from "@mui/material";
 
 const Navigation = ({
   children,
@@ -21,7 +21,7 @@ const Navigation = ({
     <>
       {IsMobile ? (
         <NavigationMobile elevation={triggerElevation ? 4 : 0}>
-          <Box className="mb-40">{children}</Box>
+          <div className="mb-40">{children}</div>
         </NavigationMobile>
       ) : (
         <>

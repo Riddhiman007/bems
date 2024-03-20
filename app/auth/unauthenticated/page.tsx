@@ -1,6 +1,5 @@
 import React from "react";
 
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -21,13 +20,13 @@ export default function page() {
     >
       <CardContent className="m-4 flex flex-col gap-4 ">
         {/* title */}
-        <Box>
+        <div>
           <Typography variant="h3" className="text-3xl" component="h3">
             Unauthenticated
           </Typography>
-        </Box>
+        </div>
         <Typography>Sorry, you are unauthenticated. Please log in</Typography>
-        <Box className="flex flex-row justify-end">
+        <div className="flex flex-row justify-end">
           <MotionMuiButton
             LinkComponent={Link}
             color="success"
@@ -38,7 +37,7 @@ export default function page() {
           >
             Log in
           </MotionMuiButton>
-        </Box>
+        </div>
       </CardContent>
     </Card>
   );

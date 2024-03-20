@@ -1,5 +1,5 @@
 .main {
-  grid-template-areas: "students admin";
+  grid-template-areas: "students admin" "examRecords admin";
   grid-template-columns: 2fr 1fr;
   grid-template-rows: 1fr 1fr;
   @apply mt-24 grid gap-3;
@@ -11,8 +11,16 @@
   @apply bg-slate-900;
 }
 
+:is(:where(.dark) .examRecords) {
+  @apply bg-slate-900;
+}
+
 .students {
   grid-area: "students";
+}
+
+.examRecords {
+  grid-area: "examRecords";
 }
 
 :is(:where(.dark) .students) {

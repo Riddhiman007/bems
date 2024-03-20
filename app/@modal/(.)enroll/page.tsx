@@ -8,7 +8,7 @@ export default function AdmissionForm() {
     <>
       <Card
         component={MotionDiv}
-        key="loginCard"
+        key="enrollCard"
         initial={{ opacity: 0, marginTop: "-10rem!important" }}
         animate={{ opacity: 1, marginTop: "2.5vh !important" }}
         transition={{ delay: 0.25, ease: "easeInOut" }}

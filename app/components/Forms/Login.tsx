@@ -1,12 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import {
-  Box,
-  CircularProgress,
-  InputAdornment,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { CircularProgress, InputAdornment, TextField, Typography } from "@mui/material";
 import MotionButton from "../Motion/MotionButton";
 import AnimatePresence from "../Motion/AnimatePresence";
 
@@ -73,7 +67,7 @@ export default function LoginForm({
           />
         )}
       />
-      <Box
+      <div
         className={`flex flex-row ${
           isBackButtonEnabled ? "justify-between" : "justify-end"
         }`}
@@ -105,7 +99,7 @@ export default function LoginForm({
             <Typography>Login</Typography>
           </MotionMuiBotton>
         </AnimatePresence>
-      </Box>
+      </div>
     </form>
   );
 }

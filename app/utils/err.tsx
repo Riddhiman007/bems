@@ -1,5 +1,5 @@
 import { MotionLink } from "@/components/Motion";
-import { Box, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import React from "react";
 
 interface ErrMesage {
@@ -15,7 +15,7 @@ export const err_type: { [key: string]: ErrMesage } = {
     title: "Unauthenticated",
     message: "Sorry, you are not logged in. Please try again",
     sol: (
-      <Box className="flex flex-row justify-end">
+      <div className="flex flex-row justify-end">
         <Button
           component={MotionLink}
           href="/auth/login"
@@ -25,7 +25,7 @@ export const err_type: { [key: string]: ErrMesage } = {
         >
           Log in
         </Button>
-      </Box>
+      </div>
     ),
   },
   s: {

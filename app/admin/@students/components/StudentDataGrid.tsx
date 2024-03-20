@@ -140,7 +140,7 @@ function EditToolbar({
     <GridToolbarContainer className="flex flex-row justify-between">
       <ButtonGroup>
         <Button
-          startIcon={!isSaving && <Save />}
+          startIcon={isSaving && <Save />}
           disabled={!hasUnsavedRows || isSaving}
           color="success"
           onClick={handleSaveAllClick}
@@ -170,7 +170,6 @@ export default function StudentDataGrid({
 }: {
   initialRows: StudentRowModel[];
 }) {
-  const [editedRows, setEditedRows] = useState<GridRowId[]>([]);
   const [rows, setRows] = useState<StudentRowModel[]>(initialRows);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
   const unsavedChangesRef = useRef<UnsavedChanges>({
@@ -199,7 +198,7 @@ export default function StudentDataGrid({
       if (!unsavedChangesRef.current.rowsBeforeChange[id]) {
         unsavedChangesRef.current.rowsBeforeChange[id] = row;
       }
-      setEditedRows((editedRows) => [...editedRows, id]);
+
       setHasUnsavedRows(true);
       apiRef.current.updateRows([row]); // to trigger row render
     },
@@ -242,18 +241,20 @@ export default function StudentDataGrid({
   );
 
   const handleDiscardChanges = useCallback(() => {
-    editedRows.map((id) => {
-      setRowModesModel({
-        ...rowModesModel,
-        [id]: { mode: GridRowModes.View, ignoreModifications: true },
-      });
+    const discardedRows = Object.values(unsavedChangesRef.current.unsavedRows).filter(
+      (row) => row._action === "edit",
+    );
+    discardedRows.forEach((row) => {
+      setRowModesModel((lastRows) => ({
+        ...lastRows,
+        [row.id]: { mode: GridRowModes.View, ignoreModifications: true },
+      }));
     });
-    setEditedRows([]);
+
     apiRef.current.updateRows(Object.values(unsavedChangesRef.current.rowsBeforeChange));
     unsavedChangesRef.current = { rowsBeforeChange: {}, unsavedRows: {} };
     setHasUnsavedRows(false);
-  }, [apiRef, rowModesModel, editedRows]);
-
+  }, [apiRef, rowModesModel]);
   const handleSaveAllClick = useCallback(async () => {
     try {
       setIsSaving(true);
@@ -262,7 +263,7 @@ export default function StudentDataGrid({
       const rowsToSave = Object.values(unsavedChangesRef.current.unsavedRows).filter(
         (row) => row._action === "edit",
       );
-      rowsToSave.map((row) => {
+      rowsToSave.forEach((row) => {
         setRowModesModel((lastRows) => ({
           ...lastRows,
           [row.id]: { mode: GridRowModes.View },

@@ -2,14 +2,14 @@
 import { StudentFields, allGrades } from "@/lib/prisma/helpers";
 import { AcademicCapIcon } from "@heroicons/react/24/solid";
 import { Email, Face, Face2, Phone } from "@mui/icons-material";
-import { Box, InputAdornment, MenuItem, TextField, Typography } from "@mui/material";
+import { InputAdornment, MenuItem, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 export default function PersonalForm() {
   const [gender, setGender] = useState<"Male" | "Female" | boolean>(false);
   const { control } = useFormContext<StudentFields>();
   return (
-    <Box className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6">
       <Controller
         control={control}
         name="fullname"
@@ -94,7 +94,7 @@ export default function PersonalForm() {
           />
         )}
       />
-      <Box className="flex flex-row gap-6">
+      <div className="flex flex-row gap-6">
         <Controller
           control={control}
           name="grade"
@@ -185,7 +185,7 @@ export default function PersonalForm() {
             </>
           )}
         />
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }

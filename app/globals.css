@@ -35,7 +35,7 @@
 }
 
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 2px;
   @apply m-1;
 }
 

@@ -1,5 +1,5 @@
 import MotionDiv from "@/components/Motion/MotionDiv";
-import { Box, Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, Typography } from "@mui/material";
 import React from "react";
 
 export default function Verify() {
@@ -13,11 +13,11 @@ export default function Verify() {
     >
       <CardContent className="m-4 flex flex-col gap-4 ">
         {/* title */}
-        <Box>
+        <div>
           <Typography variant="h4" className="text-3xl" component="h3">
             Verify your email address
           </Typography>
-        </Box>
+        </div>
         <Typography>
           A link has been sent to your email address. Please click on it to continue
         </Typography>

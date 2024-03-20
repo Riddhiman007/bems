@@ -4,7 +4,6 @@ import React, { useContext } from "react";
 // charts
 import { BarChart, BarElement } from "@mui/x-charts/BarChart";
 
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -69,7 +68,7 @@ export default function AcademicProgressBarChart() {
       <Card className="shadow-xl shadow-gray-400 dark:bg-slate-900 dark:shadow dark:shadow-black">
         <CardBackgroundForLightMode />
         <CardContent>
-          <Box className="flex flex-row justify-center overflow-y-auto">
+          <div className="flex flex-row justify-center overflow-y-auto">
             <BarChart
               dataset={dataset}
               xAxis={
@@ -140,13 +139,13 @@ export default function AcademicProgressBarChart() {
               }}
               width={isMobile ? 400 : 600}
             />
-          </Box>
+          </div>
         </CardContent>
       </Card>
       {isMobile && (
         <Card className="shadow-xl shadow-gray-400 dark:bg-slate-950 dark:shadow dark:shadow-black">
           <CardContent>
-            <Box className="flex flex-row justify-center"></Box>
+            <div className="flex flex-row justify-center"></div>
           </CardContent>
         </Card>
       )}

@@ -1,6 +1,5 @@
 "use client";
 import {
-  Box,
   Button,
   Card,
   CardContent,
@@ -83,7 +82,7 @@ export default function Youtube() {
                   )}
                 />
 
-                <Box className="flex flex-row justify-between">
+                <div className="flex flex-row justify-between">
                   <MotionMuiButton
                     type="button"
                     whileHover={{ scale: 1.1 }}
@@ -103,7 +102,7 @@ export default function Youtube() {
                   >
                     Insert
                   </MotionMuiButton>
-                </Box>
+                </div>
               </form>
             </CardContent>
           </Card>

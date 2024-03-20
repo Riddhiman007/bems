@@ -1,14 +1,14 @@
 "use client";
 import { StudentFields } from "@/lib/prisma";
 import { Cast, Face, Face2, LocationCity } from "@mui/icons-material";
-import { Box, InputAdornment, MenuItem, TextField, Typography } from "@mui/material";
+import { InputAdornment, MenuItem, TextField, Typography } from "@mui/material";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 export default function ParentalForm() {
   const { control } = useFormContext<StudentFields>();
 
   return (
-    <Box className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4">
       <Controller
         control={control}
         name="father_name"
@@ -139,6 +139,6 @@ export default function ParentalForm() {
           </TextField>
         )}
       />
-    </Box>
+    </div>
   );
 }

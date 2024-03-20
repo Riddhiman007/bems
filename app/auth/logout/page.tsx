@@ -1,6 +1,5 @@
 import LogoutButton from "@/components/LogoutButton";
 import MotionDiv from "@/components/Motion/MotionDiv";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -23,17 +22,17 @@ export default async function Logout() {
       >
         <CardContent className="m-4 flex flex-col gap-4 ">
           {/* title */}
-          <Box>
+          <div>
             <Typography variant="h4" className="text-3xl" component="h3">
               {session ? "You're already logged in..." : "Log out"}
             </Typography>
-          </Box>
+          </div>
           {session === null && (
             <>
               <Typography>Are you sure you want to log out?</Typography>
-              <Box className="flex flex-row justify-end">
+              <div className="flex flex-row justify-end">
                 <LogoutButton />
-              </Box>
+              </div>
             </>
           )}
         </CardContent>

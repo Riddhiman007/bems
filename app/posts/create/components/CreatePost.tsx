@@ -10,14 +10,7 @@ import {
   createPost,
 } from "@/lib/prisma";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  MenuItem,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, CircularProgress, MenuItem, TextField, Typography } from "@mui/material";
 import { EditorState, LexicalEditor, SerializedEditorState } from "lexical";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
@@ -71,11 +64,7 @@ export default function CreatePost({ session }: { session: Session | null }) {
   };
 
   return (
-    <Box
-      component="form"
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 "
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 ">
       <Controller
         control={control}
         name="title"
@@ -234,7 +223,7 @@ export default function CreatePost({ session }: { session: Session | null }) {
         }
       />
 
-      <Box className="flex flex-row justify-end">
+      <div className="flex flex-row justify-end">
         <Button
           type="submit"
           disabled={typeof isSubmitting === "string" || Boolean(isSubmitting)}
@@ -254,7 +243,7 @@ export default function CreatePost({ session }: { session: Session | null }) {
             {typeof isSubmitting === "string" ? isSubmitting : "Submit"}
           </Typography>
         </Button>
-      </Box>
-    </Box>
+      </div>
+    </form>
   );
 }

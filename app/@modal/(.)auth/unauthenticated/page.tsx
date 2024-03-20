@@ -1,13 +1,12 @@
 import React from "react";
 
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import MotionDiv from "@/components/Motion/MotionDiv";
-import Button from "@mui/material/Button";
-import MotionLink from "@/components/Motion/MotionLink";
 import CancelButton from "@/components/CancelButton";
+import MotionMuiButton from "@/components/Motion/MotionMuiButton";
+import Link from "next/link";
 
 export default function page() {
   return (
@@ -22,16 +21,16 @@ export default function page() {
     >
       <CardContent className="m-4 flex flex-col gap-4 ">
         {/* title */}
-        <Box>
+        <div>
           <Typography variant="h3" className="text-3xl" component="h3">
             Unauthenticated
           </Typography>
-        </Box>
+        </div>
         <Typography>Sorry, you are unauthenticated. Please log in</Typography>
-        <Box className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between">
           <CancelButton />
-          <Button
-            LinkComponent={MotionLink}
+          <MotionMuiButton
+            LinkComponent={Link}
             color="success"
             variant="contained"
             className="bg-green-700 px-4 py-2 text-green-50 hover:bg-green-900"
@@ -39,8 +38,8 @@ export default function page() {
             whileHover={{ scale: 1.1 }}
           >
             Log in
-          </Button>
-        </Box>
+          </MotionMuiButton>
+        </div>
       </CardContent>
     </Card>
   );

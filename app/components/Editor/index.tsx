@@ -13,7 +13,7 @@ import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { YoutubeNode } from "./nodes";
 
 import { theme } from "./theme";
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { ToolbarPlugin } from "./plugins";
 import { ActionsPlugin } from "./plugins";
 import { EditorState, LexicalEditor } from "lexical";
@@ -48,11 +48,11 @@ export default function Editor({
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
-      <Box className="flex flex-col ">
+      <div className="flex flex-col ">
         {typeof isToolbarShown === "undefined" || isToolbarShown ? (
           <ToolbarPlugin />
         ) : undefined}
-        <Box>
+        <div>
           <RichTextPlugin
             ErrorBoundary={ErrorBoundary}
             contentEditable={
@@ -82,11 +82,11 @@ export default function Editor({
             }
           />
           {helperText}
-        </Box>
+        </div>
         {typeof isActionShown === "undefined" || isActionShown ? (
           <ActionsPlugin />
         ) : undefined}
-      </Box>
+      </div>
       <HistoryPlugin />
       <OnChangePlugin onChange={onChange} />
       {/* <EditorRefPlugin editorRef={ref} /> */}

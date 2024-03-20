@@ -5,11 +5,10 @@ import {
   Autocomplete,
   AutocompleteChangeDetails,
   AutocompleteChangeReason,
-  Box,
   TextField,
 } from "@mui/material";
 import {
-  $INTERNAL_isPointSelection,
+  $isNodeSelection,
   $createParagraphNode,
   $getSelection,
   $isRangeSelection,
@@ -45,7 +44,7 @@ export default function StyleText() {
   const formatParagraph = useCallback(() => {
     editor.update(() => {
       const selection = $getSelection();
-      if ($isRangeSelection(selection) || $INTERNAL_isPointSelection(selection)) {
+      if ($isRangeSelection(selection) || $isNodeSelection(selection)) {
         $setBlocksType(selection, () => $createParagraphNode());
       }
     });
@@ -55,7 +54,7 @@ export default function StyleText() {
     (tag: HeadingTagType) => {
       editor.update(() => {
         const selection = $getSelection();
-        if ($isRangeSelection(selection) || $INTERNAL_isPointSelection(selection)) {
+        if ($isRangeSelection(selection) || $isNodeSelection(selection)) {
           $setBlocksType(selection, () => $createHeadingNode(tag));
         }
       });
@@ -66,7 +65,7 @@ export default function StyleText() {
   const formatQuote = useCallback(() => {
     editor.update(() => {
       const selection = $getSelection();
-      if ($isRangeSelection(selection) || $INTERNAL_isPointSelection(selection)) {
+      if ($isRangeSelection(selection) || $isNodeSelection(selection)) {
         $setBlocksType(selection, () => $createQuoteNode());
       }
     });
@@ -85,7 +84,7 @@ export default function StyleText() {
     }
   }, [currentStyle, formatParagraph, formatHeading, formatQuote]);
   return (
-    <Box className="flex w-40 flex-col">
+    <div className="flex w-40 flex-col">
       <Autocomplete
         value={currentStyle}
         onChange={handleChange}
@@ -101,6 +100,6 @@ export default function StyleText() {
           <TextField variant="standard" label="Styles" {...params} />
         )}
       />
-    </Box>
+    </div>
   );
 }

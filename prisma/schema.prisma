@@ -1,7 +1,6 @@
 datasource db {
   provider = "mongodb"
-
-  url = env("MONGODB_URI")
+  url      = env("MONGODB_URI")
 }
 
 generator client {
@@ -83,8 +82,9 @@ model Grade {
   class_teacher Teacher   @relation(fields: [teacher_name], references: [id], onDelete: NoAction)
   teacher_name  String    @unique @db.ObjectId
 
-  students       Student[]
-  subjectsTaught SubjectTaughtByInWhichGrade[]
+  students                    Student[]
+  SubjectTaughtByInWhichGrade SubjectTaughtByInWhichGrade[]
+  GradeExamRel                GradeExamRel[]
 
   @@map("grades")
 }
@@ -101,14 +101,15 @@ model Teacher {
 }
 
 model SubjectTaughtByInWhichGrade {
-  id             String        @id @default(auto()) @map("_id") @db.ObjectId
-  subject        SubjectList[]
-  grade          Grade         @relation(fields: [gradeId], references: [id])
-  gradeId        String        @db.ObjectId
-  subjectTeacher Teacher       @relation(fields: [teacherId], references: [id])
-  teacherId      String        @db.ObjectId
+  id             String             @id @default(auto()) @map("_id") @db.ObjectId
+  subjects       SubjectList[]
+  exam_Subjects  ExamSubjectsList[]
+  grade          Grade              @relation(fields: [gradeId], references: [id])
+  gradeId        String             @db.ObjectId
+  subjectTeacher Teacher            @relation(fields: [teacherId], references: [id])
+  teacherId      String             @db.ObjectId
 
-  @@unique([subject, gradeId, teacherId])
+  @@unique([subjects, gradeId, teacherId])
 }
 
 model ExamRecord {
@@ -121,10 +122,34 @@ model ExamRecord {
   Mathematics Int      @default(0)
   Science     Int      @default(0)
   SST         Int      @default(0)
-  Marathi     Int?     @default(0)
-  Computer    String?
+  Marathi     Int      @default(0)
+  Computer    Int      @default(0)
+  isComplete  Boolean  @default(false)
+  Exam        Exam     @relation(fields: [examType], references: [type])
 
   @@unique([studentId, examType])
+}
+
+model Exam {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  type         ExamType       @unique
+  records      ExamRecord[]
+  GradeExamRel GradeExamRel[]
+  isComplete   Boolean        @default(false)
+}
+
+model GradeExamRel {
+  id                     String    @id @default(auto()) @map("_id") @db.ObjectId
+  grade                  Grade     @relation(fields: [gradeId], references: [grade])
+  gradeId                GradeType
+  exam_type              Exam      @relation(fields: [examId], references: [id])
+  examId                 String    @db.ObjectId
+  English_Full_Marks     Int       @default(0)
+  Hindi_Full_Marks       Int       @default(0)
+  Marathi_Full_Marks     Int       @default(0)
+  Mathematics_Full_Marks Int       @default(0)
+  Science_Full_Marks     Int       @default(0)
+  Computer_Full_Marks    Int       @default(0)
 }
 
 model Student {
@@ -164,7 +189,7 @@ model Post {
   author_id   String        @db.ObjectId
   StarredPost StarredPost[] @relation("StarredPost")
   Comment     Comment[]
-  postedOn    DateTime  @default(now())
+  postedOn    DateTime      @default(now())
 
   @@map("posts")
 }
@@ -176,7 +201,7 @@ model Comment {
   post        Post     @relation(fields: [postId], references: [id])
   postId      String   @db.ObjectId
   content     Json
-  commentedOn DateTime  @default(now())
+  commentedOn DateTime @default(now())
 
   @@map("comments")
 }
@@ -231,6 +256,16 @@ enum SubjectList {
   Economics
 }
 
+enum ExamSubjectsList {
+  English
+  Hindi
+  Marathi
+  SST
+  Science
+  Mathematics
+  Computer
+}
+
 enum ExamType {
   FA1
   SA1
@@ -239,4 +274,23 @@ enum ExamType {
   Prelim1
   Prelim2
   Board
+}
+
+enum ExamGrades5Bit {
+  A
+  B
+  C
+  D
+  E
+}
+
+enum ExamGrades8Bit {
+  A1
+  A2
+  B1
+  B2
+  C1
+  C2
+  D
+  E
 }

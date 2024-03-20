@@ -1,6 +1,6 @@
 "use server";
 
-import { Role } from "@prisma/client";
+import { $Enums, Role } from "@prisma/client";
 import { Student as PrismaStudentModel } from "@prisma/client";
 import prisma, { StudentFields } from "..";
 import { revalidatePath } from "next/cache";
@@ -96,6 +96,13 @@ export async function fetchAllStudents(): Promise<StudentRowModel[]> {
   }));
 }
 
+export async function fetchStudentNameOfParticularGrade(grade: $Enums.GradeType) {
+  const students = await prisma.student.findMany({
+    where: { grade_name: grade },
+    select: { id: true, fullname: true },
+  });
+  return students;
+}
 export async function updateStudent(
   email: string,
   {

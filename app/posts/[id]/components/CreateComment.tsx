@@ -1,7 +1,7 @@
 import Editor from "@/components/Editor";
 import { MotionButton } from "@/components/Motion";
 import { createComment } from "@/lib/prisma";
-import { Box, Button, CircularProgress, Typography } from "@mui/material";
+import { Button, CircularProgress, Typography } from "@mui/material";
 import { SerializedEditorState } from "lexical";
 import React, { useRef, useState } from "react";
 import { experimental_useFormStatus as useFormStatus } from "react-dom";
@@ -24,7 +24,7 @@ export default function CreateComment({
     }
   };
   return (
-    <Box component="form" onSubmit={handleSubmit} className="flex flex-col gap-3">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-3">
       <Editor
         onChange={(editorState) => {
           content.current = editorState.toJSON();
@@ -32,7 +32,7 @@ export default function CreateComment({
         error={Boolean(err)}
         // helperText={}
       />
-      <Box className="flex flex-row justify-end">
+      <div className="flex flex-row justify-end">
         <Button
           component={MotionButton}
           color="success"
@@ -45,7 +45,7 @@ export default function CreateComment({
           {isSubmitting && <CircularProgress size={20} className="text-green-50" />}
           <Typography>{isSubmitting ? "Submitting..." : "Submit"}</Typography>
         </Button>
-      </Box>
-    </Box>
+      </div>
+    </form>
   );
 }

@@ -1,5 +1,5 @@
 "use client";
-import { Box, Tab, Tabs, Typography } from "@mui/material";
+import { Tab, Tabs, Typography } from "@mui/material";
 import React, { useState } from "react";
 import Home from "./Home";
 import ToolbarProvider from "./ToolbarContext";
@@ -11,7 +11,7 @@ interface TabPanelProps<T> {
   index: T;
 }
 function TabPanel<T>({ children, value, index }: TabPanelProps<T>) {
-  return <Box hidden={value !== index}>{children}</Box>;
+  return <div hidden={value !== index}>{children}</div>;
 }
 
 export default function ToolbarPlugin() {
@@ -19,7 +19,7 @@ export default function ToolbarPlugin() {
   const handleTabChange = (ev: React.SyntheticEvent, value: string) => setIdx(value);
   return (
     <ToolbarProvider>
-      <Box className="mb-4 flex flex-col gap-4">
+      <div className="mb-4 flex flex-col gap-4">
         <Tabs
           value={idx}
           onChange={handleTabChange}
@@ -39,7 +39,7 @@ export default function ToolbarPlugin() {
             label={<Typography className="dark:text-slate-100">Design</Typography>}
           />
         </Tabs>
-        <Box className="ml-2">
+        <div className="ml-2">
           <TabPanel value="Home" index={idx}>
             <Home />
           </TabPanel>
@@ -49,8 +49,8 @@ export default function ToolbarPlugin() {
           <TabPanel value="2" index={idx}>
             <Typography>2</Typography>
           </TabPanel>
-        </Box>
-      </Box>
+        </div>
+      </div>
     </ToolbarProvider>
   );
 }

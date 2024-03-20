@@ -1,6 +1,5 @@
 "use client";
 import {
-  Box,
   Button,
   Step,
   StepConnector,
@@ -71,7 +70,7 @@ export default function EnrollComponent() {
   }, []);
   return (
     <>
-      <Box className="flex flex-col justify-center gap-7">
+      <div className="flex flex-col justify-center gap-7">
         <Stepper
           orientation="horizontal"
           activeStep={activeStep}
@@ -128,8 +127,8 @@ export default function EnrollComponent() {
             onSubmit={handleSubmit(onSubmit, (e) => console.log(e))}
             className="flex flex-col gap-7"
           >
-            <Box className="h-40 overflow-y-auto">{steps[activeStep].component}</Box>
-            <Box
+            <div className="h-40 overflow-y-auto">{steps[activeStep].component}</div>
+            <div
               className={`flex flex-row ${
                 allStepsCompleted ? "justify-end" : "justify-between"
               } `}
@@ -162,11 +161,11 @@ export default function EnrollComponent() {
               >
                 {isLastStep ? "Finish" : allStepsCompleted ? "Done" : "Next"}
               </Button>
-            </Box>
+            </div>
           </form>
           {/* <pre>{JSON.stringify(methods.watch(), null, 2)}</pre> */}
         </FormProvider>
-      </Box>
+      </div>
     </>
   );
 }

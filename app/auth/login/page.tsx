@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, Typography } from "@mui/material";
 
 import MotionDiv from "@/components/Motion/MotionDiv";
 import LoginForm from "@/components/Forms/Login";
@@ -18,11 +18,11 @@ export default function Login(): React.ReactNode | null {
         <CardBackgroundForLightMode />
         <CardContent className="m-4 flex flex-col gap-4 ">
           {/* title */}
-          <Box>
+          <div>
             <Typography variant="h3" className="text-4xl" component="h3">
               Login
             </Typography>
-          </Box>
+          </div>
           <LoginForm isBackButtonEnabled={false} />
         </CardContent>
       </Card>

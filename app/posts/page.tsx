@@ -1,6 +1,5 @@
 import { allStarredUsers, fetchAllPosts } from "@/lib/prisma";
 import {
-  Box,
   Card,
   CardContent,
   CardMedia,
@@ -66,7 +65,7 @@ export default async function Posts() {
   const session = await auth();
   return (
     <Container className="mt-20 flex flex-col gap-7">
-      <Box className="flex flex-row justify-center">
+      <div className="flex flex-row justify-center">
         <TextField
           className=""
           placeholder="Search posts..."
@@ -79,15 +78,15 @@ export default async function Posts() {
           }}
           variant="filled"
         />
-      </Box>
+      </div>
       {posts.length === 0 && (
-        <Box className="mt-10 flex flex-row justify-center">
+        <div className="mt-10 flex flex-row justify-center">
           <Typography className="dark:text-slate-700" variant="h3">
             Nothing to display...
           </Typography>
-        </Box>
+        </div>
       )}
-      <Box className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
         <Suspense fallback={<FallBack />}>
           {posts.map(async (post) => {
             const { id, title, desc } = post;
@@ -106,7 +105,7 @@ export default async function Posts() {
             );
           })}
         </Suspense>
-      </Box>
+      </div>
     </Container>
   );
 }

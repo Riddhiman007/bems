@@ -6,7 +6,6 @@ import {
   Container,
   BottomNavigation,
   BottomNavigationAction,
-  Box,
   Typography,
   IconButton,
   SpeedDial,
@@ -137,7 +136,7 @@ const NavigationMobile = ({
         className="bg-transparent py-4 lg:py-6"
       >
         <Container className="flex flex-row text-center">
-          <Box className=" mx-auto flex flex-row gap-2">
+          <div className=" mx-auto flex flex-row gap-2">
             <Image src={image} alt="braves" height={50} width={50} />
             <Typography
               style={{ font: "Shrikhand" }}
@@ -146,8 +145,8 @@ const NavigationMobile = ({
             >
               Braves
             </Typography>
-          </Box>
-          <Box className="flex flex-row gap-2 md:gap-4">
+          </div>
+          <div className="flex flex-row gap-2 md:gap-4">
             <IconButton className=" mt-3 h-fit w-fit hover:scale-[1.1]">
               <Search className="h-7 w-7 dark:text-slate-50" />
             </IconButton>
@@ -177,7 +176,7 @@ const NavigationMobile = ({
                 Login
               </Button>
             )}
-          </Box>
+          </div>
         </Container>
       </AppBar>
       {children}
