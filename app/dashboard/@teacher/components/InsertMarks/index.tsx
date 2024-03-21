@@ -4,7 +4,7 @@ import { DataGrid, GridColDef, GridRowsProp, GridValidRowModel } from "@mui/x-da
 import { $Enums, ExamType } from "@prisma/client";
 import React, { useMemo } from "react";
 import { processRowUpdate } from "./InsertMarksBackend";
-import { StudentRow } from ".";
+import { StudentRow } from "..";
 
 const columns: GridColDef[] = [
   {
@@ -13,12 +13,6 @@ const columns: GridColDef[] = [
     type: "string",
     width: 200,
   },
-  // {
-  //   field: "grade",
-  //   headerName: "Grade",
-  //   type: "singleSelect",
-  //   valueOptions: allGrades,
-  // },
 ];
 
 export default function InsertMarks({

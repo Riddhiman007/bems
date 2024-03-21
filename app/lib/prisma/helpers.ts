@@ -173,3 +173,5 @@ export const MainSubjects: ExamSubjectsList[] = [
   "SST",
   "Science",
 ];
+
+export const allExamSubjects = Object.values(ExamSubjectsList);

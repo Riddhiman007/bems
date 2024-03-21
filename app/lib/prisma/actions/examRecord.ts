@@ -102,7 +102,7 @@ export async function updateRecord(
       let percentage = (got_marks / tot_marks) * 100;
       record = await prisma.examRecord.update({
         where: { studentId_examType: { examType, studentId } },
-        data: { totalMarks: got_marks, percentage },
+        data: { totalMarks: got_marks, percentage: Number(percentage.toFixed(2)) },
       });
     }
   }

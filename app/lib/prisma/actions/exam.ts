@@ -26,6 +26,8 @@ export async function createNewExam({
   secondary_main_sub_marks,
   secondary_optional_sub_marks,
 }: ExamProps) {
+  console.log("Creating new exam properties...");
+
   let grades = allGrades.filter((val) => {
     for (
       let index = allGrades.findIndex((val) => val === fromGrade);
@@ -108,9 +110,16 @@ export async function createNewExam({
       });
     });
   });
+  console.log("New exam created successfully");
   return newExam;
 }
 
 export async function fetchIncompleteExam() {
   return await prisma.exam.findFirst({ where: { isComplete: false } });
+}
+
+export async function isExamPresent(examType: ExamType) {
+  let res = await prisma.exam.findUnique({ where: { type: examType } });
+  if (res) return res;
+  else return false;
 }

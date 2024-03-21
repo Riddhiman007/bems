@@ -16,7 +16,11 @@ export async function getSubjectsAndGrades(teacherId: string) {
 
 export async function getTeacher(userId: string, role: $Enums.Role) {
   if (role === "Teacher") {
-    const res = await prisma.teacher.findFirst({});
+    const res = await prisma.teacher.findFirst({
+      where: { User: { id: userId } },
+      include: { class: true },
+    });
+    return res;
   }
 }
 

@@ -6,6 +6,7 @@ import {
   allGrades,
   createNewExam,
   exam_defaults,
+  isExamPresent,
   middleGrades,
   prepGrades,
   primaryGrades,
@@ -14,7 +15,7 @@ import {
 import { Divider, MenuItem, TextField, Typography } from "@mui/material";
 import { DataGrid, GridColDef, GridValidRowModel } from "@mui/x-data-grid";
 import { ExamType, GradeType } from "@prisma/client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 const columns: GridColDef[] = [
@@ -54,7 +55,7 @@ export default function CreateExam() {
     toGrade: GradeType;
   }
 
-  const { handleSubmit, control, watch, getValues } = useForm<FormInput>();
+  const { handleSubmit, control, watch, getValues } = useForm<FormInput>({ mode: "all" });
   const [currentExam, setCurrentExam] = useState<ExamType | undefined>();
   const [selectedGrades, setSelectedGrades] = useState<GradeType[]>([]);
 
@@ -108,6 +109,14 @@ export default function CreateExam() {
     }
   });
 
+  const eligibleGrades = useMemo<GradeType[]>(() => {
+    if (currentExam === "FA1" || currentExam === "SA1") return allGrades;
+    if (currentExam === "FA2" || currentExam === "SA2")
+      return prepGrades.concat(primaryGrades, middleGrades, ["VIII"]);
+    if (currentExam === "Prelim1" || currentExam === "Prelim2") return ["IX", "X"];
+    if (currentExam === "Board") return ["X"];
+    return [];
+  }, [currentExam]);
   const onSubmit = async ({ exam, fromGrade, toGrade }: FormInput) => {
     await createNewExam({ exam_type: exam, fromGrade, toGrade });
   };
@@ -120,18 +129,37 @@ export default function CreateExam() {
             control={control}
             name="exam"
             rules={{
+              async validate(val) {
+                if (val) {
+                  let res = await isExamPresent(val);
+                  if (res) {
+                    return "Exam already exists";
+                  } else if (res === false) {
+                    return true;
+                  }
+                }
+              },
+              required: "Please select an exam",
               onChange() {
                 setCurrentExam(getValues("exam"));
               },
             }}
-            render={({ field: { ref, ...other } }) => (
+            render={({ field: { ref, ...other }, fieldState: { error, invalid } }) => (
               <TextField
+                error={Boolean(error) || invalid}
                 variant="outlined"
                 select
                 size="small"
                 placeholder="Exam type"
                 label="Exam"
                 className="w-24"
+                helperText={
+                  error && (
+                    <Typography className="text-sm text-red-500">
+                      {error.message}
+                    </Typography>
+                  )
+                }
                 SelectProps={{
                   MenuProps: {
                     classes: { list: "dark:bg-slate-900" },
@@ -153,14 +181,17 @@ export default function CreateExam() {
           <Controller
             control={control}
             rules={{
+              required: "Please enter grade",
               onChange() {
                 changeGrade();
               },
             }}
             name="fromGrade"
-            render={({ field: { ref, ...other } }) => (
+            render={({ field: { ref, ...other }, fieldState: { invalid, error } }) => (
               <TextField
+                error={Boolean(error) || invalid}
                 select
+                disabled={eligibleGrades.length === 0}
                 variant="outlined"
                 size="small"
                 placeholder="Please enter grade"
@@ -171,10 +202,17 @@ export default function CreateExam() {
                     classes: { list: "dark:bg-slate-900" },
                   },
                 }}
+                helperText={
+                  error && (
+                    <Typography className="text-sm text-red-500">
+                      {error.message}
+                    </Typography>
+                  )
+                }
                 inputRef={ref}
                 {...other}
               >
-                {allGrades.map((grade) => (
+                {eligibleGrades.map((grade) => (
                   <MenuItem key={grade} value={grade}>
                     {grade}
                   </MenuItem>
@@ -188,13 +226,16 @@ export default function CreateExam() {
             control={control}
             name="toGrade"
             rules={{
+              required: "Please enter a grade",
               onChange() {
                 changeGrade();
               },
             }}
-            render={({ field: { ref, ...other } }) => (
+            render={({ field: { ref, ...other }, fieldState: { invalid, error } }) => (
               <TextField
                 select
+                disabled={eligibleGrades.length === 0}
+                error={Boolean(error) || invalid}
                 variant="outlined"
                 size="small"
                 placeholder="Please enter grade"
@@ -205,10 +246,17 @@ export default function CreateExam() {
                     classes: { list: "dark:bg-slate-900" },
                   },
                 }}
+                helperText={
+                  error && (
+                    <Typography className="text-sm text-red-500">
+                      {error.message}
+                    </Typography>
+                  )
+                }
                 inputRef={ref}
                 {...other}
               >
-                {allGrades.map((grade) => (
+                {eligibleGrades.map((grade) => (
                   <MenuItem key={grade} value={grade}>
                     {grade}
                   </MenuItem>

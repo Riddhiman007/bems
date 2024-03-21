@@ -1,5 +1,5 @@
 import { updateRecord } from "@/lib/prisma";
-import { StudentRow } from ".";
+import { StudentRow } from "..";
 import { ExamType } from "@prisma/client";
 
 export async function processRowUpdate(
