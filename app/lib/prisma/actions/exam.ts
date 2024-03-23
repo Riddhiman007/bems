@@ -123,3 +123,8 @@ export async function isExamPresent(examType: ExamType) {
   if (res) return res;
   else return false;
 }
+
+export async function fetchAllExams() {
+  let res = await prisma.exam.findMany();
+  return res;
+}

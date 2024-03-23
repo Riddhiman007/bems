@@ -107,5 +107,12 @@ export async function updateRecord(
     }
   }
 
+  let allRecords = await prisma.examRecord.findMany({ where: { examType } });
+  let completedRecords = await prisma.examRecord.findMany({
+    where: { examType, isComplete: true },
+  });
+  if (completedRecords.length === allRecords.length) {
+    await prisma.exam.update({ where: { type: examType }, data: { isComplete: true } });
+  }
   return record;
 }
