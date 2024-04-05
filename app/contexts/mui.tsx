@@ -36,6 +36,7 @@ export default function MuiTheme({
         xxl: 1536,
       },
     },
+
     // typography(palette) {
     //   if (palette.mode === "dark") {
     //     return { allVariants: { color: "rgb(16 19 23)" } };
@@ -60,6 +61,7 @@ export default function MuiTheme({
     palette: {
       mode: isDark ? "dark" : "light",
     },
+    
   });
 
   const cache = createCache({ key: "emotion", nonce, prepend: true });

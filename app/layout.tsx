@@ -9,7 +9,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
 import { headers } from "next/headers";
-
 export const metadata: Metadata = {
   title: "Braves Foundation",
   description: "Braves Foundation",
@@ -27,7 +26,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-gray-100 dark:bg-slate-950" nonce={nonce ? nonce : undefined}>
+      <body nonce={nonce ? nonce : undefined}>
         <Context session={session} nonce={nonce ? nonce : undefined}>
           <Navigation nonce={nonce ? nonce : undefined}>
             {modal}

@@ -1,6 +1,4 @@
-import { Container } from "@mui/material";
 import React from "react";
-import styles from "./admin.module.css";
 
 export default function AdminLayout({
   children,
@@ -12,12 +10,12 @@ export default function AdminLayout({
   examRecords: React.ReactNode;
 }) {
   return (
-    <Container className="mt-24 flex flex-col gap-7" component="main">
+    <main className="container mt-24 flex flex-col gap-7">
       <div className="flex flex-row gap-4">
         {students}
         {children}
       </div>
       {examRecords}
-    </Container>
+    </main>
   );
 }

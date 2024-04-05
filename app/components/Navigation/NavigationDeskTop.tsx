@@ -1,47 +1,40 @@
 "use client";
 
-import Avatar from "@mui/material/Avatar";
-import Container from "@mui/material/Container";
-import AppBar from "@mui/material/AppBar/AppBar";
-import Typography from "@mui/material/Typography/Typography";
-import Button from "@mui/material/Button/Button";
-import IconButton from "@mui/material/IconButton/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/navbar";
+import { Button } from "@nextui-org/button";
+import {
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from "@nextui-org/dropdown";
+
+import { Avatar } from "@nextui-org/avatar";
+
+import { useAnimate, useAnimation } from "framer-motion";
 
 import { MoonIcon, SunIcon, UserIcon } from "@heroicons/react/24/solid";
 import { useDarkMode } from "@/contexts";
-import Link from "next/link";
 import Image from "next/image";
 import image from "../../photo-removebg.png";
 import "@fontsource/shrikhand";
-import MotionDiv from "../Motion/MotionDiv";
 import React, { useEffect, useState } from "react";
-import MotionLink from "../Motion/MotionLink";
 import { useSession } from "next-auth/react";
-import {
-  Divider,
-  Icon,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  Popover,
-} from "@mui/material";
+
 import {
   Dashboard,
   Logout,
   NoEncryptionGmailerrorredTwoTone,
   Search,
 } from "@mui/icons-material";
-import { MotionNav } from "../Motion";
-interface AppBarItem {
+import { MotionButton, MotionSpan, MotionLink } from "../Motion";
+import { BellIcon } from "@heroicons/react/24/outline";
+interface NavbarItemsProp {
   name: string;
   href: string;
 }
 
-const AppBarItems: Array<AppBarItem> = [
+const NavbarItems: Array<NavbarItemsProp> = [
   { name: "home", href: "/" },
   { name: "events", href: "/events" },
   { name: "posts", href: "/posts" },
@@ -67,6 +60,7 @@ const NavigationDeskTop = ({
 
   // useEffect(() => setCurrentTheme(theme), [theme]);
 
+  const handleThemeChange = () => setIsDark(!isDark);
   // ui logic
   const handleUserMenuOpen = (e: React.MouseEvent<HTMLElement>) => {
     setUserAnchorEl(e.currentTarget);
@@ -75,144 +69,89 @@ const NavigationDeskTop = ({
     setUserAnchorEl(null);
   };
   return (
-    <AppBar
-      nonce={nonce}
-      component={MotionNav}
-      initial={{ opacity: 0, y: -100 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: "easeIn" }}
-      elevation={elevation}
-      className="bg-transparent py-4 lg:py-6"
-    >
-      <Container className="flex flex-row justify-between gap-4">
-        <Link href="/">
-          <MotionDiv
-            nonce={nonce}
-            whileHover={{ scale: 1.1 }}
-            className="flex grow-[3] flex-row gap-1"
-          >
-            <Image src={image} alt="braves" height={50} width={50} />
-            <Typography
-              style={{ font: "Shrikhand" }}
-              className="mt-3 text-xl font-semibold no-underline mix-blend-difference dark:text-slate-50"
-              variant="h6"
+    <Navbar nonce={nonce} as="nav">
+      <NavbarBrand
+        className="flex flex-row gap-2"
+        as={MotionLink}
+        href="/"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 1.15 }}
+      >
+        <Image alt="braves icon" src={image} height={50} width={50} />
+        <p className="text-2xl font-bold text-content1-foreground">Braves</p>
+      </NavbarBrand>
+      <NavbarContent as="div" justify="end" className="gap-7">
+        <div className="flex flex-row gap-4">
+          {NavbarItems.map((item) => (
+            <NavbarItem
+              whileHover={{ scale: 1.07 }}
+              whileTap={{ scale: 1.1 }}
+              key={item.name}
+              as={MotionLink}
+              href={item.href}
+              className="text-content1-foreground no-underline"
             >
-              Braves
-            </Typography>
-          </MotionDiv>
-        </Link>
-        <div className="flex flex-row justify-between gap-4 lg:gap-7">
-          <div className="flex flex-row gap-4">
-            {AppBarItems.map((item) => (
-              <Button
-                nonce={nonce}
-                component={MotionLink}
-                whileHover={{ scale: 1.1 }}
-                className="text-xs  dark:text-slate-50"
-                key={item.name}
-                href={item.href}
-                variant="text"
-              >
-                {item.name}
-              </Button>
-            ))}
-          </div>
-          <div className="flex flex-row">
-            <IconButton nonce={nonce} className=" mt-3 h-fit w-fit hover:scale-[1.1]">
-              <Search className="h-7 w-7 dark:text-slate-50" />
-            </IconButton>
-
-            <IconButton
-              nonce={nonce}
-              onClick={(e) => setIsDark(!isDark)}
-              className="mt-3 h-fit w-fit hover:scale-[1.1]"
+              {item.name.toUpperCase()}
+            </NavbarItem>
+          ))}
+        </div>
+        <div className="flex flex-row gap-4">
+          <NavbarItem className="flex flex-row gap-3">
+            <Button
+              isIconOnly
+              variant="light"
+              className="border-none"
+              as={MotionButton}
+              onPress={handleThemeChange}
             >
               {isDark ? (
-                <MoonIcon className=" h-7 w-7 dark:text-slate-100" />
+                <MoonIcon className="size-7" />
               ) : (
-                <SunIcon className=" h-7 w-7 dark:text-slate-100" />
+                <SunIcon className="animate-slow-spin size-7" />
               )}
-            </IconButton>
-
-            {session ? (
-              <>
-                <Tooltip title="me" nonce={nonce}>
-                  <IconButton
-                    nonce={nonce}
-                    className="m-1 h-fit w-fit hover:scale-[1.1]"
-                    onClick={handleUserMenuOpen}
-                  >
-                    <Avatar className="bg-teal-700 dark:text-slate-100">
-                      {session.user?.fullname[0]}
-                    </Avatar>
-                  </IconButton>
-                </Tooltip>
-
-                <Popover
-                  anchorEl={UserAnchorEl}
-                  nonce={nonce}
-                  component="div"
-                  className=""
-                  open={Boolean(UserAnchorEl)}
-                  onClose={handleUserMenuClose}
-                  onClick={handleUserMenuClose}
-                  anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                  elevation={24}
-                >
-                  <div className="p-2 dark:bg-slate-900">
-                    <div className="flex flex-row gap-4">
-                      <Avatar>E</Avatar>
-                      <div className="flex flex-col gap-2">
-                        <Typography>{session.user?.fullname}</Typography>
-                        <Typography>{session.user?.role}</Typography>
-                      </div>
-                    </div>
-                    <List component="div" className="dark:bg-slate-900">
-                      {UserMenuItems.map((item) => (
-                        <ListItemButton
-                          key={item.name}
-                          nonce={nonce}
-                          component={Link}
-                          // LinkComponent={Link}
-                          href={item.href}
-                          className="flex flex-row"
-                        >
-                          <ListItemIcon>{item.icon}</ListItemIcon>
-                          <Typography>{item.name}</Typography>
-                        </ListItemButton>
-                      ))}
-
-                      <Divider />
-                      <ListItemButton
-                        nonce={nonce}
-                        component={Link}
-                        className="flex flex-row "
-                        href="/auth/logout"
-                      >
-                        <ListItemIcon>
-                          <Logout />
-                        </ListItemIcon>
-                        <Typography>Logout</Typography>
-                      </ListItemButton>
-                    </List>
-                  </div>
-                </Popover>
-              </>
-            ) : (
-              <Button
-                className="my-2 bg-green-700 !py-1 px-4 text-green-50 hover:bg-green-900"
-                nonce={nonce}
-                component={MotionLink}
-                whileHover={{ scale: 1.1 }}
-                href="/auth/login"
-              >
-                Login
-              </Button>
-            )}
-          </div>
+            </Button>
+            <Button isIconOnly variant="light" className="border-none">
+              <BellIcon className="size-7" />
+            </Button>
+          </NavbarItem>
         </div>
-      </Container>
-    </AppBar>
+
+        {session ? (
+          <Dropdown>
+            <NavbarItem>
+              <DropdownTrigger>
+                <Avatar
+                  icon={<UserIcon className="size-7" />}
+                  isBordered
+                  isFocusable
+                  color="secondary"
+                  as={MotionSpan}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 1.2 }}
+                />
+              </DropdownTrigger>
+            </NavbarItem>
+            <DropdownMenu as="div">
+              {UserMenuItems.map((item) => (
+                <DropdownItem
+                  key={item.name}
+                  href={item.href}
+                  as={MotionLink}
+                  selectedIcon={item.icon}
+                  className="flex flex-row gap-4 capitalize text-content3-foreground no-underline"
+                >
+                  {item.name}
+                </DropdownItem>
+              ))}
+            </DropdownMenu>
+          </Dropdown>
+        ) : (
+          <Button variant="solid" color="success" href="/auth/login">
+            Login
+          </Button>
+        )}
+      </NavbarContent>
+    </Navbar>
   );
 };
 

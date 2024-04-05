@@ -4,7 +4,8 @@ import { $Enums, Role } from "@prisma/client";
 import { Student as PrismaStudentModel } from "@prisma/client";
 import prisma, { StudentFields } from "..";
 import { revalidatePath } from "next/cache";
-import { StudentRowModel } from "@/admin/components";
+
+import { StudentRowType } from "@/admin/@students/components";
 
 export async function createNewStudent({
   fullname,
@@ -16,7 +17,7 @@ export async function createNewStudent({
   gender,
   caste,
   grade,
-}: StudentFields): Promise<StudentRowModel> {
+}: StudentFields) {
   console.log(
     "before push " +
       JSON.stringify(
@@ -79,9 +80,9 @@ export async function createNewStudent({
   };
 }
 
-export async function fetchAllStudents(): Promise<StudentRowModel[]> {
+export async function fetchAllStudents(): Promise<StudentRowType[]> {
   const student = await prisma.student.findMany({ include: { user: true, grade: true } });
-  return student.map<StudentRowModel>((v) => ({
+  return student.map<StudentRowType>((v) => ({
     address: v.user.address,
     contact: v.user.contact,
     email: v.user.email,
@@ -90,7 +91,7 @@ export async function fetchAllStudents(): Promise<StudentRowModel[]> {
     fullname: v.fullname,
     gender: v.user.gender,
     grade: v.grade.grade,
-    id: v.id,
+    key: v.id,
     caste: v.caste,
     isNew: v.isNew,
   }));

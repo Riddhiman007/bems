@@ -59,7 +59,6 @@ export default function CreateExam() {
   const [selectedGrades, setSelectedGrades] = useState<GradeType[]>([]);
   const methods = useForm<FormInput>({ mode: "all" });
   const { handleSubmit, control, watch, getValues } = methods;
-
   const { isDark } = useDarkMode();
 
   const [activeStep, setActiveStep] = useState(0);

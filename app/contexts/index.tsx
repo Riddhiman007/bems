@@ -6,7 +6,9 @@ import IsMobileProvider from "./IsMobileContext";
 import DarkModeProvider, { useDarkMode } from "./DarkModeProvider";
 import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
-// import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
+import { NextUIProvider } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
+
 export default function Context({
   children,
   session,
@@ -15,13 +17,14 @@ export default function Context({
   session: Session | null | undefined;
   nonce?: string;
 }>) {
+  const router = useRouter();
   return (
     <SessionProvider session={session}>
       <IsMobileProvider>
         <DarkModeProvider>
-          {/* <AppRouterCacheProvider> */}
-          <MuiTheme nonce={nonce}>{children}</MuiTheme>
-          {/* </AppRouterCacheProvider> */}
+          {/* <MuiTheme nonce={nonce}> */}
+          <NextUIProvider navigate={router.push}>{children}</NextUIProvider>
+          {/* </MuiTheme> */}
         </DarkModeProvider>
       </IsMobileProvider>
     </SessionProvider>

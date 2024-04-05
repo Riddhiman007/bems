@@ -1,33 +1,25 @@
-export { default as StudentDataGrid } from "./StudentDataGrid";
-import { StudentFields } from "@/lib/prisma";
-import {
-  GridRowsProp,
-  GridRowModesModel,
-  GridValidRowModel,
-  GridRowId,
-} from "@mui/x-data-grid";
-import { GridApiCommunity } from "@mui/x-data-grid/internals";
-import { Student } from "@prisma/client";
-import React from "react";
+import { DataType } from "@/components/Tables";
+import { DefaultRowType } from "@/components/Tables";
+import { Caste, Gender, GradeType } from "@prisma/client";
 
-export interface UnsavedChanges {
-  unsavedRows: Record<GridRowId, StudentRowModel>;
-  rowsBeforeChange: Record<GridRowId, StudentRowModel>;
+export { default as StudentTable } from "./StudentTable";
+
+export interface ColumnType {
+  key: string;
+  label: string;
+  type: DataType;
 }
 
-export interface StudentRowModel extends StudentFields, GridValidRowModel {
-  id: GridRowId;
-}
-export interface StudentDatagridEditToolBarProps {
-  apiRef: React.MutableRefObject<GridApiCommunity>;
-  unsavedChangesRef: React.MutableRefObject<UnsavedChanges>;
-  isSaving: boolean;
-  hasUnsavedRows: boolean;
-  handleSaveAllClick: () => void;
-  handleDiscardChanges: () => void;
-  setRows: (newRows: (oldRows: StudentRowModel[]) => StudentRowModel[]) => void;
-  setRowModesModel: (
-    newModel: (oldModel: GridRowModesModel) => GridRowModesModel,
-  ) => void;
-  setHasUnsavedRows: React.Dispatch<React.SetStateAction<boolean>>;
+export interface StudentRowType extends DefaultRowType {
+  key: string;
+  fullname: string;
+  father_name: string;
+  mother_name: string;
+  email: string;
+  address: string;
+  contact: string;
+  isNew: boolean;
+  grade: GradeType;
+  caste: Caste;
+  gender: Gender;
 }
