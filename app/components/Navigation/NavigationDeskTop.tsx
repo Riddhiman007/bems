@@ -107,7 +107,7 @@ const NavigationDeskTop = ({
               {isDark ? (
                 <MoonIcon className="size-7" />
               ) : (
-                <SunIcon className="animate-slow-spin size-7" />
+                <SunIcon className="size-7 animate-slow-spin" />
               )}
             </Button>
             <Button isIconOnly variant="light" className="border-none">
@@ -146,7 +146,14 @@ const NavigationDeskTop = ({
             </DropdownMenu>
           </Dropdown>
         ) : (
-          <Button variant="solid" color="success" href="/auth/login">
+          <Button
+            href="/auth/login"
+            className="rounded-md bg-success-300 px-4 py-2 text-2xl capitalize text-success-900 no-underline hover:bg-success-200 active:bg-success-50"
+            autoCapitalize="all"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 1.2 }}
+            as={MotionLink}
+          >
             Login
           </Button>
         )}

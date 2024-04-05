@@ -2,6 +2,7 @@
 import { allGrades, fetchAllStudents } from "@/lib/prisma";
 import { useAsyncList } from "@react-stately/data";
 
+import bravesIcon from "@/other-favicon.ico";
 import {
   Table,
   TableBody,
@@ -35,7 +36,7 @@ export default function StudentTable() {
   const renderCell = (student: StudentRowType, key: Key): React.ReactNode => {
     switch (key) {
       case "fullname":
-        return <User name={student.fullname} />;
+        return <User name={student.fullname} avatarProps={{ src: bravesIcon.src }} />;
 
       default:
         return student[key];
@@ -77,6 +78,7 @@ export default function StudentTable() {
         )}
       </TableHeader>
       <TableBody
+        emptyContent="Sorry! We can't find any student's record... "
         items={list.items}
         isLoading={list.isLoading}
         loadingContent={<Spinner label="Loading..." />}
