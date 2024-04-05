@@ -1,5 +1,4 @@
 import React from "react";
-import { fetchAllStudents } from "@/lib/prisma";
 
 import { Card, CardBody } from "@nextui-org/card";
 
@@ -12,7 +11,6 @@ const StudentTable = dynamic(
 );
 
 export default async function Student() {
-  const students = await fetchAllStudents();
   return (
     <Card className="bg-content1">
       <CardBody className="flex flex-col gap-3">

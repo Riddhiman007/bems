@@ -1,4 +1,4 @@
-import StudentDataGrid from "@/admin/@students/components/StudentDataGrid";
+import StudentTable from "@/admin/@students/components/StudentTable";
 import { MotionDiv } from "@/components/Motion";
 import { fetchAllStudents } from "@/lib/prisma";
 import { Card, CardContent } from "@mui/material";
@@ -17,7 +17,7 @@ export default async function Students() {
       className="m-auto w-fit overflow-auto rounded-md shadow-2xl shadow-neutral-950 dark:bg-slate-900"
     >
       <CardContent>
-        <StudentDataGrid initialRows={students} />
+        <StudentTable />
       </CardContent>
     </Card>
   );
