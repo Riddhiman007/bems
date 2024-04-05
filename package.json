@@ -23,7 +23,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma db push",
+    "postinstall": "pnpm exec prisma db push",
     "studio": "prisma studio"
   },
   "dependencies": {
