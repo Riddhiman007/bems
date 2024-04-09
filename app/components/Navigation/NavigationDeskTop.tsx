@@ -7,6 +7,7 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
+  DropdownSection,
 } from "@nextui-org/dropdown";
 
 import { Avatar } from "@nextui-org/avatar";
@@ -45,20 +46,12 @@ const UserMenuItems = [
   { name: "dashboard", href: "/dashboard", icon: <Dashboard /> },
   { name: "my achievements", href: "/myachievements", icon: <Dashboard /> },
 ];
-const NavigationDeskTop = ({
-  elevation,
-  nonce,
-}: {
-  elevation: number;
-  nonce?: string;
-}) => {
+const NavigationDeskTop = ({ nonce }: { nonce?: string }) => {
   const { isDark, setIsDark } = useDarkMode();
   const [UserAnchorEl, setUserAnchorEl] = useState<null | HTMLElement>(null);
 
   // get session
   const { data: session } = useSession();
-
-  // useEffect(() => setCurrentTheme(theme), [theme]);
 
   const handleThemeChange = () => setIsDark(!isDark);
   // ui logic
@@ -132,23 +125,35 @@ const NavigationDeskTop = ({
               </DropdownTrigger>
             </NavbarItem>
             <DropdownMenu as="div">
-              {UserMenuItems.map((item) => (
+              <DropdownSection>
+                {UserMenuItems.map((item) => (
+                  <DropdownItem
+                    key={item.name}
+                    href={item.href}
+                    as={MotionLink}
+                    selectedIcon={item.icon}
+                    className="flex flex-row gap-4 capitalize text-content3-foreground no-underline"
+                  >
+                    {item.name}
+                  </DropdownItem>
+                ))}
+              </DropdownSection>
+              <DropdownSection>
                 <DropdownItem
-                  key={item.name}
-                  href={item.href}
                   as={MotionLink}
-                  selectedIcon={item.icon}
-                  className="flex flex-row gap-4 capitalize text-content3-foreground no-underline"
+                  key="logOut"
+                  href="/auth/logout"
+                  className="capitalize text-danger-foreground no-underline"
                 >
-                  {item.name}
+                  Log out
                 </DropdownItem>
-              ))}
+              </DropdownSection>
             </DropdownMenu>
           </Dropdown>
         ) : (
           <Button
             href="/auth/login"
-            className="rounded-md bg-success-300 px-4 py-2 text-2xl capitalize text-success-900 no-underline hover:bg-success-200 active:bg-success-50"
+            className="rounded-md bg-success-300 px-4 py-2 capitalize text-success-900 no-underline hover:bg-success-200 active:bg-success-50"
             autoCapitalize="all"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 1.2 }}

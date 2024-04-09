@@ -1,9 +1,9 @@
 "use client";
-import { IsMobileContext } from "@/contexts/IsMobileContext";
-import React, { useContext } from "react";
+
+import React from "react";
 import NavigationMobile from "./NavigationMobile";
 import NavigationDeskTop from "./NavigationDeskTop";
-import { useScrollTrigger } from "@mui/material";
+import { useIsMobile } from "@nextui-org/use-is-mobile";
 
 const Navigation = ({
   children,
@@ -12,20 +12,17 @@ const Navigation = ({
   children: React.ReactNode;
   nonce?: string;
 }) => {
-  const IsMobile = useContext<boolean>(IsMobileContext);
-  const triggerElevation = useScrollTrigger({
-    disableHysteresis: true,
-    threshold: 0,
-  });
+  const IsMobile = useIsMobile();
+
   return (
     <>
       {IsMobile ? (
-        <NavigationMobile elevation={triggerElevation ? 4 : 0}>
+        <NavigationMobile>
           <div className="mb-40">{children}</div>
         </NavigationMobile>
       ) : (
         <>
-          <NavigationDeskTop elevation={triggerElevation ? 4 : 0} nonce={nonce} />
+          <NavigationDeskTop nonce={nonce} />
           {children}
         </>
       )}

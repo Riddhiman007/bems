@@ -14,6 +14,8 @@ export const metadata: Metadata = {
   description: "Braves Foundation",
 };
 
+export const runtime = "nodejs";
+
 export default async function RootLayout({
   children,
   modal,
@@ -26,7 +28,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body nonce={nonce ? nonce : undefined}>
+      <body nonce={nonce ? nonce : undefined} className="m-0">
         <Context session={session} nonce={nonce ? nonce : undefined}>
           <Navigation nonce={nonce ? nonce : undefined}>
             {modal}

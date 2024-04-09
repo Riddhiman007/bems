@@ -1,5 +1,5 @@
 import NextAuth from "next-auth";
-import EmailProvider from "@auth/core/providers/email";
+import EmailProvider from "next-auth/providers/nodemailer";
 import prisma from "./prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { User as PrismaUser } from "@prisma/client";
@@ -31,3 +31,5 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
 });
+
+// export * from "./actions"

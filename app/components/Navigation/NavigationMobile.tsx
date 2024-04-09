@@ -1,20 +1,11 @@
 "use client";
 import React from "react";
 
-import {
-  AppBar,
-  Container,
-  BottomNavigation,
-  BottomNavigationAction,
-  Typography,
-  IconButton,
-  SpeedDial,
-  SpeedDialAction,
-  Button,
-} from "@mui/material";
-
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/navbar";
+import { Button } from "@nextui-org/button";
 // icons
 import {
+  BellIcon,
   CalendarIcon,
   ChatBubbleLeftIcon,
   HomeIcon,
@@ -57,50 +48,45 @@ interface NavItem {
   label: string;
 }
 
-const NavigationMobile = ({
-  children,
-  elevation,
-}: {
-  children: React.ReactNode;
-  elevation: number;
-}) => {
+const NavigationMobile = ({ children }: { children: React.ReactNode }) => {
   const { isDark, setIsDark } = useDarkMode();
+
   const currentRoute = usePathname();
   const { data: session } = useSession();
+
+  const handleThemeChange = () => setIsDark(!isDark);
   const navItems: Array<NavItem> = [
     {
       label: "Home",
       href: "/",
-      icon: <HomeIcon className="h-7 w-7 active:scale-110 dark:text-slate-50 " />,
+      icon: <HomeIcon className="size-7 active:scale-110 dark:text-slate-50 " />,
       iconOutline: (
-        <HomeIconOutline className="h-7 w-7 active:scale-110 dark:text-slate-50" />
+        <HomeIconOutline className="size-7 active:scale-110 dark:text-slate-50" />
       ),
     },
 
     {
       label: "Events",
       href: "/events",
-      icon: <CalendarIcon className="h-7 w-7 active:scale-110 dark:text-slate-50" />,
+      icon: <CalendarIcon className="size-7 active:scale-110 dark:text-slate-50" />,
       iconOutline: (
-        <CalenderIconOutline className="h-7 w-7 active:scale-110 dark:text-slate-50" />
+        <CalenderIconOutline className="size-7 active:scale-110 dark:text-slate-50" />
       ),
     },
     {
       label: "Posts",
       href: "/posts",
-      icon: (
-        <ChatBubbleLeftIcon className="h-7 w-7 active:scale-110 dark:text-slate-50" />
-      ),
+      icon: <ChatBubbleLeftIcon className="size-7 active:scale-110 dark:text-slate-50" />,
       iconOutline: (
-        <ChatBubbleLeftIconOutline className="h-7 w-7 active:scale-110 dark:text-slate-50" />
+        <ChatBubbleLeftIconOutline className="size-7 active:scale-110 dark:text-slate-50" />
       ),
     },
     {
       label: "Me",
       href: "/me",
-      icon: <UserCircleIcon className="h-7 w-7 active:scale-110 dark:text-slate-50" />,
+      icon: <UserCircleIcon className="size-7 active:scale-110 dark:text-slate-50" />,
       iconOutline: (
-        <UserCircleIconOutline className="h-7 w-7 active:scale-110 dark:text-slate-50" />
+        <UserCircleIconOutline className="size-7 active:scale-110 dark:text-slate-50" />
       ),
     },
   ];
@@ -115,7 +101,7 @@ const NavigationMobile = ({
     {
       title: "my posts",
       href: "/posts",
-      icon: <ChatBubbleLeftIconOutline className="h-7 w-7" />,
+      icon: <ChatBubbleLeftIconOutline className="size-7" />,
       idx: "[--i:2]",
     },
     {
@@ -127,106 +113,58 @@ const NavigationMobile = ({
   ];
   return (
     <>
-      <AppBar
-        elevation={elevation}
-        component={MotionNav}
-        initial={{ opacity: 0, y: -100 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: "easeIn" }}
-        className="bg-transparent py-4 lg:py-6"
-      >
-        <Container className="flex flex-row text-center">
-          <div className=" mx-auto flex flex-row gap-2">
-            <Image src={image} alt="braves" height={50} width={50} />
-            <Typography
-              style={{ font: "Shrikhand" }}
-              className=" mt-3 text-xl mix-blend-difference"
-              variant="h6"
-            >
-              Braves
-            </Typography>
-          </div>
-          <div className="flex flex-row gap-2 md:gap-4">
-            <IconButton className=" mt-3 h-fit w-fit hover:scale-[1.1]">
-              <Search className="h-7 w-7 dark:text-slate-50" />
-            </IconButton>
-            <IconButton
-              className=" mt-3 h-fit w-fit hover:scale-[1.1]"
-              onClick={() => setIsDark(!isDark)}
+      <Navbar as="nav">
+        <NavbarBrand
+          className="flex flex-row gap-2"
+          as={MotionLink}
+          href="/"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 1.15 }}
+        >
+          <Image alt="braves icon" src={image} height={50} width={50} />
+          <p className="text-2xl font-bold text-content1-foreground">Braves</p>
+        </NavbarBrand>
+        <NavbarContent justify="end" as="div">
+          <NavbarItem as="div">
+            <Button isIconOnly variant="light" className="border-none">
+              <Search className="size-7 fill-content2-foreground" />
+            </Button>
+          </NavbarItem>
+          <NavbarItem as="div">
+            <Button
+              isIconOnly
+              variant="light"
+              className="border-none"
+              onPress={handleThemeChange}
             >
               {isDark ? (
-                <MoonIcon className="h-7 w-7 dark:text-slate-50 " />
+                <MoonIcon className="size-7" />
               ) : (
-                <SunIcon className="h-7 w-7 dark:text-slate-50" />
+                <SunIcon className="size-7 animate-slow-spin" />
               )}
-            </IconButton>
-            <IconButton className=" mt-3 h-fit w-fit hover:scale-[1.1]">
-              <BellIconOutline
-                aria-label="notifications"
-                className="h-7 w-7 dark:text-slate-50"
-              />
-            </IconButton>
-            {!session && (
-              <Button
-                className="my-2 bg-green-700 !py-2 px-4 text-green-50 hover:bg-green-900"
-                component={MotionLink}
-                whileHover={{ scale: 1.1 }}
-                href="/auth/login"
-              >
-                Login
-              </Button>
-            )}
-          </div>
-        </Container>
-      </AppBar>
+            </Button>
+          </NavbarItem>
+          <NavbarItem as="div">
+            <Button isIconOnly variant="light" className="border-none">
+              <BellIconOutline className="size-7" />
+            </Button>
+          </NavbarItem>
+          {session === null && (
+            <Button
+              href="/auth/login"
+              className="rounded-md bg-success-300 px-4 py-2 capitalize text-success-900 no-underline hover:bg-success-200 active:bg-success-50"
+              autoCapitalize="all"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 1.2 }}
+              as={MotionLink}
+            >
+              Login
+            </Button>
+          )}
+        </NavbarContent>
+      </Navbar>
       {children}
-      <BottomNavigation className=" fixed inset-x-0 bottom-0 z-[120] gap-7 px-7 shadow-md shadow-gray-950 dark:bg-slate-900">
-        {navItems.map((item) => (
-          <BottomNavigationAction
-            showLabel={item.href === currentRoute}
-            key={item.label}
-            id={item.label}
-            TouchRippleProps={{ className: "z-20" }}
-            label={item.label}
-            component={MotionLink}
-            className={`dark:bg-slate-900  ${
-              item.href === currentRoute
-                ? `${styles.indicator} dark:[--shadow-color:#0f172a;]`
-                : ""
-            }`}
-            href={item.href}
-            icon={item.href == currentRoute ? item.icon : item.iconOutline}
-          />
-        ))}
-      </BottomNavigation>
-      {session && (
-        <SpeedDial
-          icon={<UserIconOutline className="h-8 w-8 text-green-50" />}
-          className={styles.speedDial}
-          FabProps={{
-            style: { zIndex: 100 },
-            className:
-              "h-[4.25rem] w-[4.25rem] relative bottom-10 bg-green-700 active:bg-green-900 active:scale-150 z-[140]",
-          }}
-          ariaLabel="user info"
-          openIcon={<CloseOutlined />}
-        >
-          {speedDialItems.map((item) => (
-            <SpeedDialAction
-              key={item.title}
-              tooltipTitle={item.title}
-              icon={item.icon}
-              FabProps={{
-                LinkComponent: Link,
-                href: item.href,
-                className:
-                  "hover:scale-125 dark:text-slate-50 dark:bg-slate-800 dark:hover:bg-slate-900 z-[120]" +
-                  item.idx,
-              }}
-            />
-          ))}
-        </SpeedDial>
-      )}
+      <div className="fixed inset-0 bottom-0 bg-content2"></div>
     </>
   );
 };

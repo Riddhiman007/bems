@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React from "react";
 
 // charts
 import { BarChart, BarElement } from "@mui/x-charts/BarChart";
@@ -7,9 +7,9 @@ import { BarChart, BarElement } from "@mui/x-charts/BarChart";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import {useIsMobile} from "@nextui-org/use-is-mobile"
 
 import { axisClasses } from "@/components/Charts";
-import { IsMobileContext } from "@/contexts/IsMobileContext";
 import { ChartsLegend } from "@mui/x-charts/ChartsLegend";
 import CardBackgroundForLightMode from "@/components/CardBackgroundForLightMode";
 
@@ -62,7 +62,7 @@ const dataset = [
 ];
 
 export default function AcademicProgressBarChart() {
-  const isMobile = useContext(IsMobileContext);
+  const isMobile = useIsMobile();
   return (
     <>
       <Card className="shadow-xl shadow-gray-400 dark:bg-slate-900 dark:shadow dark:shadow-black">

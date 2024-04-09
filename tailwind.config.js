@@ -21,7 +21,7 @@ module.exports = {
   corePlugins: {
     preflight: false,
   },
-  important: true,
+  // important: true,
   plugins: [
     nextui({
       themes: {},

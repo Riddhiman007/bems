@@ -6,7 +6,7 @@ import AnimatePresence from "../Motion/AnimatePresence";
 
 // hooks
 import { Controller, SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
-import { LoginByEmail } from "@/lib/actions/queries";
+import { loginByEmail } from "@/lib/actions";
 import { Email } from "@mui/icons-material";
 import CancelButton from "../CancelButton";
 import { z } from "zod";
@@ -33,7 +33,8 @@ export default function LoginForm({
   });
   const onSubmit: SubmitHandler<LoginValidator> = async (data) => {
     setTimeout(() => setIsLoading(true), 500);
-    await LoginByEmail(data.email);
+    await loginByEmail(data.email);
+    setIsLoading(false);
   };
 
   const onError: SubmitErrorHandler<LoginValidator> = async (data) => console.log(data);

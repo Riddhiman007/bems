@@ -1,26 +1,22 @@
-"use client";
-import Button from "@mui/material/Button";
+// "use client";
+import { Button } from "@nextui-org/button";
 import React from "react";
-import MotionButton from "./Motion/MotionButton";
-import { useRouter } from "next/navigation";
+import { MotionButton } from "./Motion";
 
 /// This component is used for intercepting routes only
 export default function CancelButton() {
-  const router = useRouter();
   return (
     <Button
       type="button"
-      onClick={() => router.back()}
-      component={MotionButton}
+      as={MotionButton}
       initial={{ opacity: 0, y: 400 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.2 }}
       whileHover={{ scale: 1.05 }}
-      variant="outlined"
-      className="rounded-md px-4 py-2 "
-      color="error"
+      variant="bordered"
+      className="rounded-md px-4 py-2"
+      color="danger"
     >
       Cancel
     </Button>
-  );
+);
 }

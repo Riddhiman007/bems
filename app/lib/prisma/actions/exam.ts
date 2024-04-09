@@ -126,5 +126,5 @@ export async function isExamPresent(examType: ExamType) {
 
 export async function fetchAllExams() {
   let res = await prisma.exam.findMany();
-  return res;
+  return res.map((val) => ({ key: val.id, type: val.type, isComplete: val.isComplete }));
 }

@@ -1,45 +1,30 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  MenuItem,
-  TextField,
-  Typography,
-} from "@mui/material";
-import React from "react";
-
-import styles from "../admin.module.css";
-import { MotionMuiButton } from "@/components/Motion";
-import Link from "next/link";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { ExamTypeList, fetchAllExams } from "@/lib/prisma";
-import { CheckCircle } from "@mui/icons-material";
+import { Card, CardBody } from "@nextui-org/card";
+import { Button } from "@nextui-org/button";
 import { ExamRecords } from "./components";
-
+import { MotionLink } from "@/components/Motion";
 export default async function ExamRecord() {
-  let allExams = await fetchAllExams();
   return (
-    <Card className={`${styles.examRecords} dark:bg-slate-900`}>
-      <CardContent className="flex flex-col gap-7">
-        <Typography variant="h4">Exam Records</Typography>
+    <Card>
+      <CardBody className="flex flex-col gap-7">
+        <h4 className="text-2xl">Exam Records</h4>
         {/* new record */}
         <div className=" flex flex-row ">
-          <MotionMuiButton
+          <Button
+            as={MotionLink}
             color="success"
-            variant="contained"
-            className="bg-green-700 px-4 py-2 text-green-50 hover:bg-green-800"
+            variant="solid"
+            className="bg-success-200 px-4 py-2 text-success-900 hover:bg-success-50"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 1.2 }}
-            LinkComponent={Link}
             href="/admin/examRecord/create"
           >
             Create New Record...
-          </MotionMuiButton>
+          </Button>
         </div>
         <div className="flex flex-col gap-4">
-          <ExamRecords rows={allExams} />
+          <ExamRecords />
         </div>
-      </CardContent>
+      </CardBody>
     </Card>
   );
 }

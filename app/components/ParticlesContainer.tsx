@@ -1,14 +1,13 @@
 "use client";
-import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { useIsMobile } from "@nextui-org/use-is-mobile";
 import { loadSlim } from "@tsparticles/slim";
 import { Container, RecursivePartial, IOptions } from "@tsparticles/engine";
-import { IsMobileContext } from "@/contexts/IsMobileContext";
 
 export default function ParticlesContainer() {
   const [init, setInit] = useState(false);
-  const isMobile = useContext(IsMobileContext);
-
+  const isMobile = useIsMobile();
   useEffect(() => {
     initParticlesEngine(async (engine) => {
       await loadSlim(engine);

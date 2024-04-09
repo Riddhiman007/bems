@@ -1,13 +1,13 @@
 "use client";
 import Image from "next/image";
-import React, { useContext } from "react";
+import React from "react";
 
 import Explosion from "@/explosion.png";
 import { useDarkMode } from "@/contexts";
-import { IsMobileContext } from "@/contexts/IsMobileContext";
+import { useIsMobile } from "@nextui-org/use-is-mobile";
 
 export default function ExplosionImage() {
-  const isMobile = useContext(IsMobileContext);
+  const isMobile = useIsMobile();
   const { isDark } = useDarkMode();
   return (
     <>
