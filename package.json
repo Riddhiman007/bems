@@ -23,7 +23,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "pnpm exec prisma db push",
+    "postinstall": "pnpm exec prisma db push && node db_setup.js",
     "studio": "prisma studio"
   },
   "dependencies": {
