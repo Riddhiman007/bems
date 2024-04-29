@@ -3,6 +3,7 @@ import { z } from "zod";
 import { SerializedEditorState } from "lexical";
 
 export const allGrades = Object.values(GradeType);
+export const allCastes = Object.values(Caste);
 
 export const StudentFieldValidator = z.object({
   fullname: z.string({ required_error: "We don't know what is your name" }),

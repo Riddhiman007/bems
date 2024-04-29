@@ -172,7 +172,15 @@ export async function deleteStudent(email: string) {
   //   where: { user: { email } },
   //   include: { user: true },
   // });
-  let e = await prisma.user.delete({ where: { email }, include: { student: true } });
+  await prisma.examRecord.deleteMany({ where: { name: { user: { email } } } });
+  let e = await prisma.user.delete({
+    where: { email },
+    include: {
+      student: true,
+      Comment: true,
+      accounts: true,
+    },
+  });
   revalidatePath("/admin");
   return e.student;
 }

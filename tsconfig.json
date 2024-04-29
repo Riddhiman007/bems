@@ -37,6 +37,9 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "tailwind.config.js",
+    "app/components/Icons/EyeIcon.jsx",
+    "app/components/Icons/EditIcon.jsx",
+    "app/components/Icons/DeleteIcon.jsx",
   ],
   "exclude": [
     "node_modules"

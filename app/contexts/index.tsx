@@ -1,12 +1,10 @@
 "use client";
 import React from "react";
 
-import MuiTheme from "./mui";
-
 import DarkModeProvider, { useDarkMode } from "./DarkModeProvider";
 import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
-import { NextUIProvider } from "@nextui-org/react";
+import { NextUIProvider } from "@nextui-org/system";
 import { useRouter } from "next/navigation";
 
 export default function Context({

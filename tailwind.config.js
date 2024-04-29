@@ -1,11 +1,9 @@
 const { nextui } = require("@nextui-org/theme");
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "app/**/*.tsx",
-    "./app/**/*.{html,js,jsx,ts,tsx}",
-    "./node_modules/@nextui-org/theme/**/*.{js, mjs}",
+    "./app/**/*.{ts,tsx,js,jsx}",
+    "./node_modules/@nextui-org/theme/dist/components/(accordion|avatar|button|card|dropdown|input|modal|navbar|select|spinner|table|user|divider|ripple|menu|popover|listbox|scroll-shadow|checkbox|spacer).js",
   ],
   theme: {
     container: { center: true },
@@ -23,8 +21,7 @@ module.exports = {
   },
   // important: true,
   plugins: [
-    nextui({
-      themes: {},
-    }),
+    
+    nextui(),
   ],
 };

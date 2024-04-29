@@ -1,7 +1,6 @@
 import React from "react";
 import Context from "./contexts";
 import "./globals.css";
-import { Container } from "@mui/material";
 import Navigation from "./components/Navigation";
 import { Metadata } from "next";
 import { auth } from "./lib/auth";

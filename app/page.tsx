@@ -72,6 +72,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 200 }}
               animate={{ opacity: 1, y: 0 }}
               translate="yes"
+              variant="bordered"
             >
               Enroll Now...
             </Button>

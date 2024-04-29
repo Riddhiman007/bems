@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "command": "npx next dev --turbo",
+            "command": "turbo dev",
             "name": "Development Server",
             "request": "launch",
             "type": "node-terminal"

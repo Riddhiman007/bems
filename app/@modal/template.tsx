@@ -10,6 +10,8 @@ export default function Template({ children }: { children: React.ReactNode }) {
   return (
     <AnimatePresence mode="wait">
       <Modal
+        scrollBehavior="outside"
+        classNames={{ base: "mt-4" }}
         closeButton={<button hidden></button>}
         isOpen={isOpen}
         onClose={onClose}

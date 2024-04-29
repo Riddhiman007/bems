@@ -11,14 +11,10 @@ import {
 } from "@nextui-org/dropdown";
 
 import { Avatar } from "@nextui-org/avatar";
-
-import { useAnimate, useAnimation } from "framer-motion";
-
 import { MoonIcon, SunIcon, UserIcon } from "@heroicons/react/24/solid";
 import { useDarkMode } from "@/contexts";
 import Image from "next/image";
 import image from "../../photo-removebg.png";
-import "@fontsource/shrikhand";
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 

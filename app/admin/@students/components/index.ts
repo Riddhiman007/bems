@@ -7,7 +7,7 @@ export { default as StudentTable } from "./StudentTable";
 export interface ColumnType {
   key: string;
   label: string;
-  type: DataType;
+  // type: DataType;
 }
 
 export interface StudentRowType extends DefaultRowType {
