@@ -81,7 +81,7 @@ export default function ModalLoginPage() {
                 variant="bordered"
                 onPress={() => {
                   onClose();
-                  router.back();
+                  setTimeout(router.back, 500);
                 }}
                 type="button"
               >

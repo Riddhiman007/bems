@@ -5,6 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "command": "mongod --port 27018 --dbpath C:\\data\\db1 --replSet rs0",
+            "name": "Start MongoDB",
+            "request": "launch",
+            "type": "node-terminal"
+        },
+        {
             "command": "turbo dev",
             "name": "Development Server",
             "request": "launch",
@@ -22,6 +28,7 @@
         {
             "name": "Start Dev server",
             "configurations": [
+                "Start MongoDB",
                 "Development Server",
                 "Launch Edge"
             ]

@@ -18,7 +18,7 @@ export default function AdmissionForm() {
           <>
             <ModalHeader>Enroll guide</ModalHeader>
             <ModalBody>
-              <EnrollComponent />
+              <EnrollComponent onClose={onClose} />
             </ModalBody>
           </>
         )}

@@ -23,3 +23,4 @@ export interface StudentRowType extends DefaultRowType {
   caste: Caste;
   gender: Gender;
 }
+

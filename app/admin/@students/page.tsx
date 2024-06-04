@@ -15,7 +15,7 @@ const StudentTable = dynamic(
       if (error)
         return (
           <div className="flex gap-2">
-            <p>Failed to load student's record due to {error.message}</p>
+            <p>Failed to load student&apos;s record due to {error.message}</p>
             <Button size="sm" variant="light" color="danger" onClick={retry}>
               Retry
             </Button>

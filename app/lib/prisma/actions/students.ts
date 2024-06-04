@@ -1,9 +1,8 @@
 "use server";
 
 import { $Enums, Role } from "@prisma/client";
-import { Student as PrismaStudentModel } from "@prisma/client";
 import prisma, { StudentFields } from "..";
-import { revalidatePath } from "next/cache";
+import { revalidatePath} from "next/cache";
 
 import { StudentRowType } from "@/admin/@students/components";
 
@@ -64,7 +63,7 @@ export async function createNewStudent({
     include: { user: true },
   });
   console.log(student);
-  revalidatePath("/admin");
+  revalidatePath("/admin", "page");
   return {
     address: student.user.address,
     contact: student.user.contact,
@@ -97,6 +96,10 @@ export async function fetchAllStudents(): Promise<StudentRowType[]> {
   }));
 }
 
+export async function fetchStudentByEmail(email: string) {
+  let stud = await prisma.user.findUnique({ where: { email, role: "Student" } });
+  return stud;
+}
 export async function fetchStudentNameOfParticularGrade(grade: $Enums.GradeType) {
   const students = await prisma.student.findMany({
     where: { grade_name: grade },
@@ -117,8 +120,8 @@ export async function updateStudent(
     grade,
     isNew,
     mother_name,
-  }: StudentFields,
-): Promise<StudentFields | null | undefined> {
+  }: Partial<StudentFields>,
+): Promise<Partial<StudentFields> | null> {
   const student = await prisma.user.update({
     data: {
       fullname,
@@ -148,10 +151,70 @@ export async function updateStudent(
     },
   });
 
-  // const t = await prisma.user.update({
-  //   where: { email },
-  //   data: { address, email: newEmail, fullname },
-  // });
+  if (student === null || !student) {
+    return null;
+  }
+  revalidatePath("/admin");
+  return {
+    father_name: student.student?.father_name,
+    mother_name: student.student?.mother_name,
+    gender: student.gender,
+    grade: student.student?.grade.grade,
+    isNew: student.student?.isNew,
+    address: student.address,
+    email: student.email,
+    contact: student.contact,
+    fullname: student.fullname,
+    caste: student.student?.caste,
+  };
+}
+export async function updateStudentThroughUserId(
+  userId: string,
+  {
+    address,
+    caste,
+    contact,
+    email,
+    father_name,
+    fullname,
+    gender,
+    grade,
+    isNew,
+    mother_name,
+  }: Partial<StudentFields>,
+): Promise<Partial<StudentFields> | null> {
+  const student = await prisma.user.update({
+    data: {
+      fullname,
+      address,
+      email,
+      gender,
+      contact,
+      student: {
+        update: {
+          data: {
+            caste,
+            father_name,
+            fullname,
+            mother_name,
+            isNew,
+            grade: {
+              connect: { grade },
+            },
+          },
+        },
+      },
+    },
+    where: { id: userId },
+    // include: { student: { select: { caste, } } },
+    include: {
+      student: { include: { grade: { select: { grade: true } } } },
+    },
+  });
+
+  if (student === null || !student) {
+    return null;
+  }
   revalidatePath("/admin");
   return {
     father_name: student.student?.father_name,

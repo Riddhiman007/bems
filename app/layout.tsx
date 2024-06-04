@@ -12,8 +12,8 @@ export const metadata: Metadata = {
   title: "Braves Foundation",
   description: "Braves Foundation",
 };
-
-export const runtime = "nodejs";
+// export const experimental_ppr = true;
+// export const runtime = "nodejs";
 
 export default async function RootLayout({
   children,

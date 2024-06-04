@@ -1,7 +1,7 @@
-"use client";
 import {
   StudentFields,
   allGrades,
+  fetchStudentByEmail,
   middleGrades,
   prepGrades,
   primaryGrades,
@@ -11,10 +11,10 @@ import { AcademicCapIcon } from "@heroicons/react/24/solid";
 import { Email, Face, Face2, Phone } from "@mui/icons-material";
 import { Input } from "@nextui-org/input";
 import { Select, SelectItem, SelectSection } from "@nextui-org/select";
+import { GradeType } from "@prisma/client";
 import React, { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-export default function PersonalForm() {
-  const [gender, setGender] = useState<"Male" | "Female" | boolean>(false);
+export default function PersonalForm({ formType }: { formType: "new" | "update" }) {
   const { control } = useFormContext<StudentFields>();
   return (
     <div className="flex flex-col gap-6">
@@ -83,6 +83,20 @@ export default function PersonalForm() {
       <Controller
         control={control}
         name="email"
+        rules={{
+          async validate(value) {
+            console.log("running email validator");
+            if (formType === "new") {
+              let stud = await fetchStudentByEmail(value);
+              if (stud?.email === value) {
+                return ["Please enter a unique email address. This is already used."];
+              }
+              return true;
+            }
+
+            return true;
+          },
+        }}
         render={({
           field: { disabled, ...remainingProps },
           fieldState: { error, invalid },
@@ -116,7 +130,7 @@ export default function PersonalForm() {
           control={control}
           name="grade"
           render={({
-            field: { disabled, ...remainingProps },
+            field: { disabled, value, ...remainingProps },
             fieldState: { error, invalid },
           }) => (
             <Select
@@ -140,30 +154,48 @@ export default function PersonalForm() {
                   className={`size-6 ${!!error ? "text-danger" : "text-content4-foreground"}`}
                 />
               }
+              defaultSelectedKeys={value ? [value] : undefined}
+              selectionMode="single"
               {...remainingProps}
             >
-              <SelectSection showDivider title="Pre primary">
+              <SelectSection
+                showDivider
+                title="Pre primary"
+                classNames={{ group: "list-none" }}
+              >
                 {prepGrades.map((grade) => (
                   <SelectItem key={grade.toString()} value={grade}>
                     {grade}
                   </SelectItem>
                 ))}
               </SelectSection>
-              <SelectSection showDivider title="Primary">
+              <SelectSection
+                showDivider
+                title="Primary"
+                classNames={{ group: "list-none" }}
+              >
                 {primaryGrades.map((grade) => (
                   <SelectItem key={grade.toString()} value={grade}>
                     {grade}
                   </SelectItem>
                 ))}
               </SelectSection>
-              <SelectSection showDivider title="Middle">
+              <SelectSection
+                showDivider
+                title="Middle"
+                classNames={{ group: "list-none" }}
+              >
                 {middleGrades.map((grade) => (
                   <SelectItem key={grade.toString()} value={grade}>
                     {grade}
                   </SelectItem>
                 ))}
               </SelectSection>
-              <SelectSection showDivider title="Secondary">
+              <SelectSection
+                showDivider
+                title="Secondary"
+                classNames={{ group: "list-none" }}
+              >
                 {secondaryGrades.map((grade) => (
                   <SelectItem key={grade.toString()} value={grade}>
                     {grade}
@@ -176,13 +208,8 @@ export default function PersonalForm() {
         <Controller
           control={control}
           name="gender"
-          rules={{
-            onChange(event) {
-              setGender(event.target.value);
-            },
-          }}
           render={({
-            field: { disabled, ...remainingProps },
+            field: { disabled, value, ...remainingProps },
             fieldState: { error, invalid },
           }) => (
             <Select
@@ -198,15 +225,17 @@ export default function PersonalForm() {
                 trigger: ["[background:none]", "border-none"],
               }}
               listboxProps={{
-                classNames: { list: "p-0", base: "w-4/5" },
+                classNames: { list: "p-0 list-none", base: "w-4/5" },
               }}
+              defaultSelectedKeys={value ? [value] : undefined}
+              selectionMode="single"
               startContent={
-                gender === "Male" ? (
+                value === "Male" ? (
                   <Face
                     className={`size-6 ${!!error ? "fill-danger" : "fill-content4-foreground"}`}
                   />
                 ) : (
-                  gender === "Female" && (
+                  value === "Female" && (
                     <Face2
                       className={`size-6 ${!!error ? "fill-danger" : "fill-content4-foreground"}`}
                     />
@@ -215,11 +244,20 @@ export default function PersonalForm() {
               }
               {...remainingProps}
             >
-              {["Male", "Female"].map((item) => (
-                <SelectItem key={item} value={item}>
-                  {item}
-                </SelectItem>
-              ))}
+              <SelectItem
+                key="Male"
+                value="Male"
+                startContent={<Face className="size-6 fill-content4-foreground" />}
+              >
+                Male
+              </SelectItem>
+              <SelectItem
+                key="Female"
+                value="Female"
+                startContent={<Face2 className="size-6 fill-content4-foreground" />}
+              >
+                Female
+              </SelectItem>
             </Select>
           )}
         />

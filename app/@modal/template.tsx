@@ -4,7 +4,7 @@ import { Modal, useDisclosure } from "@nextui-org/modal";
 import React from "react";
 
 export default function Template({ children }: { children: React.ReactNode }) {
-  const { isOpen, onClose, onOpen, onOpenChange } = useDisclosure({
+  const { isOpen, onClose, onOpenChange } = useDisclosure({
     defaultOpen: true,
   });
   return (

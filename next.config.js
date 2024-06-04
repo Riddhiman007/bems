@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   typescript: { ignoreBuildErrors: true },
+  // experimental: { ppr: true },
   // experimental: {
   //   turbo: {
   //     resolveExtensions: [".mdx", ".tsx", ".ts", ".jsx", ".js", ".mjs", ".json"],
@@ -8,8 +9,7 @@ const nextConfig = {
   //   turbotrace: { logAll: true, logDetail: true },
 
   // },
-
-  
+  // experimental: { optimizeCss: true, useLightningcss: true, useWasmBinary: true },
 };
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({

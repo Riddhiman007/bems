@@ -1,4 +1,3 @@
-"use client";
 import { StudentFields, allCastes } from "@/lib/prisma";
 import { Cast, Face, Face2, LocationCity } from "@mui/icons-material";
 import { Input } from "@nextui-org/input";
@@ -104,7 +103,7 @@ export default function ParentalForm() {
         control={control}
         name="caste"
         render={({
-          field: { disabled, ...remainingProps },
+          field: { disabled, value, ...remainingProps },
           fieldState: { error, invalid },
         }) => (
           <Select
@@ -119,6 +118,9 @@ export default function ParentalForm() {
               label: "text-sm",
               trigger: ["[background:none]", "border-none"],
             }}
+            listboxProps={{ classNames: { list: "list-none" } }}
+            defaultSelectedKeys={value ? [value] : undefined}
+            selectionMode="single"
             {...remainingProps}
           >
             {allCastes.map((item) => (
