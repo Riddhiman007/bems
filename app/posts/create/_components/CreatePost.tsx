@@ -131,6 +131,7 @@ export default function CreatePost({ session }: { session: Session }) {
           fieldState: { invalid, error },
         }) => (
           <Autocomplete
+            ref={ref}
             selectedKey={value}
             onSelectionChange={onChange}
             onBlur={onBlur}
@@ -167,6 +168,7 @@ export default function CreatePost({ session }: { session: Session }) {
           fieldState: { invalid, error },
         }) => (
           <Autocomplete
+            ref={ref}
             selectedKey={value}
             onSelectionChange={onChange}
             onBlur={onBlur}
@@ -202,38 +204,7 @@ export default function CreatePost({ session }: { session: Session }) {
         )}
       />
 
-      {/* <Controller
-        control={control}
-        name="subCategory"
-        render={({
-          field: { ref, disabled, ...other },
-          fieldState: { error, invalid },
-        }) => (
-          <Select
-            classNames={{
-              trigger: "border-none",
-            }}
-            label="Sub Category"
-            placeholder="What is the category of your post?"
-            variant="underlined"
-            isDisabled={disabled}
-            errorMessage={error?.message}
-            // isInvalid={invalid}
-            ref={ref}
-            {...other}
-            fullWidth
-          >
-            {Boolean(currentCategory)
-              ? currentSubCategory[currentCategory].map((cat) => (
-                  <SelectItem key={cat.toString()} value={cat}>
-                    {cat}
-                  </SelectItem>
-                ))
-              : []}
-          </Select>
-        )}
-      /> */}
-
+    
       <Editor
         onChange={editorOnChange}
         error={Boolean(editorErr)}
