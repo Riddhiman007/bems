@@ -1,4 +1,4 @@
-import { auth } from "@/lib/auth";
+import { auth } from "@/_lib/auth";
 
 // components
 import {
@@ -14,7 +14,7 @@ import dynamic from "next/dynamic";
 // styles
 import React from "react";
 const AcademicProgressBarChart = dynamic(
-  () => import("./components").then((mod) => mod.AcademicProgressBarChart),
+  () => import("./_components").then((mod) => mod.AcademicProgressBarChart),
   {
     loading() {
       return <Typography variant="h3">Loading...</Typography>;
@@ -22,7 +22,7 @@ const AcademicProgressBarChart = dynamic(
   },
 );
 const InstallmentsCharts = dynamic(
-  () => import("./components").then((mod) => mod.InstallmentsCharts),
+  () => import("./_components").then((mod) => mod.InstallmentsCharts),
   {
     loading() {
       return <Typography variant="h3">Loading...</Typography>;

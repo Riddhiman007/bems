@@ -1,5 +1,5 @@
-import MotionMuiButton from "@/components/Motion/MotionMuiButton";
-import { auth } from "@/lib/auth";
+import MotionMuiButton from "@/_components/Motion/MotionMuiButton";
+import { auth } from "@/_lib/auth";
 import {
   allExamSubjects,
   fetchExamRecordsOfParticularGrade,
@@ -8,7 +8,7 @@ import {
   getExamSubjectsAndGrades,
   getSubjectsAndGrades,
   getTeacher,
-} from "@/lib/prisma";
+} from "@/_lib/prisma";
 import {
   Avatar,
   Button,
@@ -23,52 +23,58 @@ import { ExamSubjectsList } from "@prisma/client";
 import dynamic from "next/dynamic";
 import React from "react";
 
-const ClassRecord = dynamic(() => import("./components").then((mod) => mod.ClassRecord), {
-  loading: ({ isLoading, error, retry }) => {
-    if (isLoading) {
-      return <Typography>Loading...</Typography>;
-    } else if (error) {
-      return (
-        <div className="flex flex-row gap-10">
-          <Typography color="red">Sorry. Failed to load Component</Typography>
-          <MotionMuiButton
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 1.2 }}
-            color="success"
-            onClick={retry}
-            className="bg-green-700 px-4 py-2 text-green-50"
-          >
-            Retry
-          </MotionMuiButton>
-        </div>
-      );
-    } else return null;
+const ClassRecord = dynamic(
+  () => import("./_components").then((mod) => mod.ClassRecord),
+  {
+    loading: ({ isLoading, error, retry }) => {
+      if (isLoading) {
+        return <Typography>Loading...</Typography>;
+      } else if (error) {
+        return (
+          <div className="flex flex-row gap-10">
+            <Typography color="red">Sorry. Failed to load Component</Typography>
+            <MotionMuiButton
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 1.2 }}
+              color="success"
+              onClick={retry}
+              className="bg-green-700 px-4 py-2 text-green-50"
+            >
+              Retry
+            </MotionMuiButton>
+          </div>
+        );
+      } else return null;
+    },
+    ssr: false,
   },
-  ssr: false,
-});
-const InsertMarks = dynamic(() => import("./components").then((mod) => mod.InsertMarks), {
-  loading: ({ isLoading, error, retry }) => {
-    if (isLoading) {
-      return <Typography>Loading...</Typography>;
-    } else if (error) {
-      return (
-        <div className="flex flex-row gap-10">
-          <Typography color="red">Sorry. Failed to load Component</Typography>
-          <MotionMuiButton
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 1.2 }}
-            color="success"
-            onClick={retry}
-            className="bg-green-700 px-4 py-2 text-green-50"
-          >
-            Retry
-          </MotionMuiButton>
-        </div>
-      );
-    } else return null;
+);
+const InsertMarks = dynamic(
+  () => import("./_components").then((mod) => mod.InsertMarks),
+  {
+    loading: ({ isLoading, error, retry }) => {
+      if (isLoading) {
+        return <Typography>Loading...</Typography>;
+      } else if (error) {
+        return (
+          <div className="flex flex-row gap-10">
+            <Typography color="red">Sorry. Failed to load Component</Typography>
+            <MotionMuiButton
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 1.2 }}
+              color="success"
+              onClick={retry}
+              className="bg-green-700 px-4 py-2 text-green-50"
+            >
+              Retry
+            </MotionMuiButton>
+          </div>
+        );
+      } else return null;
+    },
+    ssr: false,
   },
-  ssr: false,
-});
+);
 
 export default async function TeacherDashBoard() {
   const session = await auth();

@@ -7,8 +7,12 @@ import {
   ModalHeader,
   ModalHeaderProps,
 } from "@nextui-org/modal";
-import EnrollComponent from "./components/EnrollComponent";
-import MotionDiv from "@/components/Motion/MotionDiv";
+import dynamic from "next/dynamic";
+import { EditStudentLoadingState } from "@/_components/EditStudent";
+const EnrollComponent = dynamic(() => import("./_components/EnrollComponent"), {
+  ssr: false,
+  loading: ({ isLoading }) => (isLoading ? <EditStudentLoadingState /> : null),
+});
 
 export default function AdmissionForm() {
   return (

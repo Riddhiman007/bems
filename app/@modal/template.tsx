@@ -1,5 +1,5 @@
 "use client";
-import { AnimatePresence } from "@/components/Motion";
+import { AnimatePresence } from "@/_components/Motion";
 import { Modal, useDisclosure } from "@nextui-org/modal";
 import React from "react";
 

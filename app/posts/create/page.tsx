@@ -1,19 +1,20 @@
-import { Card, CardContent, Container, Typography } from "@mui/material";
 import React from "react";
-import { CreatePost } from "./components";
-import { auth } from "@/lib/auth";
-import { redirect } from "next/navigation";
+import { CreatePost } from "./_components";
+import { auth } from "@/_lib/auth";
+import { Card, CardBody, CardHeader } from "@nextui-org/card";
+import { UnauthenticatedError } from "@/errors";
 
 export default async function page() {
   const session = await auth();
+  if (!session) throw new UnauthenticatedError();
   return (
-    <Container className="mt-24">
-      <Card className="dark:bg-slate-900">
-        <CardContent className="mx-4 my-3 flex flex-col gap-4">
-          <Typography variant="h3">Create Post</Typography>
+    <div className="container mt-24">
+      <Card>
+        <CardHeader className="w-auto text-xl">Create Post</CardHeader>
+        <CardBody className="w-auto">
           <CreatePost session={session} />
-        </CardContent>
+        </CardBody>
       </Card>
-    </Container>
+    </div>
   );
 }

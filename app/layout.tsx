@@ -1,9 +1,9 @@
 import React from "react";
-import Context from "./contexts";
+import Context from "./_contexts";
 import "./globals.css";
-import Navigation from "./components/Navigation";
+import Navigation from "./_components/Navigation";
 import { Metadata } from "next";
-import { auth } from "./lib/auth";
+import { auth } from "./_lib/auth";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";

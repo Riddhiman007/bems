@@ -1,12 +1,5 @@
 "use client";
-import {
-  StudentFields,
-  allCastes,
-  allGrades,
-  deleteStudent,
-  fetchAllStudents,
-} from "@/lib/prisma";
-import { useAsyncList } from "@react-stately/data";
+import { StudentFields, deleteStudent } from "@/_lib/prisma";
 import {
   SortDescriptor,
   Table,
@@ -15,22 +8,18 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-  getKeyValue,
 } from "@nextui-org/table";
 
 import bravesIcon from "@/other-favicon.ico";
 import { Spinner } from "@nextui-org/spinner";
 import { User } from "@nextui-org/user";
 
-import React, { Key, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { Key, useCallback, useMemo, useRef, useState } from "react";
 import { ColumnType, StudentRowType } from ".";
-import { DataType, TableRowModesModel, UnsavedChanges } from "@/components/Tables";
-import { Button, ButtonGroup } from "@nextui-org/button";
+import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
-import { Checkbox } from "@nextui-org/checkbox";
-import { DeleteOutline, EditOutlined, Search } from "@mui/icons-material";
-import { DeleteIcon, EditIcon, EyeIcon } from "@/components/Icons";
-import { Select, SelectItem } from "@nextui-org/select";
+import { Search } from "@mui/icons-material";
+import { DeleteIcon, EditIcon, EyeIcon } from "@/_components/Icons";
 import { useRouter } from "next/navigation";
 import {
   Modal,
@@ -39,7 +28,15 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@nextui-org/modal";
-import { EditStudent } from "@/components/EditStudent";
+import dynamic from "next/dynamic";
+import { EditStudentLoadingState } from "@/_components/EditStudent";
+const EditStudent = dynamic(
+  () => import("@/_components/EditStudent").then((mod) => mod.EditStudent),
+  {
+    ssr: false,
+    loading: ({ isLoading }) => (isLoading ? <EditStudentLoadingState /> : null),
+  },
+);
 
 const initialColumns: ColumnType[] = [
   { key: "fullname", label: "FULL NAME" },

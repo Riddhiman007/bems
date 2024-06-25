@@ -1,6 +1,6 @@
-import { auth } from "@/lib/auth";
+import { auth } from "@/_lib/auth";
 import React from "react";
-import Unauthenticated from "./components/Unauthenticated";
+import Unauthenticated from "./_components/Unauthenticated";
 export default async function DashboardLayout({
   children,
   student,

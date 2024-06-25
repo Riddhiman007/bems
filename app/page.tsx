@@ -1,12 +1,12 @@
-import TypeAnimation from "./components/TypeWriter";
+import TypeAnimation from "./_components/ui/TypeWriter";
 import React from "react";
 import Image from "next/image";
 import SchoolImage from "./1-PhotoRoom.png";
-import { MotionLink, MotionDiv } from "./components/Motion";
+import { MotionLink, MotionDiv } from "./_components/Motion";
 import dynamic from "next/dynamic";
 import { headers } from "next/headers";
 import { Button } from "@nextui-org/button";
-const ParticlesContainer = dynamic(() => import("./components/ParticlesContainer"), {
+const ParticlesContainer = dynamic(() => import("./_components/ui/ParticlesContainer"), {
   ssr: false,
 });
 // export const runtime = "edge";

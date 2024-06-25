@@ -1,7 +1,7 @@
-import { MotionDiv } from "@/components/Motion";
+import { MotionDiv } from "@/_components/Motion";
 import { Card, CardContent, Typography } from "@mui/material";
 import React from "react";
-import { CreateExam } from "./components";
+import { CreateExam } from "./_components";
 
 export default function CreateExamRecord() {
   return (

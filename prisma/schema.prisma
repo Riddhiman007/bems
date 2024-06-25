@@ -204,6 +204,35 @@ model Comment {
   @@map("comments")
 }
 
+model Log {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  level   LogLevel
+  name    String
+  message Json
+
+  @@map("Logs")
+}
+
+enum LogLevel {
+  error
+  warn
+  help
+  data
+  info
+  debug
+  prompt
+  http
+  verbose
+  input
+  silly
+  // for syslog
+  alert
+  emerg
+  crit
+  warning
+  notice
+}
+
 enum Role {
   Student
   Teacher

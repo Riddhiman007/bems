@@ -1,61 +1,30 @@
-import { allStarredUsers, fetchAllPosts } from "@/lib/prisma";
-import {
-  Card,
-  CardContent,
-  CardMedia,
-  Container,
-  InputAdornment,
-  Skeleton,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { allStarredUsers, fetchAllPosts, isStarredPost } from "@/_lib/prisma";
+import { Skeleton } from "@nextui-org/skeleton";
 import React, { Suspense } from "react";
-import PostCard from "./components/PostCard";
-import { auth } from "@/lib/auth";
+import PostCard from "./_components/PostCard";
+import { auth } from "@/_lib/auth";
 import { Search } from "@mui/icons-material";
+import { Input } from "@nextui-org/input";
+import { Card, CardBody, CardHeader } from "@nextui-org/card";
+import { Divider } from "@nextui-org/divider";
 
 const FallBack = () => {
   return (
     <>
-      <Card className="dark:bg-slate-900">
-        <CardMedia>
-          <Skeleton height={200} width={200} />
-        </CardMedia>
-        <CardContent className="flex flex-col gap-2">
-          <Skeleton height={20} width="10rem" />
-          <Skeleton height={14} width="10rem" />
-          <Skeleton height={10} width="10rem" />
-        </CardContent>
-      </Card>
-      <Card className="dark:bg-slate-900">
-        <CardMedia>
-          <Skeleton height={200} width={200} />
-        </CardMedia>
-        <CardContent className="flex flex-col gap-2">
-          <Skeleton height={20} width="10rem" />
-          <Skeleton height={14} width="10rem" />
-          <Skeleton height={10} width="10rem" />
-        </CardContent>
-      </Card>
-      <Card className="dark:bg-slate-900">
-        <CardMedia>
-          <Skeleton height={200} width={200} />
-        </CardMedia>
-        <CardContent className="flex flex-col gap-2">
-          <Skeleton height={20} width="10rem" />
-          <Skeleton height={14} width="10rem" />
-          <Skeleton height={10} width="10rem" />
-        </CardContent>
-      </Card>
-      <Card className="dark:bg-slate-900">
-        <CardMedia>
-          <Skeleton height={200} width={200} />
-        </CardMedia>
-        <CardContent className="flex flex-col gap-2">
-          <Skeleton height={20} width="10rem" />
-          <Skeleton height={14} width="10rem" />
-          <Skeleton height={10} width="10rem" />
-        </CardContent>
+      <Card>
+        <CardHeader className="flex flex-row gap-2">
+          <Skeleton className="size-8 rounded-full" />
+          <div className="flex flex-col gap-1">
+            <Skeleton className="h-4 w-12" />
+            <Skeleton className="h-2 w-6" />
+          </div>
+        </CardHeader>
+        <Divider />
+        <CardBody className="flex flex-col">
+          <Skeleton className="size-12" />
+          <Skeleton className="h-8 w-16" />
+          <Skeleton className="h-4 w-12" />
+        </CardBody>
       </Card>
     </>
   );
@@ -64,26 +33,18 @@ export default async function Posts() {
   const posts = await fetchAllPosts();
   const session = await auth();
   return (
-    <Container className="mt-20 flex flex-col gap-7">
+    <div className="container mt-20 flex flex-col gap-7">
       <div className="flex flex-row justify-center">
-        <TextField
-          className=""
+        <Input
+          classNames={{ input: "border-none" }}
           placeholder="Search posts..."
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Search />
-              </InputAdornment>
-            ),
-          }}
-          variant="filled"
+          startContent={<Search className="size-6 fill-default-400" />}
+          variant="flat"
         />
       </div>
       {posts.length === 0 && (
         <div className="mt-10 flex flex-row justify-center">
-          <Typography className="dark:text-slate-700" variant="h3">
-            Nothing to display...
-          </Typography>
+          <h3 className="text-content4-foreground">Nothing to display...</h3>
         </div>
       )}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
@@ -91,6 +52,7 @@ export default async function Posts() {
           {posts.map(async (post) => {
             const { id, title, desc } = post;
             let allStars = await allStarredUsers(id);
+            const isStarred = await isStarredPost(id, session?.user?.id);
             return (
               <PostCard
                 key={post.id}
@@ -99,6 +61,7 @@ export default async function Posts() {
                   title,
                   desc,
                   stars: allStars,
+                  isStarred: isStarred?.id,
                 }}
                 session={session}
               />
@@ -106,6 +69,6 @@ export default async function Posts() {
           })}
         </Suspense>
       </div>
-    </Container>
+    </div>
   );
 }

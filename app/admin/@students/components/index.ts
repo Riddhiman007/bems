@@ -1,5 +1,5 @@
-import { DataType } from "@/components/Tables";
-import { DefaultRowType } from "@/components/Tables";
+import { DataType } from "@/_components/Tables";
+import { DefaultRowType } from "@/_components/Tables";
 import { Caste, Gender, GradeType } from "@prisma/client";
 
 export { default as StudentTable } from "./StudentTable";
@@ -23,4 +23,3 @@ export interface StudentRowType extends DefaultRowType {
   caste: Caste;
   gender: Gender;
 }
-

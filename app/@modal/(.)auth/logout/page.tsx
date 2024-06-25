@@ -1,7 +1,7 @@
 "use client";
-import CardBackgroundForLightMode from "@/components/CardBackgroundForLightMode";
-import { MotionButton } from "@/components/Motion";
-import SignoutButton from "@/components/SignoutButton";
+import CardBackgroundForLightMode from "@/_components/ui/CardBackgroundForLightMode";
+import { MotionButton } from "@/_components/Motion";
+import SignoutButton from "@/_components/ui/SignoutButton";
 import { Button } from "@nextui-org/button";
 import { ModalBody, ModalContent, ModalHeader } from "@nextui-org/modal";
 import React from "react";

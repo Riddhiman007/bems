@@ -1,10 +1,10 @@
-import AnimatePresence from "@/components/Motion/AnimatePresence";
+import AnimatePresence from "@/_components/Motion/AnimatePresence";
 import React from "react";
-import { auth, signOut } from "@/lib/auth";
+import { auth, signOut } from "@/_lib/auth";
 import { Button } from "@nextui-org/button";
-import { MotionButton, MotionDiv } from "@/components/Motion";
-import { Card, CardBody } from "@nextui-org/card";
-import SignoutButton from "@/components/SignoutButton";
+import { MotionButton, MotionDiv } from "@/_components/Motion";
+import { Card, CardBody, CardHeader } from "@nextui-org/card";
+import SignoutButton from "@/_components/ui/SignoutButton";
 
 export default async function Logout() {
   const session = await auth();
@@ -15,16 +15,15 @@ export default async function Logout() {
         initial={{ opacity: 0, y: 400 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -400 }}
-        className="m-auto mt-40 w-96 rounded-md shadow-2xl shadow-neutral-950 dark:bg-slate-900"
+        className="m-auto mt-40 w-96"
       >
-        <CardBody className="m-4 flex flex-col gap-4 ">
+        <CardHeader className="m-0 w-auto" as="h4">
+          {session ? "Log Out" : "You are already logged out"}
+        </CardHeader>
+        <CardBody className=" flex w-auto flex-col gap-4">
           {/* title */}
-          <div>
-            <h4 className="text-3xl">
-              {session ? "You're already logged in..." : "Log out"}
-            </h4>
-          </div>
-          {session === null && (
+
+          {session !== null && (
             <>
               <p>Are you sure you want to log out?</p>
               <div className="flex flex-row justify-end">

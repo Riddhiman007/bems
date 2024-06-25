@@ -3,14 +3,14 @@ import { ModalBody, ModalContent, ModalHeader } from "@nextui-org/modal";
 import { Input } from "@nextui-org/input";
 
 import React, { useState } from "react";
-import CardBackgroundForLightMode from "@/components/CardBackgroundForLightMode";
+import CardBackgroundForLightMode from "@/_components/ui/CardBackgroundForLightMode";
 import { SubmitHandler, useController, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Email } from "@mui/icons-material";
 import { Button } from "@nextui-org/button";
-import { MotionButton } from "@/components/Motion";
-import { loginByEmail } from "@/lib/actions";
+import { MotionButton } from "@/_components/Motion";
+import { loginByEmail } from "@/_lib/actions";
 import { useRouter } from "next/navigation";
 
 const emailValidator = z.object({

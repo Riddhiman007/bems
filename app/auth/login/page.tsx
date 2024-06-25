@@ -1,9 +1,9 @@
 import React from "react";
 import { Card, CardContent, Typography } from "@mui/material";
 
-import MotionDiv from "@/components/Motion/MotionDiv";
-import LoginForm from "@/components/Forms/Login";
-import CardBackgroundForLightMode from "@/components/CardBackgroundForLightMode";
+import MotionDiv from "@/_components/Motion/MotionDiv";
+import LoginForm from "@/_components/Forms/Login";
+import CardBackgroundForLightMode from "@/_components/ui/CardBackgroundForLightMode";
 
 export default function Login(): React.ReactNode | null {
   return (

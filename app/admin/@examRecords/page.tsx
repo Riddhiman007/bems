@@ -1,7 +1,7 @@
 import { Card, CardBody } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
 // import { ExamRecords } from "./components";
-import { MotionLink } from "@/components/Motion";
+import { MotionLink } from "@/_components/Motion";
 export default async function ExamRecord() {
   return (
     <Card>
@@ -21,9 +21,7 @@ export default async function ExamRecord() {
             Create New Record...
           </Button>
         </div>
-        <div className="flex flex-col gap-4">
-          {/* <ExamRecords /> */}
-        </div>
+        <div className="flex flex-col gap-4">{/* <ExamRecords /> */}</div>
       </CardBody>
     </Card>
   );

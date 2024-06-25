@@ -1,5 +1,5 @@
 import StudentTable from "@/admin/@students/components/StudentTable";
-import { MotionDiv } from "@/components/Motion";
+import { MotionDiv } from "@/_components/Motion";
 // import { fetchAllStudents } from "@/lib/prisma";
 import { Card, CardContent } from "@mui/material";
 import React from "react";

@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { handlers } from "@/lib/auth";
+import { handlers } from "@/_lib/auth";
 
 export const runtime = "nodejs";
 const { GET: AuthGET, POST } = handlers;

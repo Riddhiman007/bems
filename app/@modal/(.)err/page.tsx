@@ -1,5 +1,5 @@
-import { MotionDiv } from "@/components/Motion";
-import { err_type } from "@/utils";
+import { MotionDiv } from "@/_components/Motion";
+import { err_type } from "@/_utils";
 import { Card, CardContent, Typography } from "@mui/material";
 import React from "react";
 

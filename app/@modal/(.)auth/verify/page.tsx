@@ -1,4 +1,4 @@
-import MotionDiv from "@/components/Motion/MotionDiv";
+import MotionDiv from "@/_components/Motion/MotionDiv";
 import { Card, CardContent, Typography } from "@mui/material";
 import React from "react";
 

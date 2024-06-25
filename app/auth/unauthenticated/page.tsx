@@ -3,9 +3,9 @@ import React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import MotionDiv from "@/components/Motion/MotionDiv";
+import MotionDiv from "@/_components/Motion/MotionDiv";
 import Link from "next/link";
-import MotionMuiButton from "@/components/Motion/MotionMuiButton";
+import MotionMuiButton from "@/_components/Motion/MotionMuiButton";
 
 export default function page() {
   return (

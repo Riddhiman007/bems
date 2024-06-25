@@ -3,9 +3,9 @@ import React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import MotionDiv from "@/components/Motion/MotionDiv";
-import CancelButton from "@/components/CancelButton";
-import MotionMuiButton from "@/components/Motion/MotionMuiButton";
+import MotionDiv from "@/_components/Motion/MotionDiv";
+import { CancelButton } from "@/_components/ui";
+import MotionMuiButton from "@/_components/Motion/MotionMuiButton";
 import Link from "next/link";
 
 export default function page() {

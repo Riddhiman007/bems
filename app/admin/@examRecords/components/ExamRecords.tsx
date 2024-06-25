@@ -1,5 +1,5 @@
 "use client";
-import { ExamTypeList, fetchAllExams } from "@/lib/prisma";
+import { ExamTypeList, fetchAllExams } from "@/_lib/prisma";
 import {
   CheckCircle,
   CheckCircleOutline,
@@ -20,7 +20,6 @@ import {
 } from "@nextui-org/table";
 import { useAsyncList } from "@react-stately/data";
 import React from "react";
-
 
 export default function ExamRecords() {
   const examRecords = useAsyncList({

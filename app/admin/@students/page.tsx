@@ -4,7 +4,7 @@ import { Card, CardBody } from "@nextui-org/card";
 import dynamic from "next/dynamic";
 import { Spinner } from "@nextui-org/spinner";
 import { Button } from "@nextui-org/button";
-import { fetchAllStudents } from "@/lib/prisma";
+import { fetchAllStudents } from "@/_lib/prisma";
 
 export const revalidate = 120;
 const StudentTable = dynamic(

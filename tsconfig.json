@@ -26,8 +26,12 @@
     ],
     "paths": {
       "@/*": [
-        "./app/*"
-      ]
+        "./app/*",
+        "./*"
+      ],
+      "@/utils/*": [
+        "./app/_utils/*"
+      ],
     }
   },
   "include": [
@@ -36,10 +40,10 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "tailwind.config.js",
-    "app/components/Icons/EyeIcon.jsx",
-    "app/components/Icons/EditIcon.jsx",
-    "app/components/Icons/DeleteIcon.jsx",
+    "tailwind.config.ts",
+    "app/_components/Icons/EyeIcon.jsx",
+    "app/_components/Icons/EditIcon.jsx",
+    "app/_components/Icons/DeleteIcon.jsx",
   ],
   "exclude": [
     "node_modules"
