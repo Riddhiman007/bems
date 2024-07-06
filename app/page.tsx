@@ -6,6 +6,7 @@ import { MotionLink, MotionDiv } from "./_components/Motion";
 import dynamic from "next/dynamic";
 import { headers } from "next/headers";
 import { Button } from "@nextui-org/button";
+import ShinyButton from "./_components/ui/ShinyButton";
 const ParticlesContainer = dynamic(() => import("./_components/ui/ParticlesContainer"), {
   ssr: false,
 });
@@ -62,20 +63,9 @@ export default function Home() {
             </h4>
           </MotionDiv>
           <div className="mb-10 flex flex-row justify-center">
-            <Button
-              href="/enroll"
-              className="rounded-md bg-success-300 p-8 text-2xl capitalize text-success-900 no-underline hover:bg-success-200 active:bg-success-50"
-              autoCapitalize="all"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 1.2 }}
-              as={MotionLink}
-              initial={{ opacity: 0, y: 200 }}
-              animate={{ opacity: 1, y: 0 }}
-              translate="yes"
-              variant="bordered"
-            >
+            <ShinyButton href="/enroll" className="!px-6 !py-4 text-2xl">
               Enroll Now...
-            </Button>
+            </ShinyButton>
           </div>
         </div>
       </div>

@@ -1,22 +1,32 @@
-// "use client";
+"use client";
 import { Button } from "@nextui-org/button";
 import React from "react";
 import { MotionButton } from "../Motion";
+import { useRouter } from "next/navigation";
+
+interface Props {
+  isSubmitting: boolean;
+  onClose: () => void;
+}
 
 /// This component is used for intercepting routes only
-export default function CancelButton() {
+export default function CancelButton({ isSubmitting, onClose }: Props) {
+  const router = useRouter();
   return (
     <Button
-      type="button"
       as={MotionButton}
-      initial={{ opacity: 0, y: 400 }}
-      animate={{ opacity: 1, y: 0 }}
-      whileHover={{ scale: 1.05 }}
-      variant="bordered"
-      className="rounded-md px-4 py-2"
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 1.15 }}
       color="danger"
+      variant="bordered"
+      onPress={() => {
+        onClose();
+        setTimeout(router.back, 500);
+      }}
+      type="button"
+      isDisabled={isSubmitting}
     >
       Cancel
     </Button>
-);
+  );
 }

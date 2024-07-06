@@ -12,25 +12,29 @@ import { CancelButton } from "../ui";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nextui-org/button";
+import { MotionButton } from "../Motion";
 
-const loginSchema = z.object({
+export const loginSchema = z.object({
   email: z
     .string({ required_error: "Please enter your email address." })
     .email({ message: "Please enter your email address correctly." }),
 });
 
-type LoginValidator = z.infer<typeof loginSchema>;
-export default function LoginForm({
-  isBackButtonEnabled,
-}: {
-  isBackButtonEnabled: boolean;
-}) {
+export type LoginValidator = z.infer<typeof loginSchema>;
+
+interface Props {
+  /**
+   * @default false
+   */
+  isModal?: { onClose: () => void } | false;
+}
+
+export default function LoginForm({ isModal }: Props) {
   const {
     control,
     handleSubmit,
-    formState: { isLoading },
+    formState: { isSubmitting },
   } = useForm<LoginValidator>({
-    shouldUseNativeValidation: false,
     mode: "all",
     resolver: zodResolver(loginSchema),
   });
@@ -47,10 +51,17 @@ export default function LoginForm({
         name="email"
         render={({ field: { ref, ...remainingProps }, fieldState: { error } }) => (
           <Input
-            errorMessage={error && <p className="text-red-600">{error.message}</p>}
+            autoFocus
+            errorMessage={error?.message || undefined}
             isRequired
-            classNames={{ innerWrapper: "w-[-webkit-fill-available]" }}
-            size="md"
+            classNames={{
+              errorMessage: "text-danger",
+              input: "border-none",
+              label: ["text-sm", !!error ? "text-danger-900" : ""],
+              inputWrapper: "w-[-webkit-fill-available]",
+            }}
+            size="sm"
+            labelPlacement="outside"
             variant="faded"
             fullWidth
             label="Email"
@@ -60,20 +71,22 @@ export default function LoginForm({
           />
         )}
       />
-      <div
-        className={`flex flex-row ${
-          isBackButtonEnabled ? "justify-between" : "justify-end"
-        }`}
-      >
-        {isBackButtonEnabled && <CancelButton />}
-        <AnimatePresence>
-          <Button
-            className="bg-success px-4 py-2 text-success-foreground"
-            isLoading={isLoading}
-          >
-            Login
-          </Button>
-        </AnimatePresence>
+      <div className={`flex flex-row ${isModal ? "justify-between" : "justify-end"}`}>
+        {isModal && (
+          <CancelButton isSubmitting={isSubmitting} onClose={isModal.onClose} />
+        )}
+
+        <Button
+          as={MotionButton}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 1.15 }}
+          color="success"
+          variant="ghost"
+          className="bg-success-200 !text-success-800 hover:bg-success-100 active:bg-success-50"
+          isLoading={isSubmitting}
+        >
+          Login
+        </Button>
       </div>
     </form>
   );

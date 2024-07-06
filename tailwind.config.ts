@@ -3,23 +3,6 @@ import { Config, PluginAPI } from "tailwindcss/types/config";
 import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette";
 import defaultTheme from "tailwindcss/defaultTheme";
 import colors from "tailwindcss/colors";
-// import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette";
-// const flattenColorPalette: any = (colors: any) =>
-//   Object.assign(
-//     {},
-//     ...Object.entries(colors !== null && colors !== void 0 ? colors : {}).flatMap(
-//       ([color, values]) =>
-//         typeof values == "object"
-//           ? Object.entries(flattenColorPalette(values)).map(([number, hex]) => ({
-//               [color + (number === "DEFAULT" ? "" : `-${number}`)]: hex,
-//             }))
-//           : [
-//               {
-//                 [`${color}`]: values,
-//               },
-//             ],
-//     ),
-//   );
 
 const config: Config = {
   content: [

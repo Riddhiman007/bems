@@ -1,6 +1,6 @@
 "use client";
 import { ModalBody, ModalContent, ModalHeader } from "@nextui-org/modal";
-import { Input } from "@nextui-org/input";
+import { Input, LoginForm, LoginValidator, loginSchema } from "@/_components/Forms";
 
 import React, { useState } from "react";
 import CardBackgroundForLightMode from "@/_components/ui/CardBackgroundForLightMode";
@@ -13,30 +13,23 @@ import { MotionButton } from "@/_components/Motion";
 import { loginByEmail } from "@/_lib/actions";
 import { useRouter } from "next/navigation";
 
-const emailValidator = z.object({
-  email: z
-    .string({ required_error: "Please enter your email." })
-    .email("It must be an email address"),
-});
 export default function ModalLoginPage() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  type Email = {
-    email: string;
-  };
 
-  const { handleSubmit, control } = useForm<Email>({
-    resolver: zodResolver(emailValidator),
+  const {
+    handleSubmit,
+    control,
+    formState: { isSubmitting },
+  } = useForm<LoginValidator>({
+    resolver: zodResolver(loginSchema),
   });
   const {
     field: { disabled, ...other },
     fieldState: { invalid, isDirty, isTouched, isValidating, error },
   } = useController({ control, name: "email" });
 
-  const onSubmit: SubmitHandler<Email> = async ({ email }) => {
-    setIsLoading(true);
+  const onSubmit: SubmitHandler<LoginValidator> = async ({ email }) => {
     await loginByEmail(email);
-    setIsLoading(false);
   };
   return (
     <ModalContent>
@@ -45,21 +38,22 @@ export default function ModalLoginPage() {
           <CardBackgroundForLightMode />
           <ModalHeader className="text-lg">Login</ModalHeader>
           <ModalBody
-            as="form"
-            onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col gap-4 p-4"
+          // as="form"
+          // onSubmit={handleSubmit(onSubmit)}
+          // className="flex flex-col gap-4 p-4"
           >
-            <Input
+            <LoginForm isModal={{ onClose }} />
+            {/* <Input
               autoFocus
-              isDisabled={disabled}
+              isDisabled={disabled || isSubmitting}
               isInvalid={invalid}
-              variant="underlined"
+              variant="faded"
               className="border-none"
               classNames={{
                 errorMessage: "text-danger text-base",
                 input: "border-none",
                 label: ["text-sm", !!error ? "text-danger-900" : ""],
-                inputWrapper: "w-auto",
+                inputWrapper: "w-[-webkit-fill-available]",
               }}
               size="md"
               startContent={
@@ -84,6 +78,7 @@ export default function ModalLoginPage() {
                   setTimeout(router.back, 500);
                 }}
                 type="button"
+                isDisabled={isSubmitting}
               >
                 Cancel
               </Button>
@@ -94,11 +89,11 @@ export default function ModalLoginPage() {
                 color="success"
                 variant="ghost"
                 className="bg-success-200 !text-success-800 hover:bg-success-100 active:bg-success-50"
-                isLoading={isLoading}
+                isLoading={isSubmitting}
               >
                 Login
               </Button>
-            </div>
+            </div> */}
           </ModalBody>
         </>
       )}

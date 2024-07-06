@@ -36,7 +36,7 @@
 
 ::-webkit-scrollbar {
   width: 2px;
-  @apply m-1;
+  @apply m-0.5;
 }
 
 .dark ::-webkit-scrollbar-thumb {

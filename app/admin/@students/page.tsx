@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Card, CardBody } from "@nextui-org/card";
+import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import dynamic from "next/dynamic";
 import { Spinner } from "@nextui-org/spinner";
 import { Button } from "@nextui-org/button";
@@ -30,8 +30,8 @@ export default async function Student() {
   const students = await fetchAllStudents();
   return (
     <Card className="bg-content1">
-      <CardBody className="flex flex-col gap-3">
-        <h4 className="ml-1 text-2xl">Students</h4>
+      <CardHeader as="h4">Students</CardHeader>
+      <CardBody className="flex flex-col gap-3 overflow-hidden">
         <StudentTable initialStudents={students} />
       </CardBody>
     </Card>

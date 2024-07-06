@@ -29,12 +29,11 @@ export default function Input<
     getClearButtonProps,
     getDescriptionProps,
     getErrorMessageProps,
-    getHelperWrapperProps,
+
     getInnerWrapperProps,
     getInputProps,
     getInputWrapperProps,
     getLabelProps,
-    getMainWrapperProps,
   } = useInput<T>({ ...props });
 
   const labelContent = <label {...getLabelProps()}>{label}</label>;

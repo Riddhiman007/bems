@@ -29,19 +29,8 @@ export const StudentFieldValidator = z.object({
   isNew: z.boolean().default(true).optional(),
 });
 
-export interface StudentFields {
-  fullname: string;
-  father_name: string;
-  mother_name: string;
-  caste?: Caste;
-  grade: GradeType;
-  address: string;
-  contact: string;
-  email: string;
-  gender: Gender;
-  isNew?: boolean;
-}
-
+export type StudentFields = z.infer<typeof StudentFieldValidator>;
+export type StudentFieldsWithId = StudentFields & { id: string };
 export type Category = "Science" | "Maths" | "Computer" | "Literature" | "Social Science";
 export type SubCategory =
   | "Archeaology"

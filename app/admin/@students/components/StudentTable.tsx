@@ -1,5 +1,5 @@
 "use client";
-import { StudentFields, deleteStudent } from "@/_lib/prisma";
+import { StudentFields, StudentFieldsWithId, deleteStudent } from "@/_lib/prisma";
 import {
   SortDescriptor,
   Table,
@@ -18,8 +18,8 @@ import React, { Key, useCallback, useMemo, useRef, useState } from "react";
 import { ColumnType, StudentRowType } from ".";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
-import { Search } from "@mui/icons-material";
-import { DeleteIcon, EditIcon, EyeIcon } from "@/_components/Icons";
+import { ScrollShadow } from "@nextui-org/scroll-shadow";
+import { DeleteIcon, EditIcon, EyeIcon, SearchIcon } from "@nextui-org/shared-icons";
 import { useRouter } from "next/navigation";
 import {
   Modal,
@@ -30,6 +30,8 @@ import {
 } from "@nextui-org/modal";
 import dynamic from "next/dynamic";
 import { EditStudentLoadingState } from "@/_components/EditStudent";
+import { createPortal } from "react-dom";
+import { XCircleIcon } from "@heroicons/react/24/solid";
 const EditStudent = dynamic(
   () => import("@/_components/EditStudent").then((mod) => mod.EditStudent),
   {
@@ -61,6 +63,10 @@ export default function StudentTable({
     column: "fullname",
     direction: "ascending",
   });
+
+  const studentToBeEdited = useRef<StudentFieldsWithId>();
+  const studentToBeDeleted = useRef<{ email: string; fullname: string }>();
+  const router = useRouter();
   const {
     isOpen,
     onOpenChange,
@@ -71,9 +77,12 @@ export default function StudentTable({
       studentToBeEdited.current = undefined;
     },
   });
-  const studentToBeEdited = useRef<StudentFields>();
-  const router = useRouter();
-
+  const deleteModal = useDisclosure({
+    onClose() {
+      studentToBeDeleted.current = undefined;
+    },
+  });
+  const [isStudentDeleting, setIsStudentDeleting] = useState(false);
   const filterStudents = useCallback(
     (input: string) => {
       setStudents(
@@ -117,10 +126,11 @@ export default function StudentTable({
     gender,
     grade,
     isNew,
-
+    key,
     mother_name,
   }: StudentRowType) => {
     studentToBeEdited.current = {
+      id: key,
       address,
       contact,
       email,
@@ -137,12 +147,17 @@ export default function StudentTable({
     modalOpen();
     // studentToBeEdited.current = undefined;
   };
-  const removeStudent = async (student: StudentRowType) => {
-    setStudents(students.filter((stud) => stud.key !== student.id));
-    let deletedStud = await deleteStudent(student.email);
-    console.log(deletedStud);
-
-    console.log(students);
+  const removeStudent = ({ email, fullname }: StudentRowType) => {
+    studentToBeDeleted.current = { email, fullname };
+    deleteModal.onOpen();
+  };
+  const handleDeleteStudent = () => {
+    setIsStudentDeleting(true);
+    deleteStudent(studentToBeDeleted.current?.email || "").finally(() => {
+      setIsStudentDeleting(false);
+      deleteModal.onClose();
+      router.refresh();
+    });
   };
   const renderCell = (student: StudentRowType, key: Key): React.ReactNode => {
     const cellValue = student[key as keyof StudentRowType];
@@ -191,6 +206,12 @@ export default function StudentTable({
             </Button>
           </div>
         );
+      case "isNew":
+        return student.isNew ? (
+          <XCircleIcon className="size-6 bg-danger-500" />
+        ) : (
+          <XCircleIcon />
+        );
       default:
         return cellValue;
     }
@@ -204,7 +225,7 @@ export default function StudentTable({
         <div className="flex flex-row gap-14">
           <Input
             variant="flat"
-            startContent={<Search className="size-6 fill-content4-foreground" />}
+            startContent={<SearchIcon className="size-6" />}
             className="w-1/3"
             classNames={{
               input: "border-none",
@@ -224,89 +245,119 @@ export default function StudentTable({
             </Button>
           </div>
         </div>
-
-        <Table
-          removeWrapper
-          sortDescriptor={sortDescriptor}
-          onSortChange={setSortDescriptor}
+        <ScrollShadow
+          orientation="horizontal"
+          overflowCheck="horizontal"
+          size={60}
+          hideScrollBar
         >
-          <TableHeader columns={initialColumns}>
-            {(col) => (
-              <TableColumn
-                defaultWidth={200}
-                width={400}
-                key={col.key}
-                allowsSorting
-                allowsResizing
-              >
-                {col.label}
-              </TableColumn>
-            )}
-          </TableHeader>
-          <TableBody
-            emptyContent={"Sorry, no student record found."}
-            loadingContent={<Spinner>Loading...</Spinner>}
-            items={sortStudents}
+          <Table
+            removeWrapper
+            sortDescriptor={sortDescriptor}
+            onSortChange={setSortDescriptor}
+            className="mr-8"
           >
-            {(row) => (
-              <TableRow key={row.key}>
-                {(col) => (
-                  <TableCell key={`${row.key}${col}`}>{renderCell(row, col)}</TableCell>
-                )}
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+            <TableHeader columns={initialColumns}>
+              {(col) => (
+                <TableColumn
+                  defaultWidth={200}
+                  width={400}
+                  key={col.key}
+                  allowsSorting
+                  allowsResizing
+                >
+                  {col.label}
+                </TableColumn>
+              )}
+            </TableHeader>
+            <TableBody
+              emptyContent={"Sorry, no student record found."}
+              loadingContent={<Spinner>Loading...</Spinner>}
+              items={sortStudents}
+            >
+              {(row) => (
+                <TableRow key={row.key}>
+                  {(col) => (
+                    <TableCell key={`${row.key}${col}`}>{renderCell(row, col)}</TableCell>
+                  )}
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </ScrollShadow>
       </div>
 
-      <Modal
-        scrollBehavior="outside"
-        classNames={{ base: "mt-4" }}
-        // closeButton={<button hidden></button>}
-        isOpen={isOpen}
-        onClose={onClose}
-        onOpenChange={onOpenChange}
-        placement="top-center"
-        isDismissable={false}
-        isKeyboardDismissDisabled={true}
-        backdrop="blur"
-        motionProps={{
-          variants: {
-            enter: {
-              y: 0,
-              opacity: 1,
-              transition: {
-                duration: 0.3,
-                ease: "easeOut",
-              },
-            },
-
-            exit: {
-              y: -300,
-              opacity: 0,
-              transition: {
-                duration: 0.3,
-                ease: "easeIn",
-              },
-            },
-          },
-        }}
-      >
-        <ModalContent key="editStudent">
-          {(onClose) => (
-            <>
-              <ModalHeader>Edit Student</ModalHeader>
-              <ModalBody>
-                <EditStudent
-                  onClose={onClose}
-                  email={studentToBeEdited.current ? studentToBeEdited.current.email : ""}
-                  defaultValues={studentToBeEdited.current}
-                />
-              </ModalBody>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+      {createPortal(
+        <Modal
+          scrollBehavior="outside"
+          classNames={{ base: "mt-4" }}
+          // closeButton={<button hidden></button>}
+          isOpen={isOpen}
+          onClose={onClose}
+          onOpenChange={onOpenChange}
+          placement="top-center"
+          isDismissable={false}
+          isKeyboardDismissDisabled={true}
+          backdrop="blur"
+        >
+          <ModalContent key="editStudent">
+            {(onClose) => (
+              <>
+                <ModalHeader>Edit Student</ModalHeader>
+                <ModalBody>
+                  <EditStudent
+                    onClose={onClose}
+                    id={studentToBeEdited.current ? studentToBeEdited.current.id : ""}
+                    defaultValues={studentToBeEdited.current}
+                  />
+                </ModalBody>
+              </>
+            )}
+          </ModalContent>
+        </Modal>,
+        document.body,
+      )}
+      {createPortal(
+        <Modal
+          scrollBehavior="outside"
+          classNames={{ base: "mt-4" }}
+          isOpen={deleteModal.isOpen}
+          onClose={deleteModal.onClose}
+          onOpenChange={deleteModal.onOpenChange}
+          placement="top-center"
+          isDismissable
+          isKeyboardDismissDisabled={true}
+          backdrop="blur"
+        >
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader>Delete student</ModalHeader>
+                <ModalBody className="flex flex-col">
+                  <p>
+                    Are you sure you want to delete{" "}
+                    {studentToBeDeleted.current?.fullname || ""}?
+                  </p>
+                  <div className="flex flex-row justify-between ">
+                    <Button variant="bordered" color="danger" onPress={onClose}>
+                      Cancel
+                    </Button>
+                    <Button
+                      variant="solid"
+                      color="danger"
+                      className="border-danger-300 bg-danger-400"
+                      onPress={handleDeleteStudent}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                </ModalBody>
+              </>
+            )}
+          </ModalContent>
+        </Modal>,
+        document.body,
+      )}
     </>
   );
 }

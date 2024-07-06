@@ -19,27 +19,6 @@ export default function Template({ children }: { children: React.ReactNode }) {
         placement="top-center"
         isDismissable={false}
         backdrop="blur"
-        motionProps={{
-          variants: {
-            enter: {
-              y: 0,
-              opacity: 1,
-              transition: {
-                duration: 0.3,
-                ease: "easeOut",
-              },
-            },
-
-            exit: {
-              y: -300,
-              opacity: 0,
-              transition: {
-                duration: 0.3,
-                ease: "easeIn",
-              },
-            },
-          },
-        }}
       >
         {children}
       </Modal>

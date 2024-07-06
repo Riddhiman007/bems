@@ -5,6 +5,7 @@ import prisma, { StudentFields } from "..";
 import { revalidatePath } from "next/cache";
 import { studentLogger } from "@/logger";
 import { StudentRowType } from "@/admin/@students/components";
+// import { studentIndex } from "@/_lib/search";
 
 export async function createNewStudent({
   fullname,
@@ -43,7 +44,9 @@ export async function createNewStudent({
     },
     include: { user: true },
   });
+  // studentIndex.addDocuments([student], { primaryKey: "id" });
   studentLogger.info({ type: "create", student: student });
+
   revalidatePath("/admin", "page");
   return {
     address: student.user.address,
@@ -89,73 +92,7 @@ export async function fetchStudentNameOfParticularGrade(grade: $Enums.GradeType)
   return students;
 }
 export async function updateStudent(
-  email: string,
-  {
-    address,
-    caste,
-    contact,
-    email: newEmail,
-    father_name,
-    fullname,
-    gender,
-    grade,
-    isNew,
-    mother_name,
-  }: Partial<StudentFields>,
-): Promise<Partial<StudentFields> | null> {
-  const student = await prisma.user.update({
-    data: {
-      fullname,
-      address,
-      email: newEmail,
-      gender,
-      contact,
-      student: {
-        update: {
-          data: {
-            caste,
-            father_name,
-            fullname,
-            mother_name,
-            isNew,
-            grade: {
-              connect: { grade },
-            },
-          },
-        },
-      },
-    },
-    where: { email },
-    // include: { student: { select: { caste, } } },
-    include: {
-      student: true,
-    },
-  });
-
-  if (student === null || !student) {
-    return null;
-  }
-  studentLogger.info({
-    type: "edit",
-    studentToBeEditedEmail: email,
-    newStudentInfo: student.student,
-  });
-  revalidatePath("/admin");
-  return {
-    father_name: student.student?.father_name,
-    mother_name: student.student?.mother_name,
-    gender: student.gender,
-    grade: student.student?.grade_name,
-    isNew: student.student?.isNew,
-    address: student.address,
-    email: student.email,
-    contact: student.contact,
-    fullname: student.fullname,
-    caste: student.student?.caste,
-  };
-}
-export async function updateStudentThroughUserId(
-  userId: string,
+  id: string,
   {
     address,
     caste,
@@ -168,59 +105,33 @@ export async function updateStudentThroughUserId(
     isNew,
     mother_name,
   }: Partial<StudentFields>,
-): Promise<Partial<StudentFields> | null> {
-  const student = await prisma.user.update({
+) {
+  const student = await prisma.student.update({
+    where: { id },
     data: {
+      caste,
+      father_name,
       fullname,
-      address,
-      email,
-      gender,
-      contact,
-      student: {
-        update: {
-          data: {
-            caste,
-            father_name,
-            fullname,
-            mother_name,
-            isNew,
-            grade: {
-              connect: { grade },
-            },
-          },
-        },
-      },
-    },
-    where: { id: userId },
-    // include: { student: { select: { caste, } } },
-    include: {
-      student: true,
+      grade: { connect: { grade } },
+      isNew,
+      mother_name,
+      user: { update: { address, contact, email, gender, fullname } },
     },
   });
 
   if (student === null || !student) {
     return null;
   }
+  // studentIndex.updateDocuments([student], { primaryKey: "id" });
+  studentLogger.info({
+    type: "edit",
+    studentToBeEditedEmail: email,
+    newStudentInfo: student,
+  });
   revalidatePath("/admin");
-  return {
-    father_name: student.student?.father_name,
-    mother_name: student.student?.mother_name,
-    gender: student.gender,
-    grade: student.student?.grade_name,
-    isNew: student.student?.isNew,
-    address: student.address,
-    email: student.email,
-    contact: student.contact,
-    fullname: student.fullname,
-    caste: student.student?.caste,
-  };
 }
 
 export async function deleteStudent(email: string) {
-  // let d = await prisma.student.delete({
-  //   where: { user: { email } },
-  //   include: { user: true },
-  // });
   await prisma.examRecord.deleteMany({ where: { name: { user: { email } } } });
   let e = await prisma.user.delete({
     where: { email },
@@ -228,8 +139,13 @@ export async function deleteStudent(email: string) {
       student: true,
       Comment: true,
       accounts: true,
+      StarredPost: true,
+      posts: true,
+      sessions: true,
     },
   });
+  // studentIndex.deleteDocument(e.student?.id as string);
+  studentLogger.info({ type: "delete", studentInfo: e });
   revalidatePath("/admin");
   return e.student;
 }

@@ -38,6 +38,7 @@ import styles from "./NavigationMobile.module.css";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { MotionButton, MotionNav } from "../Motion";
+import MainButton from "./BottomNavigationButton";
 
 interface NavItem {
   href: string;
@@ -170,6 +171,7 @@ const NavigationMobile = ({ children }: { children: React.ReactNode }) => {
         </NavbarContent>
       </Navbar>
       {children}
+      <MainButton />
       <div className="fixed inset-x-0 bottom-0 z-40 flex flex-row justify-evenly bg-content1">
         {navItems.map(({ href, icon, iconOutline, label }) => (
           <Button

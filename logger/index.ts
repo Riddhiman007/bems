@@ -2,18 +2,32 @@ import { createLogger, transports, format, Container } from "winston";
 import("winston-daily-rotate-file");
 import TransportStream from "winston-transport";
 import prisma from "@/_lib/prisma";
-import { Readable } from "stream";
+import { LogLevel, PrismaClient } from "@prisma/client";
+
 class PrismaTransport extends TransportStream {
-  public log(info: any, next: () => void) {
+  private prisma: PrismaClient;
+  constructor() {
+    super();
+    this.prisma = prisma;
+  }
+  public log(info: Record<string, any>, next: () => void) {
+    const { prisma, emit } = this;
     prisma.log
       .create({
-        data: { name: info["name"], level: info["level"], message: info },
+        data: {
+          name: info.name as string,
+          level: (this.level as LogLevel) || "info",
+          message: info,
+        },
       })
       .then(() => {
-        this.emit("logged");
+        emit("finish");
+      })
+      .catch(() => emit("error"))
+      .finally(() => {
+        emit("close");
+        next();
       });
-
-    next();
   }
 }
 const { colorize, combine, timestamp, json, errors, printf } = format;
@@ -63,6 +77,18 @@ const studentLogger = container.add("studentLogger", {
     new PrismaTransport(),
   ],
 });
+const searchLogger = container.add("searchLogger", {
+  defaultMeta: { name: "searchLogger" },
+  transports: [
+    new transports.File({
+      dirname: "logs",
+      filename: "search.log",
+      format: combine(json(), timestamp()),
+    }),
+    new transports.Console(),
+    new PrismaTransport(),
+  ],
+});
 
 export default container;
-export { studentLogger, logger };
+export { studentLogger, logger, searchLogger };

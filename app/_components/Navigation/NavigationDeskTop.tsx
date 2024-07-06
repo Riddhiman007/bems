@@ -26,6 +26,9 @@ import {
 } from "@mui/icons-material";
 import { MotionButton, MotionSpan, MotionLink } from "../Motion";
 import { BellIcon } from "@heroicons/react/24/outline";
+import { Divider } from "@nextui-org/divider";
+import { SearchIcon, SearchLinearIcon } from "@nextui-org/shared-icons";
+import ShinyButton from "../ui/ShinyButton";
 interface NavbarItemsProp {
   name: string;
   href: string;
@@ -44,27 +47,28 @@ const UserMenuItems = [
 ];
 const NavigationDeskTop = ({ nonce }: { nonce?: string }) => {
   const { isDark, setIsDark } = useDarkMode();
-  const [UserAnchorEl, setUserAnchorEl] = useState<null | HTMLElement>(null);
 
   // get session
   const { data: session } = useSession();
 
   const handleThemeChange = () => setIsDark(!isDark);
-  // ui logic
-  const handleUserMenuOpen = (e: React.MouseEvent<HTMLElement>) => {
-    setUserAnchorEl(e.currentTarget);
-  };
-  const handleUserMenuClose = () => {
-    setUserAnchorEl(null);
-  };
   return (
-    <Navbar nonce={nonce} as="nav">
+    <Navbar nonce={nonce} as="nav" classNames={{ wrapper: "gap-x-80" }}>
       <NavbarBrand
-        className="flex flex-row gap-2"
+        className="flex flex-row justify-center gap-2"
         as={MotionLink}
         href="/"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 1.15 }}
+        // @ts-ignore
+        transition={{
+          scale: {
+            type: "spring",
+            stiffness: 10,
+            damping: 5,
+            mass: 0.1,
+          },
+        }}
       >
         <Image alt="braves icon" src={image} height={50} width={50} />
         <p className="text-2xl font-bold text-content1-foreground">Braves</p>
@@ -73,37 +77,92 @@ const NavigationDeskTop = ({ nonce }: { nonce?: string }) => {
         <div className="flex flex-row gap-4">
           {NavbarItems.map((item) => (
             <NavbarItem
-              whileHover={{ scale: 1.07 }}
-              whileTap={{ scale: 1.1 }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 1.15 }}
               key={item.name}
               as={MotionLink}
               href={item.href}
+              // @ts-ignore
+              transition={{
+                scale: {
+                  type: "spring",
+                  stiffness: 10,
+                  damping: 5,
+                  mass: 0.1,
+                },
+              }}
               className="text-content1-foreground no-underline"
             >
               {item.name.toUpperCase()}
             </NavbarItem>
           ))}
         </div>
-        <div className="flex flex-row gap-4">
-          <NavbarItem className="flex flex-row gap-3">
-            <Button
-              isIconOnly
-              variant="light"
-              className="border-none"
-              as={MotionButton}
-              onPress={handleThemeChange}
-            >
-              {isDark ? (
-                <MoonIcon className="size-7" />
-              ) : (
-                <SunIcon className="size-7 animate-slow-spin" />
-              )}
-            </Button>
-            <Button isIconOnly variant="light" className="border-none">
-              <BellIcon className="size-7" />
-            </Button>
-          </NavbarItem>
-        </div>
+
+        <NavbarItem className="flex flex-row gap-3">
+          <Button
+            isIconOnly
+            variant="light"
+            className="border-none"
+            as={MotionButton}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 1.15 }}
+            // @ts-ignore
+            transition={{
+              scale: {
+                type: "spring",
+                stiffness: 10,
+                damping: 5,
+                mass: 0.1,
+              },
+            }}
+            onPress={handleThemeChange}
+          >
+            {isDark ? (
+              <MoonIcon className="size-7" />
+            ) : (
+              <SunIcon className="size-7 animate-slow-spin" />
+            )}
+          </Button>
+          <Button
+            isIconOnly
+            variant="light"
+            className="border-none"
+            href="/search"
+            as={MotionLink}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 1.15 }}
+            // @ts-ignore
+            transition={{
+              scale: {
+                type: "spring",
+                stiffness: 10,
+                damping: 5,
+                mass: 0.1,
+              },
+            }}
+          >
+            <SearchLinearIcon className="size-6" />
+          </Button>
+          <Button
+            isIconOnly
+            variant="light"
+            className="border-none"
+            as={MotionButton}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 1.15 }}
+            // @ts-ignore
+            transition={{
+              scale: {
+                type: "spring",
+                stiffness: 10,
+                damping: 5,
+                mass: 0.1,
+              },
+            }}
+          >
+            <BellIcon className="size-7" />
+          </Button>
+        </NavbarItem>
 
         {session ? (
           <Dropdown>
@@ -120,8 +179,8 @@ const NavigationDeskTop = ({ nonce }: { nonce?: string }) => {
                 />
               </DropdownTrigger>
             </NavbarItem>
-            <DropdownMenu as="div">
-              <DropdownSection>
+            <DropdownMenu classNames={{ list: "p-0 list-none" }}>
+              <DropdownSection classNames={{ group: "p-0" }}>
                 {UserMenuItems.map((item) => (
                   <DropdownItem
                     key={item.name}
@@ -134,7 +193,8 @@ const NavigationDeskTop = ({ nonce }: { nonce?: string }) => {
                   </DropdownItem>
                 ))}
               </DropdownSection>
-              <DropdownSection>
+
+              <DropdownSection classNames={{ group: "p-0" }}>
                 <DropdownItem
                   as={MotionLink}
                   key="logOut"
@@ -147,16 +207,7 @@ const NavigationDeskTop = ({ nonce }: { nonce?: string }) => {
             </DropdownMenu>
           </Dropdown>
         ) : (
-          <Button
-            href="/auth/login"
-            className="rounded-md bg-success-300 px-4 py-2 capitalize text-success-900 no-underline hover:bg-success-200 active:bg-success-50"
-            autoCapitalize="all"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 1.2 }}
-            as={MotionLink}
-          >
-            Login
-          </Button>
+          <ShinyButton href="/auth/login">Login</ShinyButton>
         )}
       </NavbarContent>
     </Navbar>

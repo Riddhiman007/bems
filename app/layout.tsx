@@ -12,16 +12,15 @@ export const metadata: Metadata = {
   title: "Braves Foundation",
   description: "Braves Foundation",
 };
+interface Props {
+  children: React.ReactNode;
+  modal: React.ReactNode;
+}
+
 // export const experimental_ppr = true;
 // export const runtime = "nodejs";
 
-export default async function RootLayout({
-  children,
-  modal,
-}: {
-  children: React.ReactNode;
-  modal: React.ReactNode;
-}) {
+export default async function RootLayout({ children, modal }: Props) {
   const nonce = headers().get("x-nonce");
   const session = await auth();
 
@@ -30,8 +29,8 @@ export default async function RootLayout({
       <body nonce={nonce ? nonce : undefined} className="m-0">
         <Context session={session} nonce={nonce ? nonce : undefined}>
           <Navigation nonce={nonce ? nonce : undefined}>
-            {modal}
             {children}
+            {modal}
           </Navigation>
         </Context>
         <Script

@@ -240,3 +240,8 @@ yarn.lock
 
 # turbo
 .turbo
+
+# meilisearch exe files
+meilisearch
+data.ms
+dumps

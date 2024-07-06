@@ -78,6 +78,7 @@ export default function EnrollComponent({ onClose }: { onClose: () => void }) {
           <div className="flex flex-row justify-between">
             <Button
               variant="bordered"
+              isDisabled={isSubmitting}
               color="danger"
               type="button"
               onClick={handleReturnButtonClick}

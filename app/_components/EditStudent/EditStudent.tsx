@@ -16,11 +16,11 @@ const steps: ItemProps[] = [
 ];
 
 export default function EditStudent({
-  email,
+  id,
   defaultValues,
   onClose,
 }: {
-  email: string;
+  id: string;
   defaultValues?: Partial<StudentFields>;
   onClose: () => void;
 }) {
@@ -79,7 +79,7 @@ export default function EditStudent({
 
   const onSubmit: SubmitHandler<StudentFields> = async (data) => {
     console.log(data);
-    await updateStudent(email, data);
+    await updateStudent(id, data);
     setActiveStep((lastStep) => lastStep + 1);
   };
   return (
