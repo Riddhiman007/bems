@@ -1,6 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "pipeline": {
+  "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "env": ["MONGODB_URI", "EMAIL_HASH", "EMAIL_SERVER", "AUTH_SECRET"],
