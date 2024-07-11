@@ -207,7 +207,9 @@ const NavigationDeskTop = ({ nonce }: { nonce?: string }) => {
             </DropdownMenu>
           </Dropdown>
         ) : (
-          <ShinyButton href="/auth/login">Login</ShinyButton>
+          <NavbarItem>
+            <ShinyButton href="/auth/login">Login</ShinyButton>
+          </NavbarItem>
         )}
       </NavbarContent>
     </Navbar>

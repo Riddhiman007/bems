@@ -39,6 +39,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { MotionButton, MotionNav } from "../Motion";
 import MainButton from "./BottomNavigationButton";
+import ShinyButton from "../ui/ShinyButton";
 
 interface NavItem {
   href: string;
@@ -156,16 +157,7 @@ const NavigationMobile = ({ children }: { children: React.ReactNode }) => {
           </NavbarItem>
           {session === null && (
             <NavbarItem>
-              <Button
-                href="/auth/login"
-                className="rounded-md bg-success-300 px-4 py-2 capitalize text-success-900 no-underline hover:bg-success-200 active:bg-success-50"
-                autoCapitalize="all"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 1.2 }}
-                as={MotionLink}
-              >
-                Login
-              </Button>
+              <ShinyButton href="/auth/login">Login</ShinyButton>
             </NavbarItem>
           )}
         </NavbarContent>
