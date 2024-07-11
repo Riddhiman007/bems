@@ -3,7 +3,7 @@
 import { $Enums, Role } from "@prisma/client";
 import prisma, { StudentFields } from "..";
 import { revalidatePath } from "next/cache";
-import { studentLogger } from "@/logger";
+// import { studentLogger } from "@/logger";
 import { StudentRowType } from "@/admin/@students/components";
 // import { studentIndex } from "@/_lib/search";
 
@@ -45,7 +45,7 @@ export async function createNewStudent({
     include: { user: true },
   });
   // studentIndex.addDocuments([student], { primaryKey: "id" });
-  studentLogger.info({ type: "create", student: student });
+  // studentLogger.info({ type: "create", student: student });
 
   revalidatePath("/admin", "page");
   return {
@@ -123,11 +123,11 @@ export async function updateStudent(
     return null;
   }
   // studentIndex.updateDocuments([student], { primaryKey: "id" });
-  studentLogger.info({
-    type: "edit",
-    studentToBeEditedEmail: email,
-    newStudentInfo: student,
-  });
+  // studentLogger.info({
+  //   type: "edit",
+  //   studentToBeEditedEmail: email,
+  //   newStudentInfo: student,
+  // });
   revalidatePath("/admin");
 }
 
@@ -145,7 +145,7 @@ export async function deleteStudent(email: string) {
     },
   });
   // studentIndex.deleteDocument(e.student?.id as string);
-  studentLogger.info({ type: "delete", studentInfo: e });
+  // studentLogger.info({ type: "delete", studentInfo: e });
   revalidatePath("/admin");
   return e.student;
 }
