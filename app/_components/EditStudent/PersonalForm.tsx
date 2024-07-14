@@ -1,20 +1,19 @@
 import {
-  StudentFields,
-  allGrades,
-  fetchStudentByEmail,
+  StudentInput,
   middleGrades,
   prepGrades,
   primaryGrades,
   secondaryGrades,
-} from "@/_lib/prisma";
+} from "@/_utils/types";
 import { AcademicCapIcon } from "@heroicons/react/24/solid";
 import { Email, Face, Face2, Phone } from "@mui/icons-material";
 import { Input, Select } from "@/_components/Forms";
 import { SelectItem, SelectSection } from "@nextui-org/select";
-import React, { useState } from "react";
+import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
+import { fetchStudentByEmail } from "@/_lib/prisma";
 export default function PersonalForm({ formType }: { formType: "new" | "update" }) {
-  const { control } = useFormContext<StudentFields>();
+  const { control } = useFormContext<StudentInput>();
   return (
     <div className="flex flex-col gap-6">
       <Controller

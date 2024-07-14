@@ -2,9 +2,10 @@ import React, { useCallback, useRef, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import MotionButton from "@/_components/Motion/MotionButton";
 import { PersonalForm, ParentalForm } from "@/_components/EditStudent";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { StudentFieldValidator, StudentFields, updateStudent } from "@/_lib/prisma";
+import { valibotResolver } from "@hookform/resolvers/valibot";
+import { updateStudent } from "@/_lib/prisma";
+import { StudentFieldValidator } from "@/_utils/schema";
+import { StudentInput } from "@/_utils/types";
 import Stepper, { ItemProps } from "@/_components/Stepper";
 import { Button } from "@nextui-org/button";
 import EditComplete from "./EditComplete";
@@ -21,15 +22,15 @@ export default function EditStudent({
   onClose,
 }: {
   id: string;
-  defaultValues?: Partial<StudentFields>;
+  defaultValues?: Partial<StudentInput>;
   onClose: () => void;
 }) {
   const editStudentForm = useRef<HTMLFormElement | null>(null);
   const [activeStep, setActiveStep] = useState(0);
-  const methods = useForm<StudentFields>({
+  const methods = useForm<StudentInput>({
     reValidateMode: "onBlur",
     mode: "all",
-    resolver: zodResolver(StudentFieldValidator),
+    resolver: valibotResolver(StudentFieldValidator),
     defaultValues,
   });
 
@@ -77,7 +78,7 @@ export default function EditStudent({
     } else setActiveStep((lastStep) => lastStep - 1);
   }, [isFirstStep, allStepsCompleted]);
 
-  const onSubmit: SubmitHandler<StudentFields> = async (data) => {
+  const onSubmit: SubmitHandler<StudentInput> = async (data) => {
     console.log(data);
     await updateStudent(id, data);
     setActiveStep((lastStep) => lastStep + 1);

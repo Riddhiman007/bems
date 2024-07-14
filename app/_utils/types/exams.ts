@@ -1,30 +1,17 @@
-import { DefaultExamMarks } from "@/_utils/types";
-import { ExamSubjectsList, GradeType, PrismaClient } from "@prisma/client";
+import { ExamSubjectsList, ExamType } from "@prisma/client";
 
-const prismaClientSingleton: () => PrismaClient = () => new PrismaClient();
+export const ExamTypeList = Object.values(ExamType);
 
-declare global {
-  var prisma: undefined | ReturnType<typeof prismaClientSingleton>;
-}
-
-const prisma = globalThis.prisma ?? prismaClientSingleton();
-export default prisma;
-
-if (process.env.NODE_ENV !== "production") globalThis.prisma = prisma;
-
-export * from "./actions";
-// export * from "./helpers";
-
-export const MainSubjects: ExamSubjectsList[] = [
-  "English",
-  "Hindi",
-  "Marathi",
-  "Mathematics",
-  "SST",
-  "Science",
-];
-
-export const allGrades = Object.values(GradeType);
+export type DefaultExamMarks = {
+  exam_type: ExamType;
+  primary_main_sub_marks?: number;
+  primary_optional_sub_marks?: number;
+  middle_main_sub_marks?: number;
+  middle_optional_sub_marks?: number;
+  secondary_main_sub_marks?: number;
+  secondary_optional_sub_marks?: number;
+  pre_primary_sub_marks?: number;
+};
 
 export const exam_defaults: DefaultExamMarks[] = [
   {
@@ -77,7 +64,13 @@ export const exam_defaults: DefaultExamMarks[] = [
   },
 ];
 
-export const prepGrades: GradeType[] = ["nursery", "jr", "sr"];
-export const primaryGrades: GradeType[] = ["I", "II", "III", "IV"];
-export const middleGrades: GradeType[] = ["V", "VI", "VII"];
-export const secondaryGrades: GradeType[] = ["VIII", "IX", "X"];
+export const MainSubject: ExamSubjectsList[] = [
+  "English",
+  "Hindi",
+  "Marathi",
+  "Mathematics",
+  "SST",
+  "Science",
+];
+
+export const allExamSubjects = Object.values(ExamSubjectsList);

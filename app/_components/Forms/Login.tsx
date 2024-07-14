@@ -1,26 +1,17 @@
 "use client";
-import React, { useState } from "react";
-import AnimatePresence from "../Motion/AnimatePresence";
+import React from "react";
 
 // hooks
 import { Controller, SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import { loginByEmail } from "@/_lib/actions";
 
 import Input from "./Input";
-import { Email } from "@mui/icons-material";
 import { CancelButton } from "../ui";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nextui-org/button";
 import { MotionButton } from "../Motion";
-
-export const loginSchema = z.object({
-  email: z
-    .string({ required_error: "Please enter your email address." })
-    .email({ message: "Please enter your email address correctly." }),
-});
-
-export type LoginValidator = z.infer<typeof loginSchema>;
+import { LoginInput } from "@/_utils/types";
+import { valibotResolver } from "@hookform/resolvers/valibot";
+import { LoginValidator } from "@/_utils/schema";
 
 interface Props {
   /**
@@ -34,15 +25,15 @@ export default function LoginForm({ isModal }: Props) {
     control,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<LoginValidator>({
+  } = useForm<LoginInput>({
     mode: "all",
-    resolver: zodResolver(loginSchema),
+    resolver: valibotResolver(LoginValidator),
   });
-  const onSubmit: SubmitHandler<LoginValidator> = async (data) => {
+  const onSubmit: SubmitHandler<LoginInput> = async (data) => {
     await loginByEmail(data.email);
   };
 
-  const onError: SubmitErrorHandler<LoginValidator> = async (data) => console.log(data);
+  const onError: SubmitErrorHandler<LoginInput> = async (data) => console.log(data);
 
   return (
     <form className="flex flex-col gap-7" onSubmit={handleSubmit(onSubmit, onError)}>

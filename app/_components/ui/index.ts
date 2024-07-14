@@ -4,6 +4,7 @@ export { default as ErrorHandler } from "./ErrorHandler";
 export { default as ExplosionImage } from "./ExplosionImage";
 export { default as ParticlesContainer } from "./ParticlesContainer";
 export { default as SignoutButton } from "./SignoutButton";
+export { default as EmailTemplate } from "./EmailTemplate";
 export { default as TypeWriter } from "./TypeWriter";
 export * from "./GlowComponent";
 export * from "./tracing-beam";

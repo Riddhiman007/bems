@@ -1,6 +1,7 @@
 "use server";
 import { ExamSubjectsList, ExamType, GradeType } from "@prisma/client";
-import prisma, { MainSubjects } from "..";
+import prisma from "..";
+import { MainSubjects } from "..";
 
 export async function createNewExamRecordForGrade(
   examType: ExamType,

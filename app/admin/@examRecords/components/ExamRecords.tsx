@@ -1,15 +1,6 @@
 "use client";
-import { ExamTypeList, fetchAllExams } from "@/_lib/prisma";
-import {
-  CheckCircle,
-  CheckCircleOutline,
-  CancelOutlined,
-  RadioButtonUncheckedOutlined,
-  Cancel,
-} from "@mui/icons-material";
+import { fetchAllExams } from "@/_lib/prisma";
 import { TableCell } from "@mui/material";
-import { GridColDef, GridRowModel, GridValidRowModel } from "@mui/x-data-grid";
-import { DataGrid } from "@mui/x-data-grid";
 import {
   Table,
   TableBody,

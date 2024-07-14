@@ -14,21 +14,21 @@ import React, { useState } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import MotionMuiButton from "@/_components/Motion/MotionMuiButton";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { INSERT_YOUTUBE_VIDEO } from "../../YoutubePlugin";
+import * as v from "valibot";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 
-const formProps = z.object({
-  ytLink: z.string({ required_error: "Please enter a youtube link." }),
+const formProps = v.object({
+  ytLink: v.string("Please enter a youtube link."),
 });
-type FormProps = z.infer<typeof formProps>;
+type FormProps = v.InferInput<typeof formProps>;
 
 export default function Youtube() {
   const [editor] = useLexicalComposerContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { control, handleSubmit, clearErrors, reset } = useForm<FormProps>({
     mode: "all",
-    resolver: zodResolver(formProps),
+    resolver: valibotResolver(formProps),
   });
 
   const handleModalOpen = () => setIsModalOpen(true);

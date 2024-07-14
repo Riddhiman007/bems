@@ -1,6 +1,5 @@
 import NextAuth from "next-auth";
 import EmailProvider from "next-auth/providers/nodemailer";
-import Resend from "next-auth/providers/resend";
 import prisma from "../prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { User as PrismaUser } from "@prisma/client";
@@ -14,7 +13,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       server: process.env.EMAIL_SERVER,
       secret: process.env.EMAIL_HASH,
     }),
-    Resend,
   ],
   pages: {
     signIn: "/auth/login",

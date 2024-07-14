@@ -7,7 +7,7 @@ import {
   prepGrades,
   primaryGrades,
   secondaryGrades,
-} from "@/_lib/prisma";
+} from "@/_utils/types";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { ExamType, GradeType } from "@prisma/client";
 import React, { useEffect, useMemo, useState } from "react";

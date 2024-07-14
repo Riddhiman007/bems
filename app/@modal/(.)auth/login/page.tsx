@@ -1,36 +1,11 @@
 "use client";
 import { ModalBody, ModalContent, ModalHeader } from "@nextui-org/modal";
-import { Input, LoginForm, LoginValidator, loginSchema } from "@/_components/Forms";
+import { LoginForm } from "@/_components/Forms";
 
 import React, { useState } from "react";
 import CardBackgroundForLightMode from "@/_components/ui/CardBackgroundForLightMode";
-import { SubmitHandler, useController, useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Email } from "@mui/icons-material";
-import { Button } from "@nextui-org/button";
-import { MotionButton } from "@/_components/Motion";
-import { loginByEmail } from "@/_lib/actions";
-import { useRouter } from "next/navigation";
 
 export default function ModalLoginPage() {
-  const router = useRouter();
-
-  const {
-    handleSubmit,
-    control,
-    formState: { isSubmitting },
-  } = useForm<LoginValidator>({
-    resolver: zodResolver(loginSchema),
-  });
-  const {
-    field: { disabled, ...other },
-    fieldState: { invalid, isDirty, isTouched, isValidating, error },
-  } = useController({ control, name: "email" });
-
-  const onSubmit: SubmitHandler<LoginValidator> = async ({ email }) => {
-    await loginByEmail(email);
-  };
   return (
     <ModalContent>
       {(onClose) => (

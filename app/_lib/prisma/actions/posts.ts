@@ -1,10 +1,10 @@
 "use server";
 import { auth } from "@/_lib/auth";
-import prisma, { PostFields } from "..";
-import { Session } from "next-auth";
+import prisma from "..";
 import { redirect } from "next/navigation";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { SerializedEditorState } from "lexical";
+import { PostInput } from "@/_utils/types";
 
 export async function createPost({
   category,
@@ -12,7 +12,7 @@ export async function createPost({
   subCategory,
   title,
   desc,
-}: PostFields) {
+}: PostInput) {
   const session = await auth();
   if (session) {
     const { user } = session;

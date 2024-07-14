@@ -1,10 +1,11 @@
 "use server";
 
 import { $Enums, Role } from "@prisma/client";
-import prisma, { StudentFields } from "..";
+import prisma from "..";
 import { revalidatePath } from "next/cache";
 // import { studentLogger } from "@/logger";
 import { StudentRowType } from "@/admin/@students/components";
+import { StudentInput } from "@/_utils/types";
 // import { studentIndex } from "@/_lib/search";
 
 export async function createNewStudent({
@@ -17,7 +18,7 @@ export async function createNewStudent({
   gender,
   caste,
   grade,
-}: StudentFields) {
+}: StudentInput) {
   const student = await prisma.student.create({
     data: {
       caste,
@@ -104,7 +105,7 @@ export async function updateStudent(
     grade,
     isNew,
     mother_name,
-  }: Partial<StudentFields>,
+  }: Partial<StudentInput>,
 ) {
   const student = await prisma.student.update({
     where: { id },

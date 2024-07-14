@@ -1,11 +1,11 @@
-import { StudentFields, allCastes } from "@/_lib/prisma";
+import { StudentInput, allCastes } from "@/_utils/types";
 import { Cast, Face, Face2, LocationCity } from "@mui/icons-material";
 import { Input, Select } from "@/_components/Forms";
 import { SelectItem } from "@nextui-org/select";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 export default function ParentalForm() {
-  const { control } = useFormContext<StudentFields>();
+  const { control } = useFormContext<StudentInput>();
 
   return (
     <div className="flex flex-col gap-4">

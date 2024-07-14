@@ -1,5 +1,5 @@
 "use client";
-import { StudentFields, StudentFieldsWithId, deleteStudent } from "@/_lib/prisma";
+import { deleteStudent } from "@/_lib/prisma";
 import {
   SortDescriptor,
   Table,
@@ -32,6 +32,7 @@ import dynamic from "next/dynamic";
 import { EditStudentLoadingState } from "@/_components/EditStudent";
 import { createPortal } from "react-dom";
 import { XCircleIcon } from "@heroicons/react/24/solid";
+import { StudentOutputWithId } from "@/_utils/types";
 const EditStudent = dynamic(
   () => import("@/_components/EditStudent").then((mod) => mod.EditStudent),
   {
@@ -64,7 +65,7 @@ export default function StudentTable({
     direction: "ascending",
   });
 
-  const studentToBeEdited = useRef<StudentFieldsWithId>();
+  const studentToBeEdited = useRef<StudentOutputWithId>();
   const studentToBeDeleted = useRef<{ email: string; fullname: string }>();
   const router = useRouter();
   const {

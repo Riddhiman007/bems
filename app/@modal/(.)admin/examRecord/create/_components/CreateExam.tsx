@@ -1,33 +1,17 @@
 "use client";
 import MotionMuiButton from "@/_components/Motion/MotionMuiButton";
+import { createNewExam } from "@/_lib/prisma";
 import {
-  ExamTypeList,
-  GradeClass,
-  allGrades,
-  createNewExam,
-  exam_defaults,
-  isExamPresent,
-  middleGrades,
-  prepGrades,
-  primaryGrades,
-  secondaryGrades,
-} from "@/_lib/prisma";
-import {
-  Divider,
-  MenuItem,
   Step,
   StepConnector,
   StepLabel,
   Stepper,
-  TextField,
-  Typography,
   stepConnectorClasses,
   stepIconClasses,
 } from "@mui/material";
-import { DataGrid, GridColDef, GridValidRowModel } from "@mui/x-data-grid";
-import { ExamType, GradeType } from "@prisma/client";
-import React, { useEffect, useMemo, useState, createContext, useContext } from "react";
-import { Controller, FormProvider, useForm } from "react-hook-form";
+import { GradeType } from "@prisma/client";
+import React, { useState, createContext, useContext } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 import BasicInfo from "./BasicInfo";
 import MarksChart from "./MarksChart";
 import TimeTableChart from "./TimeTableChart";

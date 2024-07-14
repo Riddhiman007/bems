@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useMemo } from "react";
 
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/navbar";
 import { Button } from "@nextui-org/button";
@@ -55,45 +55,35 @@ const NavigationMobile = ({ children }: { children: React.ReactNode }) => {
   const { data: session } = useSession();
 
   const handleThemeChange = () => setIsDark(!isDark);
+  const navItemClassName = useMemo(
+    () => "size-20 text-content2-foreground active:scale-110",
+    [],
+  );
   const navItems: Array<NavItem> = [
     {
       label: "Home",
       href: "/",
-      icon: <HomeIcon className="size-10 text-content2-foreground active:scale-110 " />,
-      iconOutline: (
-        <HomeIconOutline className="size-10 text-content2-foreground active:scale-110" />
-      ),
+      icon: <HomeIcon className={navItemClassName} />,
+      iconOutline: <HomeIconOutline className={navItemClassName} />,
     },
 
     {
       label: "Events",
       href: "/events",
-      icon: (
-        <CalendarIcon className="size-10 text-content2-foreground active:scale-110" />
-      ),
-      iconOutline: (
-        <CalenderIconOutline className="size-10 text-content2-foreground active:scale-110" />
-      ),
+      icon: <CalendarIcon className={navItemClassName} />,
+      iconOutline: <CalenderIconOutline className={navItemClassName} />,
     },
     {
       label: "Posts",
       href: "/posts",
-      icon: (
-        <ChatBubbleLeftIcon className="size-10 text-content2-foreground active:scale-110" />
-      ),
-      iconOutline: (
-        <ChatBubbleLeftIconOutline className="size-10 text-content2-foreground active:scale-110" />
-      ),
+      icon: <ChatBubbleLeftIcon className={navItemClassName} />,
+      iconOutline: <ChatBubbleLeftIconOutline className={navItemClassName} />,
     },
     {
       label: "Me",
       href: "/me",
-      icon: (
-        <UserCircleIcon className="size-10 text-content2-foreground active:scale-110" />
-      ),
-      iconOutline: (
-        <UserCircleIconOutline className="size-10 text-content2-foreground active:scale-110" />
-      ),
+      icon: <UserCircleIcon className={navItemClassName} />,
+      iconOutline: <UserCircleIconOutline className={navItemClassName} />,
     },
   ];
 

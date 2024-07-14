@@ -3,14 +3,9 @@ import { MenuItem, TextField, Typography } from "@mui/material";
 import React, { useMemo, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { FormInput } from ".";
-import {
-  ExamTypeList,
-  allGrades,
-  isExamPresent,
-  middleGrades,
-  prepGrades,
-  primaryGrades,
-} from "@/_lib/prisma";
+import { isExamPresent } from "@/_lib/prisma";
+import { allGrades, middleGrades, prepGrades, primaryGrades } from "@/_lib/prisma";
+import { ExamTypeList } from "@/_utils/types";
 import { useExamContext } from "./CreateExam";
 import { ExamType, GradeType } from "@prisma/client";
 

@@ -1,6 +1,5 @@
 "use client";
-import { allGrades, getSubjectsAndGrades } from "@/_lib/prisma";
-import { DataGrid, GridColDef, GridRowsProp, GridValidRowModel } from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { $Enums, ExamType } from "@prisma/client";
 import React, { useMemo } from "react";
 import { processRowUpdate } from "./InsertMarksBackend";

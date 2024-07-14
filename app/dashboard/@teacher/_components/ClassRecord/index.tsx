@@ -1,5 +1,5 @@
 "use client";
-import { allExamSubjects } from "@/_lib/prisma";
+import { allExamSubjects } from "@/_utils/types";
 import { DataGrid, GridColDef, GridValidRowModel } from "@mui/x-data-grid";
 import React, { useMemo } from "react";
 import { number } from "zod";

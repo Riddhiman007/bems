@@ -10,5 +10,5 @@ export async function logOut() {
 }
 
 export async function loginByEmail(email: string) {
-  await signIn("resend", { email, redirect: true, redirectTo: "/dashboard" });
+  await signIn("nodemailer", { email, redirect: true, redirectTo: "/dashboard" });
 }

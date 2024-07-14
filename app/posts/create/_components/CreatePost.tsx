@@ -1,17 +1,8 @@
 "use client";
 import Editor from "@/_components/Editor";
 import { MotionButton } from "@/_components/Motion";
-import { UnauthenticatedError } from "@/errors";
-import {
-  Category,
-  InternalPostFields,
-  PostFieldsValidator,
-  SubCategory,
-  category,
-  createPost,
-} from "@/_lib/prisma";
-
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Category, InternalPostInput, SubCategory, category } from "@/_utils/types";
+import { createPost } from "@/_lib/prisma";
 import { AutocompleteItem } from "@nextui-org/autocomplete";
 import { Autocomplete } from "@/_components/Forms";
 import { Button } from "@nextui-org/button";
@@ -21,6 +12,8 @@ import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { valibotResolver } from "@hookform/resolvers/valibot";
+import { PostFieldsValidator } from "@/_utils/schema";
 
 export default function CreatePost({ session }: { session: Session }) {
   const router = useRouter();
@@ -32,9 +25,9 @@ export default function CreatePost({ session }: { session: Session }) {
     getValues,
     formState: { isSubmitting, isSubmitSuccessful },
     watch,
-  } = useForm<InternalPostFields>({
+  } = useForm<InternalPostInput>({
     mode: "all",
-    resolver: zodResolver(PostFieldsValidator),
+    resolver: valibotResolver(PostFieldsValidator),
   });
   const currentCategory = getValues("category");
   const editorRef = useRef<SerializedEditorState>();
@@ -48,7 +41,7 @@ export default function CreatePost({ session }: { session: Session }) {
     "Social Science": ["Economics", "Geography", "Politics"],
     Literature: ["Grammar"],
   };
-  const onSubmit: SubmitHandler<InternalPostFields> = async (data) => {
+  const onSubmit: SubmitHandler<InternalPostInput> = async (data) => {
     console.log(data);
     console.log(editorRef.current);
     if (!(editorRef.current === undefined)) {
@@ -204,7 +197,6 @@ export default function CreatePost({ session }: { session: Session }) {
         )}
       />
 
-    
       <Editor
         onChange={editorOnChange}
         error={Boolean(editorErr)}

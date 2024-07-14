@@ -4,10 +4,12 @@ import MotionButton from "@/_components/Motion/MotionButton";
 import { useRouter } from "next/navigation";
 import { PersonalForm, ParentalForm } from "@/_components/EditStudent";
 import Done from "./Done";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { StudentFieldValidator, StudentFields, createNewStudent } from "@/_lib/prisma";
+import { createNewStudent } from "@/_lib/prisma";
 import Stepper, { ItemProps } from "@/_components/Stepper";
 import { Button } from "@nextui-org/button";
+import { StudentInput } from "@/_utils/types";
+import { StudentFieldValidator } from "@/_utils/schema";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 
 const steps: ItemProps[] = [
   { label: "Personal details", component: <PersonalForm formType="new" /> },
@@ -19,10 +21,10 @@ export default function EnrollComponent({ onClose }: { onClose: () => void }) {
   const [activeStep, setActiveStep] = useState(0);
   const enrollForm = useRef<HTMLFormElement | null>(null);
   const router = useRouter();
-  const methods = useForm<StudentFields>({
+  const methods = useForm<StudentInput>({
     reValidateMode: "onBlur",
     mode: "all",
-    resolver: zodResolver(StudentFieldValidator),
+    resolver: valibotResolver(StudentFieldValidator),
   });
 
   const {
@@ -66,7 +68,7 @@ export default function EnrollComponent({ onClose }: { onClose: () => void }) {
     } else setActiveStep((lastStep) => lastStep - 1);
   }, [isFirstStep, router, allStepsCompleted]);
 
-  const onSubmit = useCallback<SubmitHandler<StudentFields>>(async (data) => {
+  const onSubmit = useCallback<SubmitHandler<StudentInput>>(async (data) => {
     console.log(data);
     await createNewStudent(data);
     setActiveStep((lastStep) => lastStep + 1);

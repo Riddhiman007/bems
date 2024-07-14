@@ -1,25 +1,20 @@
 import MotionMuiButton from "@/_components/Motion/MotionMuiButton";
 import { auth } from "@/_lib/auth";
 import {
-  allExamSubjects,
   fetchExamRecordsOfParticularGrade,
   fetchIncompleteExam,
-  fetchStudentNameOfParticularGrade,
   getExamSubjectsAndGrades,
-  getSubjectsAndGrades,
   getTeacher,
 } from "@/_lib/prisma";
+import { allExamSubjects } from "@/_utils/types";
 import {
   Avatar,
-  Button,
   Card,
   CardContent,
   CardMedia,
   Container,
-  Divider,
   Typography,
 } from "@mui/material";
-import { ExamSubjectsList } from "@prisma/client";
 import dynamic from "next/dynamic";
 import React from "react";
 

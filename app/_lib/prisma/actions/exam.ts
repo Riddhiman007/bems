@@ -1,16 +1,9 @@
 "use server";
 
-import { ExamType, Grade, GradeType, Student } from "@prisma/client";
-import prisma, {
-  DefaultExamMarks,
-  allGrades,
-  primaryGrades,
-  middleGrades,
-  secondaryGrades,
-  exam_defaults as defaults,
-  GradeClass,
-} from "@/_lib/prisma";
-
+import { ExamType, GradeType } from "@prisma/client";
+import { DefaultExamMarks, GradeClass } from "@/_utils/types";
+import { primaryGrades, middleGrades, secondaryGrades } from "..";
+import prisma, { allGrades, exam_defaults as defaults } from "@/_lib/prisma";
 interface ExamProps extends DefaultExamMarks {
   fromGrade: GradeType;
   toGrade: GradeType;

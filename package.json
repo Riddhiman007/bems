@@ -77,6 +77,8 @@
     "@react-aria/interactions": "^3.21.3",
     "@react-aria/utils": "^3.24.1",
     "@react-aria/visually-hidden": "^3.8.12",
+    "@react-email/components": "^0.0.21",
+    "@react-email/render": "^0.0.16",
     "@react-stately/data": "^3.11.2",
     "@react-types/shared": "^3.23.1",
     "@tsparticles/engine": "^3.3.0",
@@ -96,7 +98,7 @@
     "lexical": "^0.16.0",
     "meilisearch": "^0.40.0",
     "next": "14.2.4",
-    "next-auth": "^5.0.0-beta.15",
+    "next-auth": "5.0.0-beta.19",
     "next-themes": "^0.2.1",
     "nodemailer": "^6.9.7",
     "react": "18.3.1",
@@ -109,11 +111,10 @@
     "tailwind-merge": "^2.3.0",
     "tsparticles": "^3.0.2",
     "typescript": "^5.3.3",
+    "valibot": "^0.36.0",
     "winston": "^3.13.0",
     "winston-daily-rotate-file": "^5.0.0",
-    "winston-transport": "^4.7.0",
-    "zod": "^3.22.4",
-    "zod-prisma-types": "^3.1.6"
+    "winston-transport": "^4.7.0"
   },
   "packageManager": "pnpm@9.3.0"
 }
