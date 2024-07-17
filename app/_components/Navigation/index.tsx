@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import NavigationMobile from "./NavigationMobile";
 import NavigationDeskTop from "./NavigationDeskTop";
 import { useIsMobile } from "@nextui-org/use-is-mobile";

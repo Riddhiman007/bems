@@ -38,7 +38,7 @@ import styles from "./NavigationMobile.module.css";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { MotionButton, MotionNav } from "../Motion";
-import MainButton from "./BottomNavigationButton";
+import CircularNavigation from "./CircularNavigation";
 import ShinyButton from "../ui/ShinyButton";
 
 interface NavItem {
@@ -87,26 +87,6 @@ const NavigationMobile = ({ children }: { children: React.ReactNode }) => {
     },
   ];
 
-  const speedDialItems = [
-    {
-      title: "logout",
-      href: "/auth/logout",
-      icon: <LogoutOutlined />,
-      idx: "[--i:1]",
-    },
-    {
-      title: "my posts",
-      href: "/posts",
-      icon: <ChatBubbleLeftIconOutline className="size-7" />,
-      idx: "[--i:2]",
-    },
-    {
-      title: "Dashboard",
-      href: "/dashboard",
-      icon: <DashboardOutlined />,
-      idx: "[--i:3]",
-    },
-  ];
   return (
     <>
       <Navbar as="nav">
@@ -153,7 +133,7 @@ const NavigationMobile = ({ children }: { children: React.ReactNode }) => {
         </NavbarContent>
       </Navbar>
       {children}
-      <MainButton />
+      <CircularNavigation />
       <div className="fixed inset-x-0 bottom-0 z-40 flex flex-row justify-evenly bg-content1">
         {navItems.map(({ href, icon, iconOutline, label }) => (
           <Button
@@ -161,7 +141,8 @@ const NavigationMobile = ({ children }: { children: React.ReactNode }) => {
             isIconOnly
             href={href}
             as={MotionLink}
-            className="border-none bg-transparent px-4"
+            className="size-6 border-none bg-transparent px-4"
+            size="lg"
           >
             {currentRoute === href ? icon : iconOutline}
           </Button>

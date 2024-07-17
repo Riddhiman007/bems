@@ -40,12 +40,13 @@ export default async function RootLayout({ children, modal }: Props) {
         >{`const root = document.documentElement;
 const theme = localStorage.getItem("theme");
 if (theme === null) {
-  const query = window.matchMedia("(prefers-color-scheme:dark)");
-  if (query.matches) {
-    localStorage.setItem("theme", "dark");
-  } else {
-    localStorage.setItem("theme", "light");
-  }
+  // const query = window.matchMedia("(prefers-color-scheme:dark)");
+  // if (query.matches) {
+  //   localStorage.setItem("theme", "dark");
+  // } else {
+  //   localStorage.setItem("theme", "light");
+  // }
+  localStorage.setItem("theme", "dark");
 } else if (theme === "dark") {
   root.classList.add("dark");
 } else {

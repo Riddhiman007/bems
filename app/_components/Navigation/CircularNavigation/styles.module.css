@@ -1,0 +1,26 @@
+.menu {
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 200px;
+}
+.active {
+}
+.trigger {
+}
+
+.menu-item {
+  position: absolute;
+  transform-origin: 100px;
+  left: 0;
+  transition: 0.5s;
+  transition-delay: calc(0.1s * var(--i));
+  transform: rotate(0deg) translateX(85px);
+}
+
+.menu.active .menu-item {
+  transform: rotate(calc(180deg / 4 * var(--i)));
+}
+.menu .menu-item svg {
+  transform: rotate(calc(180deg / -4 * var(--i)));
+}

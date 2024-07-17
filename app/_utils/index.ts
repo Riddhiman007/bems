@@ -1,2 +1,2 @@
 export * from "./err";
-export { cn } from "@nextui-org/system";
+export { cn } from "@nextui-org/theme";

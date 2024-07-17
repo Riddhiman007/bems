@@ -41,6 +41,7 @@
     "app/_components/Icons/EyeIcon.jsx",
     "app/_components/Icons/EditIcon.jsx",
     "app/_components/Icons/DeleteIcon.jsx",
+    "app/_components/Navigation/CircularNavigation/index.tsx",
   ],
   "exclude": [
     "node_modules"
