@@ -10,7 +10,7 @@
 }
 
 .menu-item {
-  position: absolute;
+  position: absolute !important;
   transform-origin: 100px;
   left: 0;
   transition: 0.5s;
@@ -24,3 +24,4 @@
 .menu .menu-item svg {
   transform: rotate(calc(180deg / -4 * var(--i)));
 }
+ 
