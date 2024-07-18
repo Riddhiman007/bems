@@ -73,10 +73,10 @@ export default function CircularNavigation() {
           styles.trigger,
         )}
         onPress={handleTrigger}
-        drag
-        dragConstraints={{ top: 100, left: 100, right: 100, bottom: 100 }}
-        onDragStart={startTrigger}
-        onDragEnd={endTrigger}
+        // drag
+        // dragConstraints={{ top: 100, left: 100, right: 100, bottom: 100 }}
+        // onDragStart={startTrigger}
+        // onDragEnd={endTrigger}
       >
         <Add className="size-12 text-white" />
       </Button>

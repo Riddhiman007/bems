@@ -1,7 +1,7 @@
 import { nextui } from "@nextui-org/theme";
 import { Config, PluginAPI } from "tailwindcss/types/config";
+//@ts-ignore
 import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette";
-import defaultTheme from "tailwindcss/defaultTheme";
 import colors from "tailwindcss/colors";
 
 const config: Config = {
