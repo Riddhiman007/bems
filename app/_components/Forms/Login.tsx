@@ -48,7 +48,7 @@ export default function LoginForm({ isModal }: Props) {
             classNames={{
               errorMessage: "text-danger",
               input: "border-none",
-              label: ["text-sm", !!error ? "text-danger-900" : ""],
+              label: ["text-sm", !!error ? "!text-danger-900 !pb-[8px]" : ""],
               inputWrapper: "w-[-webkit-fill-available]",
             }}
             size="sm"

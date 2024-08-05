@@ -1,7 +1,7 @@
 "use client";
 import { useInput } from "@nextui-org/input";
 import { UseInputProps } from "@nextui-org/input/dist/use-input";
-import React, { useState } from "react";
+import React, { useMemo } from "react";
 
 import { useMotionValue, motion, useMotionTemplate } from "framer-motion";
 import { CloseFilledIcon } from "../Icons";
@@ -36,7 +36,10 @@ export default function Input<
     getLabelProps,
   } = useInput<T>({ ...props });
 
-  const labelContent = <label {...getLabelProps()}>{label}</label>;
+  const labelContent = useMemo(
+    () => <label {...getLabelProps()}>{label}</label>,
+    [getLabelProps, label],
+  );
 
   const end = React.useMemo(() => {
     if (isClearable) {
@@ -71,7 +74,7 @@ export default function Input<
       {!disableGlow || props.variant === "faded" || props.variant === "flat" ? (
         <GlowComponent radius={glowRadius} glowColor={glowColor}>
           <div
-            style={{ width: "-webkit-fill-available" }}
+            //  style={{ width: "-webkit-fill-available" }}
             {...getInputWrapperProps()}
             onClick={() => {
               domRef.current?.focus();

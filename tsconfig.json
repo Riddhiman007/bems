@@ -42,6 +42,7 @@
     "app/_components/Icons/EditIcon.jsx",
     "app/_components/Icons/DeleteIcon.jsx",
     "app/_components/Navigation/CircularNavigation/index.tsx",
+    "app/_lib/auth/sendVerificationRequest.tss",
   ],
   "exclude": [
     "node_modules"

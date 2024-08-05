@@ -1,0 +1,22 @@
+[package]
+edition = "2021"
+name = "exam"
+version = "0.1.0"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+# Default enable napi4 feature, see https://nodejs.org/api/n-api.html#node-api-version-matrix
+napi.workspace = true
+napi-derive.workspace = true
+tokio.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+
+[build-dependencies]
+napi-build.workspace = true
+
+[profile.release]
+lto = true
+opt-level = 3

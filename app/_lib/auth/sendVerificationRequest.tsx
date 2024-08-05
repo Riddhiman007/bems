@@ -1,9 +1,10 @@
 import { NodemailerConfig } from "next-auth/providers/nodemailer";
 import { Theme } from "@auth/core/types";
 import { createTransport } from "nodemailer";
-import { render } from "@react-email/render";
+import { renderAsync } from "@react-email/render";
 import { EmailTemplate } from "@/_components/ui";
 import prisma from "@/_lib/prisma";
+import React from "react";
 
 export async function sendVerificationRequest({
   provider,
@@ -22,13 +23,14 @@ export async function sendVerificationRequest({
     where: { email: identifier },
     select: { fullname: true },
   });
+  const html = await renderAsync(<EmailTemplate url={url} fullname={user?.fullname} />);
   const transport = createTransport(provider.server);
   const result = await transport.sendMail({
     to: identifier,
     from: provider.from,
     subject: `Sign in to BEMS`,
     text: `Click on ${url} to sign in.`,
-    html: render(EmailTemplate({ url, fullname: user?.fullname })),
+    html,
   });
   const failed = result.rejected.concat(result.pending).filter(Boolean);
   if (failed.length) {

@@ -7,6 +7,13 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator cargoClient {
+    // Corresponds to the cargo alias created earlier
+    provider      = "cargo prisma"
+    // The location to generate the client. Is relative to the position of the schema
+    output        = "../src/prisma.rs"
+}
+
 // generator zod {
 //  provider         = "npx zod-prisma-types"
 //  output           = "../app/lib/prisma/schemas"
@@ -113,23 +120,46 @@ model SubjectTaughtByInWhichGrade {
 }
 
 model ExamRecord {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  name        Student  @relation(fields: [studentId], references: [id])
-  studentId   String   @db.ObjectId
-  examType    ExamType
-  English     Int      @default(0)
-  Hindi       Int      @default(0)
-  Mathematics Int      @default(0)
-  Science     Int      @default(0)
-  SST         Int      @default(0)
-  Marathi     Int      @default(0)
-  Computer    Int      @default(0)
-  totalMarks  Int      @default(0)
-  percentage  Float    @default(0.0)
-  isComplete  Boolean  @default(false)
-  Exam        Exam     @relation(fields: [examType], references: [type])
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      Student  @relation(fields: [studentId], references: [id])
+  studentId String   @db.ObjectId
+  examType  ExamType
+
+  totalMarks          Int               @default(0)
+  percentage          Float             @default(0.0)
+  isComplete          Boolean           @default(false)
+  oralExamRecord      OralExamRecord    @relation(fields: [oralExamRecordId], references: [id])
+  Exam                Exam              @relation(fields: [examType], references: [type])
+  oralExamRecordId    String            @unique @db.ObjectId
+  writtenExamRecord   WrittenExamRecord @relation(fields: [writtenExamRecordId], references: [id])
+  writtenExamRecordId String            @unique @db.ObjectId
 
   @@unique([studentId, examType])
+  @@map("exam_records")
+}
+
+model OralExamRecord {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  English     Int         @default(0)
+  Hindi       Int         @default(0)
+  Mathematics Int         @default(0)
+  Science     Int         @default(0)
+  SST         Int         @default(0)
+  Marathi     Int         @default(0)
+  Computer    Int         @default(0)
+  ExamRecord  ExamRecord?
+}
+
+model WrittenExamRecord {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  English     Int         @default(0)
+  Hindi       Int         @default(0)
+  Mathematics Int         @default(0)
+  Science     Int         @default(0)
+  SST         Int         @default(0)
+  Marathi     Int         @default(0)
+  Computer    Int         @default(0)
+  ExamRecord  ExamRecord?
 }
 
 model Exam {
@@ -138,6 +168,8 @@ model Exam {
   records      ExamRecord[]
   GradeExamRel GradeExamRel[]
   isComplete   Boolean        @default(false)
+
+  @@map("exams")
 }
 
 model GradeExamRel {

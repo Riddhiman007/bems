@@ -209,7 +209,7 @@ export default function StudentTable({
         );
       case "isNew":
         return student.isNew ? (
-          <XCircleIcon className="size-6 bg-danger-500" />
+          <XCircleIcon className="size-6 text-danger" />
         ) : (
           <XCircleIcon />
         );
@@ -279,7 +279,9 @@ export default function StudentTable({
               {(row) => (
                 <TableRow key={row.key}>
                   {(col) => (
-                    <TableCell key={`${row.key}${col}`}>{renderCell(row, col)}</TableCell>
+                    <TableCell key={`${row.key}_${col}`}>
+                      {renderCell(row, col)}
+                    </TableCell>
                   )}
                 </TableRow>
               )}

@@ -53,7 +53,7 @@ export function GlowComponent({ children, ...props }: Props) {
       style={{
         background,
       }}
-      className="group rounded-medium p-[2px] transition duration-300"
+      className="group rounded-small p-[2px] transition duration-300"
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setVisible(true)}
       onMouseLeave={() => setVisible(false)}

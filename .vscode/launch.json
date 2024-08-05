@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "vscode-edge-devtools.debug",
+            "request": "launch",
+            "name": "Launch Microsoft Edge and open the Edge DevTools",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
             "command": "mongod --port 27018 --dbpath C:\\data\\db1 --replSet rs0",
             "name": "Start MongoDB",
             "request": "launch",
@@ -30,7 +37,7 @@
             "configurations": [
                 "Start MongoDB",
                 "Development Server",
-                "Launch Edge"
+                "Launch Microsoft Edge and open the Edge DevTools"
             ]
         }
     ]

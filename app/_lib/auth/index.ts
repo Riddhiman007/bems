@@ -3,6 +3,7 @@ import EmailProvider from "next-auth/providers/nodemailer";
 import prisma from "../prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { User as PrismaUser } from "@prisma/client";
+import { sendVerificationRequest } from "./sendVerificationRequest";
 declare module "next-auth" {
   interface User extends PrismaUser {}
 }
@@ -12,6 +13,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     EmailProvider({
       server: process.env.EMAIL_SERVER,
       secret: process.env.EMAIL_HASH,
+      sendVerificationRequest,
     }),
   ],
   pages: {
