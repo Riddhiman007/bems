@@ -9,7 +9,7 @@
 // let f = await t("65d2e66cb4d04a168547d6c8");
 // console.log(f);
 
-import {calculateFaPercentage} from "@bems/exam";
+import {calculateFaPercentage} from "./exam/index.mjs";
 
 let data = {"English": 34, "Hindi": 45}
 
