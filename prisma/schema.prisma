@@ -7,21 +7,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-generator cargoClient {
-    // Corresponds to the cargo alias created earlier
-    provider      = "cargo prisma"
-    // The location to generate the client. Is relative to the position of the schema
-    output        = "../src/prisma.rs"
-}
-
-// generator zod {
-//  provider         = "npx zod-prisma-types"
-//  output           = "../app/lib/prisma/schemas"
-//  useMultipleFiles = true
-//  writeBarrelFiles = true
-//  createInputTypes = true
-// }
-
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
   userId            String  @db.ObjectId
